@@ -153,10 +153,14 @@ export function Navbar() {
           // Sticky-positioned solid bar. Translates off-screen on scroll-down
           // and back on scroll-up; mobile menu open keeps it pinned. The 600ms
           // smooth-out curve makes both directions feel intentional rather
-          // than a snap.
-          "sticky top-0 z-50 w-full transition-transform duration-[600ms] ease-smooth",
+          // than a snap. `will-change-transform` keeps the bar on its own
+          // compositor layer so iOS Safari doesn't leave a sub-pixel sliver
+          // visible mid-translate. The hidden state overshoots to -101% for
+          // the same reason — `-translate-y-full` can round down by a fraction
+          // of a pixel and leave a hairline of the bar peeking at the top.
+          "sticky top-0 z-50 w-full transition-transform duration-[600ms] ease-smooth will-change-transform",
           isDark ? "bg-semantic-surface-dark" : "bg-semantic-surface-primary",
-          hidden && !menuOpen && "-translate-y-full",
+          hidden && !menuOpen && "-translate-y-[101%]",
         )}
       >
         <Container className="flex items-center justify-between !py-4">

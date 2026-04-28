@@ -40,6 +40,13 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* Match html and body bg so iOS Safari's dynamic URL-bar resize, or any
+     sub-pixel gap between the sticky navbar and the page top, never flashes
+     a different colour against the surface the user is reading. */
+  html {
+    background-color: var(--semantic-surface-bg-primary);
+  }
+
   body {
     background-color: var(--semantic-surface-bg-primary);
     color: var(--semantic-text-primary);
