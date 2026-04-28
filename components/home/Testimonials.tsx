@@ -128,9 +128,9 @@ export function Testimonials({ tone = "light" }: { tone?: Tone } = {}) {
                 What they say
               </h2>
               {/* Default rule (--brand-gray) reads as near-white on dark; drop
-                  to --brand-dark-gray so it stays a subtle divider on either bg. */}
+                  to --brand-coal so it stays a subtle divider on either bg. */}
               <HorizontalRule
-                className={tone === "dark" ? "bg-brand-dark-gray" : undefined}
+                className={tone === "dark" ? "bg-brand-coal" : undefined}
               />
             </div>
           </BlurReveal>

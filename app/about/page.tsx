@@ -40,8 +40,9 @@ export default function AboutPage() {
 
             <BlurReveal>
               {/* On dark surfaces the default brand-gray rule reads as near-white;
-                  drop it to brand-dark-gray so it's a subtle divider, not a band. */}
-              <HorizontalRule className="bg-brand-dark-gray" />
+                  brand-dark-gray was still too prominent — brand-coal (#3a3a3a)
+                  reads as a true subtle divider against the #111 surface. */}
+              <HorizontalRule className="bg-brand-coal" />
             </BlurReveal>
 
             {/* Bio — photo left + 4-paragraph prose right on desktop, stacked
