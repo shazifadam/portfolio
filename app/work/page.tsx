@@ -4,7 +4,7 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { HorizontalRule } from "@/components/ui/HorizontalRule";
 import { BlurReveal } from "@/components/motion/BlurReveal";
 import { WorkGrid } from "@/components/case-study/WorkGrid";
-import { ALL_CASE_STUDIES, HOME_FEATURED } from "@/lib/case-studies";
+import { getAllCaseStudies, getHomeFeatured } from "@/lib/case-studies";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -12,7 +12,12 @@ export const metadata: Metadata = {
     "Selected case studies — product design, brand identity, and web development for international clients.",
 };
 
-export default function WorkPage() {
+export default async function WorkPage() {
+  const [featured, all] = await Promise.all([
+    getHomeFeatured(),
+    getAllCaseStudies(),
+  ]);
+
   return (
     <>
       {/* ── Hero + Featured grid ──────────────────────────────────────────
@@ -31,7 +36,7 @@ export default function WorkPage() {
                 <HorizontalRule />
               </div>
             </BlurReveal>
-            <WorkGrid items={HOME_FEATURED} />
+            <WorkGrid items={featured} />
           </div>
         </Container>
       </section>
@@ -65,7 +70,7 @@ export default function WorkPage() {
           divider. */}
       <section className="bg-semantic-surface-primary py-20 md:py-36">
         <Container>
-          <WorkGrid items={ALL_CASE_STUDIES} />
+          <WorkGrid items={all} />
         </Container>
       </section>
     </>

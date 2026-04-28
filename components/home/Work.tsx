@@ -2,9 +2,11 @@ import { Container } from "@/components/layout/Container";
 import { HorizontalRule } from "@/components/ui/HorizontalRule";
 import { WorkGrid } from "@/components/case-study/WorkGrid";
 import { BlurReveal } from "@/components/motion/BlurReveal";
-import { HOME_FEATURED } from "@/lib/case-studies";
+import { getHomeFeatured } from "@/lib/case-studies";
 
-export function Work() {
+export async function Work() {
+  const items = await getHomeFeatured();
+
   return (
     <section className="bg-semantic-surface-primary py-20 md:py-36">
       <Container>
@@ -19,7 +21,7 @@ export function Work() {
               <HorizontalRule />
             </div>
           </BlurReveal>
-          <WorkGrid items={HOME_FEATURED} />
+          <WorkGrid items={items} />
         </div>
       </Container>
     </section>
