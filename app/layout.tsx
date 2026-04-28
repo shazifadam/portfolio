@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { geist, inter, stkBureauSerif } from "@/lib/fonts";
 import { Navbar } from "@/components/layout/Navbar";
@@ -29,6 +29,14 @@ export const metadata: Metadata = {
     description:
       "Product and brand designer based in Malé, Maldives. Designing and building for international clients.",
   },
+};
+
+// iOS Safari uses theme-color to tint the status bar above the page.
+// Defaults to the light surface so the chrome reads as a continuation of
+// the navbar bg on every page; the dark hero of /about overrides this in
+// app/about/page.tsx so the tint matches that surface instead.
+export const viewport: Viewport = {
+  themeColor: "#faf9f6",
 };
 
 export default function RootLayout({

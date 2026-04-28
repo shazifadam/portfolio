@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Container } from "@/components/layout/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { HorizontalRule } from "@/components/ui/HorizontalRule";
@@ -9,6 +9,13 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Designer who builds — a brand and product designer based in Malé, Maldives, designing and building for international clients.",
+};
+
+// /about renders on the dark surface; iOS Safari's status bar tint
+// follows theme-color, so dropping it to the page bg keeps the chrome
+// continuous with the navbar instead of flashing the default light tint.
+export const viewport: Viewport = {
+  themeColor: "#111110",
 };
 
 export default function AboutPage() {

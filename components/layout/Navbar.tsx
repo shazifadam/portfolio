@@ -150,79 +150,91 @@ export function Navbar() {
     <>
       <header
         className={cn(
-          // Sticky-positioned solid bar. Translates off-screen on scroll-down
-          // and back on scroll-up; mobile menu open keeps it pinned. The 600ms
-          // smooth-out curve makes both directions feel intentional rather
-          // than a snap. `will-change-transform` keeps the bar on its own
-          // compositor layer so iOS Safari doesn't leave a sub-pixel sliver
-          // visible mid-translate. The hidden state overshoots to -101% for
-          // the same reason — `-translate-y-full` can round down by a fraction
-          // of a pixel and leave a hairline of the bar peeking at the top.
-          "sticky top-0 z-50 w-full transition-transform duration-[600ms] ease-smooth will-change-transform",
+          // Sticky bar with a permanent background cap. The bg lives on the
+          // <header> so it's always pinned at the top of the viewport — only
+          // the contents inside slide on scroll. `overflow-hidden` clips the
+          // sliding inner row so when it translates -100% it disappears
+          // cleanly without bleeding above. This is what eliminates the
+          // "gap above the navbar" the previous implementation showed on iOS
+          // mid-animation: the bg covers the navbar's space at every frame,
+          // so the page section behind never peeks through.
+          "sticky top-0 z-50 w-full overflow-hidden",
           isDark ? "bg-semantic-surface-dark" : "bg-semantic-surface-primary",
-          hidden && !menuOpen && "-translate-y-[101%]",
         )}
       >
-        <Container className="flex items-center justify-between !py-4">
-          {/* Logo placeholder — replace with the SVG mark when ready */}
-          <Link
-            href="/"
-            aria-label="Shazif Adam — home"
-            className={cn(
-              "block h-8 w-32",
-              isDark ? "bg-brand-dark-gray" : "bg-brand-gray",
-            )}
-          />
+        <div
+          className={cn(
+            // The actual navbar row — logo, links, CTA. Slides up on
+            // scroll-down and back on scroll-up. `will-change: transform`
+            // keeps it on its own compositor layer so iOS doesn't leave
+            // sub-pixel artefacts during the 600ms slide. The hidden state
+            // overshoots to -101% so any sub-pixel rounding still clears
+            // the parent's overflow-hidden edge.
+            "transition-transform duration-[600ms] ease-smooth will-change-transform",
+            hidden && !menuOpen && "-translate-y-[101%]",
+          )}
+        >
+          <Container className="flex items-center justify-between !py-4">
+            {/* Logo placeholder — replace with the SVG mark when ready */}
+            <Link
+              href="/"
+              aria-label="Shazif Adam — home"
+              className={cn(
+                "block h-8 w-32",
+                isDark ? "bg-brand-dark-gray" : "bg-brand-gray",
+              )}
+            />
 
-          <nav className="hidden items-center gap-10 md:flex">
-            <UnderlineLink href="/work" variant={isDark ? "navLight" : "navDark"}>
-              Work
-            </UnderlineLink>
-            <UnderlineLink href="/about" variant={isDark ? "navLight" : "navDark"}>
-              About
-            </UnderlineLink>
-            <span data-coming-soon className="inline-flex">
-              <UnderlineLink
-                variant="disabled"
-                surface={isDark ? "dark" : "light"}
-              >
-                Journal
+            <nav className="hidden items-center gap-10 md:flex">
+              <UnderlineLink href="/work" variant={isDark ? "navLight" : "navDark"}>
+                Work
               </UnderlineLink>
-            </span>
-            <span data-coming-soon className="inline-flex">
-              <UnderlineLink
-                variant="disabled"
-                surface={isDark ? "dark" : "light"}
-              >
-                <span className="inline-flex items-center gap-1">
-                  Shop
-                  <ArrowUpRight className="text-brand-dark-gray" />
-                </span>
+              <UnderlineLink href="/about" variant={isDark ? "navLight" : "navDark"}>
+                About
               </UnderlineLink>
-            </span>
-          </nav>
+              <span data-coming-soon className="inline-flex">
+                <UnderlineLink
+                  variant="disabled"
+                  surface={isDark ? "dark" : "light"}
+                >
+                  Journal
+                </UnderlineLink>
+              </span>
+              <span data-coming-soon className="inline-flex">
+                <UnderlineLink
+                  variant="disabled"
+                  surface={isDark ? "dark" : "light"}
+                >
+                  <span className="inline-flex items-center gap-1">
+                    Shop
+                    <ArrowUpRight className="text-brand-dark-gray" />
+                  </span>
+                </UnderlineLink>
+              </span>
+            </nav>
 
-          {/* Desktop CTA — light pill on dark routes so it reads against the bar */}
-          <div className="hidden md:block">
-            <Button href="/contact" variant={isDark ? "light" : "dark"}>
-              Contact
-            </Button>
-          </div>
+            {/* Desktop CTA — light pill on dark routes so it reads against the bar */}
+            <div className="hidden md:block">
+              <Button href="/contact" variant={isDark ? "light" : "dark"}>
+                Contact
+              </Button>
+            </div>
 
-          {/* Mobile menu trigger */}
-          <button
-            type="button"
-            aria-label="Open menu"
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen(true)}
-            className={cn(
-              "md:hidden inline-flex h-10 w-10 items-center justify-center",
-              isDark ? "text-brand-white" : "text-semantic-text-primary",
-            )}
-          >
-            <HamburgerIcon />
-          </button>
-        </Container>
+            {/* Mobile menu trigger */}
+            <button
+              type="button"
+              aria-label="Open menu"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen(true)}
+              className={cn(
+                "md:hidden inline-flex h-10 w-10 items-center justify-center",
+                isDark ? "text-brand-white" : "text-semantic-text-primary",
+              )}
+            >
+              <HamburgerIcon />
+            </button>
+          </Container>
+        </div>
       </header>
 
       {/* MOBILE MENU — full-viewport overlay */}
