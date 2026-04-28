@@ -44,7 +44,6 @@ export default defineType({
           { title: "Design System", value: "designSystem" },
           { title: "Mobile App", value: "mobileApp" },
         ],
-        layout: "tags",
       },
     }),
     defineField({
