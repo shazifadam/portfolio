@@ -82,7 +82,7 @@ export const HOME_FEATURED = ALL_CASE_STUDIES.slice(0, 6);
 // Both helpers fall back to the static seed above when the dataset is empty
 // or the fetch fails — so the site renders even before Sanity is wired up.
 
-type SanityCaseStudyCard = {
+export type SanityCaseStudyCard = {
   _id: string;
   slug: string;
   titleStart: string;
@@ -93,7 +93,7 @@ type SanityCaseStudyCard = {
   order?: number;
 };
 
-function mapSanityCard(doc: SanityCaseStudyCard): CaseStudyCardData {
+export function mapSanityCard(doc: SanityCaseStudyCard): CaseStudyCardData {
   return {
     titleStart: doc.titleStart,
     titleStartColor: doc.titleStartColor,
