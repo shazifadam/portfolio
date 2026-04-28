@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Container } from "./Container";
@@ -8,6 +9,17 @@ import { Button } from "@/components/ui/Button";
 import { UnderlineLink } from "@/components/ui/UnderlineLink";
 import { ComingSoonBadge } from "@/components/ui/ComingSoonBadge";
 import { cn } from "@/lib/utils";
+
+// Routes that render their hero on the dark surface need the navbar in its
+// dark variant so the bar reads as part of the page rather than floating on
+// top of it. Inverts:
+//   - bg: dark surface
+//   - logo placeholder swatch: brand-dark-gray (visible on dark)
+//   - Work/About underlines: navLight (white text, underline gray→white on hover)
+//   - Contact CTA: light (white pill, dark text — the inverse of the default)
+//   - Hamburger glyph: white
+// Mobile menu overlay is already dark; it's unaffected.
+const DARK_ROUTES = ["/about"] as const;
 
 function ArrowUpRight({ className }: { className?: string }) {
   return (
@@ -74,6 +86,8 @@ export function Navbar() {
   // Always reveal at the top of the page.
   const [hidden, setHidden] = useState(false);
   const lastScrollY = useRef(0);
+  const pathname = usePathname();
+  const isDark = DARK_ROUTES.some((p) => pathname?.startsWith(p));
 
   useScrollLock(menuOpen);
 
@@ -142,7 +156,8 @@ export function Navbar() {
           // and back on scroll-up; mobile menu open keeps it pinned. The 600ms
           // smooth-out curve makes both directions feel intentional rather
           // than a snap.
-          "sticky top-0 z-50 w-full bg-semantic-surface-primary transition-transform duration-[600ms] ease-smooth",
+          "sticky top-0 z-50 w-full transition-transform duration-[600ms] ease-smooth",
+          isDark ? "bg-semantic-surface-dark" : "bg-semantic-surface-primary",
           hidden && !menuOpen && "-translate-y-full",
         )}
       >
@@ -151,12 +166,19 @@ export function Navbar() {
           <Link
             href="/"
             aria-label="Shazif Adam — home"
-            className="block h-8 w-32 bg-brand-gray"
+            className={cn(
+              "block h-8 w-32",
+              isDark ? "bg-brand-dark-gray" : "bg-brand-gray",
+            )}
           />
 
           <nav className="hidden items-center gap-10 md:flex">
-            <UnderlineLink href="/work" variant="navDark">Work</UnderlineLink>
-            <UnderlineLink href="/about" variant="navDark">About</UnderlineLink>
+            <UnderlineLink href="/work" variant={isDark ? "navLight" : "navDark"}>
+              Work
+            </UnderlineLink>
+            <UnderlineLink href="/about" variant={isDark ? "navLight" : "navDark"}>
+              About
+            </UnderlineLink>
             <span data-coming-soon className="inline-flex">
               <UnderlineLink variant="disabled">Journal</UnderlineLink>
             </span>
@@ -170,9 +192,9 @@ export function Navbar() {
             </span>
           </nav>
 
-          {/* Desktop CTA */}
+          {/* Desktop CTA — light pill on dark routes so it reads against the bar */}
           <div className="hidden md:block">
-            <Button href="/contact" variant="dark">
+            <Button href="/contact" variant={isDark ? "light" : "dark"}>
               Contact
             </Button>
           </div>
@@ -183,7 +205,10 @@ export function Navbar() {
             aria-label="Open menu"
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen(true)}
-            className="md:hidden inline-flex h-10 w-10 items-center justify-center text-semantic-text-primary"
+            className={cn(
+              "md:hidden inline-flex h-10 w-10 items-center justify-center",
+              isDark ? "text-brand-white" : "text-semantic-text-primary",
+            )}
           >
             <HamburgerIcon />
           </button>

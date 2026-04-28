@@ -1,6 +1,7 @@
 import { Container } from "@/components/layout/Container";
 import { HorizontalRule } from "@/components/ui/HorizontalRule";
 import { BlurReveal } from "@/components/motion/BlurReveal";
+import { cn } from "@/lib/utils";
 
 // Testimonials are hardcoded for now — there's no Sanity schema for them yet
 // (PRD §8 only ships caseStudy + journalEntry). The shape stays close to what
@@ -14,8 +15,8 @@ type Testimonial = {
   avatarColor: string;
 };
 
-// 3×2 grid (6 cards) per Figma 182:3133. Avatar colours cycle through tokens
-// to match the Figma sequence:
+// 3×2 grid (6 cards) per Figma 182:3133 (light) / 184:6573 (dark).
+// Avatar colours cycle through tokens to match the Figma sequence:
 //   row 1 → gray, accent-orange, dark-gray
 //   row 2 → dark-gray, gray, black
 const PLACEHOLDER_QUOTE =
@@ -78,10 +79,25 @@ function Avatar({ color }: { color: string }) {
   );
 }
 
-function TestimonialCard({ quote, name, role, avatarColor }: Testimonial) {
+type Tone = "light" | "dark";
+
+function TestimonialCard({
+  quote,
+  name,
+  role,
+  avatarColor,
+  tone,
+}: Testimonial & { tone: Tone }) {
+  // Quote text recolours per surface so it stays readable: dark text on the
+  // light bg version, light-gray on the dark bg version. Author name + role
+  // stay on `--semantic-text-secondary` (mid-gray) which works on both.
+  const quoteColor =
+    tone === "dark"
+      ? "text-semantic-border-light"
+      : "text-semantic-text-primary";
   return (
     <div className="flex w-full flex-col items-start gap-[17px]">
-      <p className="text-body-xs text-semantic-text-primary">{quote}</p>
+      <p className={cn("text-body-xs", quoteColor)}>{quote}</p>
       <div className="flex items-center gap-[10px]">
         <Avatar color={avatarColor} />
         <div className="text-p3 text-semantic-text-secondary leading-[23.625px]">
@@ -93,16 +109,22 @@ function TestimonialCard({ quote, name, role, avatarColor }: Testimonial) {
   );
 }
 
-export function Testimonials() {
+export function Testimonials({ tone = "light" }: { tone?: Tone } = {}) {
+  const surface =
+    tone === "dark"
+      ? "bg-semantic-surface-dark"
+      : "bg-semantic-surface-primary";
+  const headingColor = tone === "dark" ? "text-brand-white" : "text-brand-black";
+
   return (
-    <section className="bg-semantic-surface-primary py-20 md:py-36">
+    <section className={cn("py-20 md:py-36", surface)}>
       <Container>
         <div className="flex flex-col gap-10">
           {/* Title block reveals as a unit. Each card below has its own
               BlurReveal so it animates in when its row scrolls into view. */}
           <BlurReveal>
             <div className="flex flex-col gap-4">
-              <h2 className="text-h2 max-w-[870px] text-brand-black">
+              <h2 className={cn("text-h2 max-w-[870px]", headingColor)}>
                 What they say
               </h2>
               <HorizontalRule />
@@ -112,7 +134,7 @@ export function Testimonials() {
           <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
             {TESTIMONIALS.map((t, i) => (
               <BlurReveal key={`${t.name}-${i}`}>
-                <TestimonialCard {...t} />
+                <TestimonialCard {...t} tone={tone} />
               </BlurReveal>
             ))}
           </div>

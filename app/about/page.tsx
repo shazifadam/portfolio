@@ -2,24 +2,109 @@ import type { Metadata } from "next";
 import { Container } from "@/components/layout/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { HorizontalRule } from "@/components/ui/HorizontalRule";
+import { BlurReveal } from "@/components/motion/BlurReveal";
+import { Testimonials } from "@/components/home/Testimonials";
 
-export const metadata: Metadata = { title: "About" };
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Designer who builds — a brand and product designer based in Malé, Maldives, designing and building for international clients.",
+};
 
 export default function AboutPage() {
   return (
     <>
-      <section className="bg-semantic-surface-dark text-brand-lightest pt-24 pb-16">
-        <Container className="flex flex-col gap-8">
-          <SectionLabel className="text-brand-gray">About Me</SectionLabel>
-          <h1 className="text-h1 max-w-4xl">
-            I design digital products, brand systems, and websites. Then I build them.
-          </h1>
-          <HorizontalRule className="bg-brand-dark-gray/40" />
+      {/* ── Dark hero / bio / illustration strip ────────────────────────────
+          One full-bleed dark section spans the whole page above the
+          testimonials. Inside, the indented hero (label + H2) sits above a
+          full-width rule; the bio is a 2-col layout on desktop (tilted photo
+          left, prose right) and stacks on mobile; the illustration strip is
+          four placeholder tiles that flex evenly on desktop and scroll
+          horizontally on mobile (per Figma 184:6524 / 184:6613). */}
+      <section className="bg-semantic-surface-dark py-20 md:py-36">
+        <Container>
+          <div className="flex flex-col gap-12">
+            {/* Hero — label + H2 indent only on wide viewports, matching the
+                same xl:pl-[350px] rhythm used on the home How-I-Work block
+                and the case-study body indent. */}
+            <BlurReveal>
+              <div className="flex flex-col gap-2 xl:pl-[350px]">
+                <SectionLabel>About Me</SectionLabel>
+                <h1 className="text-h2 text-brand-white">
+                  I design digital products, brand systems, and websites.{" "}
+                  <br className="hidden md:inline" />
+                  Then I build them.
+                </h1>
+              </div>
+            </BlurReveal>
+
+            <BlurReveal>
+              <HorizontalRule />
+            </BlurReveal>
+
+            {/* Bio — photo left + 4-paragraph prose right on desktop, stacked
+                on mobile. The photo placeholder is tilted -2.11deg per the
+                Figma; outer wrapper preserves the original bounding box so the
+                rotation doesn't push the prose column. */}
+            <BlurReveal>
+              <div className="flex flex-col gap-10 md:flex-row md:items-start md:gap-10">
+                <div className="flex w-full shrink-0 items-center justify-center md:w-[508px]">
+                  <div
+                    className="aspect-[508/414] w-full rounded-sm bg-semantic-text-secondary"
+                    style={{ transform: "rotate(-2.11deg)" }}
+                    aria-hidden
+                  />
+                </div>
+                <div className="text-p1 text-brand-light-gray flex flex-1 flex-col gap-[1lh]">
+                  <p>
+                    That combination is rarer than it should be — and it&apos;s
+                    what makes the work land the way it does. There&apos;s no
+                    translation loss between the design and the thing that ships.
+                  </p>
+                  <p>
+                    I&apos;m a Co-Founder and Creative Director at Encrea
+                    Studio, based in Malé, Maldives.
+                  </p>
+                  <p>
+                    Over the past eight years I&apos;ve worked across healthcare,
+                    international development, education, and tech — with clients
+                    ranging from a 200-bed hospital to a World Bank-funded
+                    publication programme in Cambodia.
+                  </p>
+                  <p>
+                    I&apos;ve kept a sketchbook running alongside every project.
+                    The current series is observational studies of Maldivian
+                    marine species — unhurried, field-note work that has nothing
+                    to do with client briefs and everything to do with keeping
+                    the eye sharp.
+                  </p>
+                </div>
+              </div>
+            </BlurReveal>
+
+            {/* Illustration strip — 4 placeholder tiles. Mobile lets the row
+                overflow so users can swipe through; desktop lays them out as
+                four flex-1 cells that share the container width. Replace the
+                bg with real images later. */}
+            <BlurReveal>
+              <div className="flex gap-[30px] overflow-x-auto md:overflow-visible -mx-[24px] px-[24px] md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div
+                    key={i}
+                    aria-hidden
+                    className="shrink-0 w-[185px] aspect-[185/151] rounded-sm bg-semantic-text-secondary md:w-auto md:flex-1 md:aspect-[321/261]"
+                  />
+                ))}
+              </div>
+            </BlurReveal>
+          </div>
         </Container>
       </section>
 
-      {/* Phase 3: bio (2-col), illustration strip, testimonials.
-          See CLAUDE.md §5.4. */}
+      {/* Testimonials — same 6-card grid as home, dark surface variant.
+          Two adjacent dark sections share the same bg, so the boundary
+          reads as breathing room rather than a colour shift. */}
+      <Testimonials tone="dark" />
     </>
   );
 }
