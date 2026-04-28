@@ -138,7 +138,7 @@ export default defineType({
       name: "contentBlocks",
       title: "Content Blocks",
       description:
-        "Add photo blocks and text blocks between sections in any order. Rendered between Overview and Challenges (see CLAUDE.md §5.3).",
+        "Add photo blocks and text blocks in any order — they render after Approach and before Post Launch Success on the detail page (see CLAUDE.md §5.3).",
       type: "array",
       of: [
         {

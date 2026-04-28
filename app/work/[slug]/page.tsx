@@ -164,39 +164,35 @@ export default async function CaseStudyPage({
               </BlurReveal>
             )}
 
-            {/* Overview */}
+            {/* Overview → Challenges → Objectives → Approach. Each gated by
+                its own show* boolean. Order is fixed (matches Figma 183:3688). */}
             {doc.showOverview && doc.overviewBody && (
               <SectionBlock heading="Overview">
                 <PortableBody value={doc.overviewBody} />
               </SectionBlock>
             )}
-
-            {/* Free-form content blocks (per CLAUDE.md §5.3 — single
-                ordered position between Overview and Challenges). */}
-            {doc.contentBlocks?.map((block) => (
-              <ContentBlock key={block._key} block={block} />
-            ))}
-
-            {/* Challenges */}
             {doc.showChallenges && doc.challengesBody && (
               <SectionBlock heading="Challenges">
                 <PortableBody value={doc.challengesBody} />
               </SectionBlock>
             )}
-
-            {/* Objectives */}
             {doc.showObjectives && doc.objectivesBody && (
               <SectionBlock heading="Objectives">
                 <PortableBody value={doc.objectivesBody} />
               </SectionBlock>
             )}
-
-            {/* Approach */}
             {doc.showApproach && doc.approachBody && (
               <SectionBlock heading="Approach">
                 <PortableBody value={doc.approachBody} />
               </SectionBlock>
             )}
+
+            {/* Free-form content blocks (photoBlock + textBlock), in the
+                order the editor arranged them. Renders after the four
+                standard sections, before Post Launch. */}
+            {doc.contentBlocks?.map((block) => (
+              <ContentBlock key={block._key} block={block} />
+            ))}
 
             {/* Post Launch Success */}
             {hasPostLaunch && (

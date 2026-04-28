@@ -463,23 +463,22 @@ Constants are named (`REVEAL_LINE_1` etc.) at the top of [Hero.tsx](components/h
 
 ### 5.3 Case Study Detail `/work/[slug]`
 
-Render order, every section optional unless flagged otherwise:
+Render order — fixed, matches Figma 183:3688 (desktop) and 183:3737 (mobile). Every section is optional unless flagged otherwise:
 
 1. Navbar.
-2. Breadcrumb: `Work / [titleStart]` (P3).
+2. Breadcrumb: `← Back to Case Studies` (P3 in `--semantic-text-secondary`, with a 24×24 left-arrow icon).
 3. Title row: `[titleStart in titleStartColor] — [titleEnd]` as H1, then tag row.
-4. Cover image / GIF / video (full-width, `border-radius: 4px`).
-5. **Overview** (label + rich text) — render iff `showOverview`.
-6. `contentBlocks` array — preserve Sanity order. Each block is either `photoBlock` (single full-width or pair side-by-side, optional caption) or `textBlock` (optional H3 heading + rich text body).
-7. **Challenges** (label + rich text) — iff `showChallenges`.
-8. **Objectives** (label + rich text) — iff `showObjectives`.
-9. **Approach** (label + rich text) — iff `showApproach`.
-10. (More `contentBlocks` may continue.)
-11. **Post Launch Success** — iff `showPostLaunch`. Each `postLaunchBlock` = H3 title + P2 paragraph. Unlimited blocks.
-12. **Similar Case Studies** — label + up to 2 cards (from `similarStudies` references).
-13. Footer.
+4. Cover image / GIF / video (full-width, `border-radius: 4px`, `aspect-[1232/720]`).
+5. **Overview** (H2 + rule + indented body) — render iff `showOverview`.
+6. **Challenges** — iff `showChallenges`.
+7. **Objectives** — iff `showObjectives`.
+8. **Approach** — iff `showApproach`.
+9. `contentBlocks` array — render in the exact order the editor arranged them. Each block is either `photoBlock` (single full-width or pair side-by-side, optional caption) or `textBlock` (optional H3 heading + rich text body).
+10. **Post Launch Success** — iff `showPostLaunch`. Each `postLaunchBlock` = P1 title + P2 secondary paragraph. Renders as a 2-column grid on desktop, stacked on mobile.
+11. **Similar Case Studies** — H2 + rule on a separate light-bg section (`--semantic-surface-primary`). Up to 2 cards from `similarStudies` references, rendered through the existing `<WorkGrid>` masonry.
+12. Footer.
 
-> The PRD describes content blocks appearing both before and after the standard Challenges/Objectives/Approach sections. Implementation: render `contentBlocks` *once* between Overview and Challenges. If editorial flexibility for "before *and* after" is needed later, split into `contentBlocksTop` and `contentBlocksBottom`. Document this decision in the Sanity schema description so the editor knows.
+> All four standard sections (Overview / Challenges / Objectives / Approach) come first as a block; **all** `contentBlocks` follow them in editor order — never interleaved. Body text inside SectionBlock indents to `xl:pl-[350px]` on wide viewports, full-width otherwise. Photo blocks always render full container width.
 
 ### 5.4 About `/about`
 
