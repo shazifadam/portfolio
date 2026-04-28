@@ -50,6 +50,7 @@ export function ContactForm() {
         <input
           type="text"
           autoComplete="name"
+          placeholder="Enter your name"
           className={inputBase}
           {...register("name", { required: "Name is required" })}
         />
