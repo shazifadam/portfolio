@@ -34,7 +34,7 @@ export const dataset = readEnv("NEXT_PUBLIC_SANITY_DATASET", "production");
 // caught by try/catch.
 export const projectId = readEnv(
   "NEXT_PUBLIC_SANITY_PROJECT_ID",
-  "placeholder",
+  "l8rn7xb3",
 );
 
 export const useCdn = false;
