@@ -127,11 +127,7 @@ export function Testimonials({ tone = "light" }: { tone?: Tone } = {}) {
               <h2 className={cn("text-h2 max-w-[870px]", headingColor)}>
                 What they say
               </h2>
-              {/* Default rule (--brand-gray) reads as near-white on dark; drop
-                  to --brand-coal so it stays a subtle divider on either bg. */}
-              <HorizontalRule
-                className={tone === "dark" ? "bg-brand-coal" : undefined}
-              />
+              <HorizontalRule tone={tone} />
             </div>
           </BlurReveal>
 

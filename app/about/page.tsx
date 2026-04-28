@@ -39,10 +39,7 @@ export default function AboutPage() {
             </BlurReveal>
 
             <BlurReveal>
-              {/* On dark surfaces the default brand-gray rule reads as near-white;
-                  brand-dark-gray was still too prominent — brand-coal (#3a3a3a)
-                  reads as a true subtle divider against the #111 surface. */}
-              <HorizontalRule className="bg-brand-coal" />
+              <HorizontalRule tone="dark" />
             </BlurReveal>
 
             {/* Bio — photo left + 4-paragraph prose right on desktop, stacked
@@ -85,19 +82,38 @@ export default function AboutPage() {
               </div>
             </BlurReveal>
 
-            {/* Illustration strip — 4 placeholder tiles. Mobile lets the row
-                overflow so users can swipe through; desktop lays them out as
-                four flex-1 cells that share the container width. Replace the
-                bg with real images later. */}
+            {/* Illustration strip — four placeholder tiles. Desktop renders
+                them as four flex-1 cells that share the container width.
+                Mobile turns into an infinite ticker carousel: tiles double
+                ([...TILES, ...TILES]) and the track translates from 0 to
+                -50% over the loop — same technique as the home ArtworkStrip
+                so when the first set scrolls past, the second is already in
+                position and the loop reads as continuous. */}
             <BlurReveal>
-              <div className="flex gap-[30px] overflow-x-auto md:overflow-visible -mx-[24px] px-[24px] md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {/* Desktop: static 4-cell row */}
+              <div className="hidden gap-[30px] md:flex">
                 {Array.from({ length: 4 }).map((_, i) => (
                   <div
                     key={i}
                     aria-hidden
-                    className="shrink-0 w-[185px] aspect-[185/151] rounded-sm bg-semantic-text-secondary md:w-auto md:flex-1 md:aspect-[321/261]"
+                    className="aspect-[321/261] flex-1 rounded-sm bg-semantic-text-secondary"
                   />
                 ))}
+              </div>
+
+              {/* Mobile: full-bleed ticker. Negative margin breaks out of
+                  Container's px-6 so the strip touches the screen edges, and
+                  overflow-hidden clips the off-screen tail of the doubled set. */}
+              <div className="-mx-6 overflow-hidden md:hidden">
+                <div className="flex w-fit animate-artwork-ticker">
+                  {[...Array(8)].map((_, i) => (
+                    <div
+                      key={i}
+                      aria-hidden
+                      className="mr-[30px] h-[151px] w-[185px] shrink-0 rounded-sm bg-semantic-text-secondary"
+                    />
+                  ))}
+                </div>
               </div>
             </BlurReveal>
           </div>
