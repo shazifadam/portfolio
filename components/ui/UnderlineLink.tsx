@@ -15,6 +15,7 @@ import type { ReactNode } from "react";
 //  - disabled     — gray text, gray underline, no hover (Journal / Shop)
 
 type Variant = "navDark" | "navLight" | "footerMuted" | "disabled";
+type Surface = "light" | "dark";
 
 const TEXT: Record<Variant, string> = {
   navDark: "text-semantic-text-primary",
@@ -28,13 +29,18 @@ const TEXT: Record<Variant, string> = {
 //   navLight  — dark bg → brand-dark-gray (visible mid-gray, not near-white)
 //   footerMuted — dark bg → brand-dark-gray (matches text colour, reads as a
 //                deliberate part of the link without being too prominent)
-//   disabled  — gray rule on whatever surface
+//   disabled  — surface-aware: brand-gray on light surfaces (matches active
+//               nav rules at rest), brand-dark-gray on dark surfaces (matches
+//               the disabled text colour so the line and label read as one
+//               muted unit instead of a bright bar under dim text).
 const RULE_DEFAULT: Record<Variant, string> = {
   navDark: "bg-brand-gray",
   navLight: "bg-brand-dark-gray",
   footerMuted: "bg-brand-dark-gray",
   disabled: "bg-brand-gray",
 };
+
+const DISABLED_RULE_DARK = "bg-brand-dark-gray";
 
 const RULE_HOVER: Record<Variant, string> = {
   navDark: "group-hover:bg-brand-black",
@@ -47,15 +53,19 @@ type Props = {
   href?: string;
   external?: boolean;
   variant?: Variant;
+  /** Currently only affects the `disabled` variant — see RULE_DEFAULT comment. */
+  surface?: Surface;
   className?: string;
   children: ReactNode;
 };
 
 function Inner({
   variant,
+  surface,
   children,
 }: {
   variant: Variant;
+  surface: Surface;
   children: ReactNode;
 }) {
   // Layout:
@@ -64,6 +74,10 @@ function Inner({
   //   Underline is absolutely positioned at bottom-1 (=4px from wrapper bottom),
   //   which sits flush against the text's lower edge.
   //   On hover the underline translates down 4px (lands at bottom-0).
+  const ruleClass =
+    variant === "disabled" && surface === "dark"
+      ? DISABLED_RULE_DARK
+      : RULE_DEFAULT[variant];
   return (
     <span className="relative inline-flex pb-1.5">
       <span className={cn("text-navbarlabel whitespace-nowrap", TEXT[variant])}>
@@ -73,7 +87,7 @@ function Inner({
         aria-hidden
         className={cn(
           "absolute left-0 right-0 bottom-1 h-0.5 transition-[transform,background-color] duration-300 ease-smooth",
-          RULE_DEFAULT[variant],
+          ruleClass,
           variant !== "disabled" && [
             "group-hover:translate-y-1",
             RULE_HOVER[variant],
@@ -88,6 +102,7 @@ export function UnderlineLink({
   href,
   external,
   variant = "navDark",
+  surface = "light",
   className,
   children,
 }: Props) {
@@ -100,7 +115,9 @@ export function UnderlineLink({
           className,
         )}
       >
-        <Inner variant={variant}>{children}</Inner>
+        <Inner variant={variant} surface={surface}>
+          {children}
+        </Inner>
       </span>
     );
   }
@@ -113,14 +130,18 @@ export function UnderlineLink({
         rel="noreferrer noopener"
         className={cn("group inline-flex", className)}
       >
-        <Inner variant={variant}>{children}</Inner>
+        <Inner variant={variant} surface={surface}>
+          {children}
+        </Inner>
       </a>
     );
   }
 
   return (
     <Link href={href} className={cn("group inline-flex", className)}>
-      <Inner variant={variant}>{children}</Inner>
+      <Inner variant={variant} surface={surface}>
+        {children}
+      </Inner>
     </Link>
   );
 }

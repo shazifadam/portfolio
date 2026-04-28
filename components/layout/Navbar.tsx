@@ -178,10 +178,18 @@ export function Navbar() {
               About
             </UnderlineLink>
             <span data-coming-soon className="inline-flex">
-              <UnderlineLink variant="disabled">Journal</UnderlineLink>
+              <UnderlineLink
+                variant="disabled"
+                surface={isDark ? "dark" : "light"}
+              >
+                Journal
+              </UnderlineLink>
             </span>
             <span data-coming-soon className="inline-flex">
-              <UnderlineLink variant="disabled">
+              <UnderlineLink
+                variant="disabled"
+                surface={isDark ? "dark" : "light"}
+              >
                 <span className="inline-flex items-center gap-1">
                   Shop
                   <ArrowUpRight className="text-brand-dark-gray" />
