@@ -3,6 +3,7 @@ import "./globals.css";
 import { geist, inter, stkBureauSerif } from "@/lib/fonts";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { RouteBackground } from "@/components/layout/RouteBackground";
 import { PageTransition } from "@/components/motion/PageTransition";
 import { ComingSoonCursor } from "@/components/ui/ComingSoonCursor";
 
@@ -36,6 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable} ${inter.variable} ${stkBureauSerif.variable}`}>
       <body className="min-h-screen bg-semantic-surface-primary text-semantic-text-primary">
+        <RouteBackground />
         <Navbar />
         <PageTransition>
           <main>{children}</main>

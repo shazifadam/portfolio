@@ -9,17 +9,15 @@ import { Button } from "@/components/ui/Button";
 import { UnderlineLink } from "@/components/ui/UnderlineLink";
 import { ComingSoonBadge } from "@/components/ui/ComingSoonBadge";
 import { cn } from "@/lib/utils";
+import { isDarkRoute } from "@/lib/routes";
 
-// Routes that render their hero on the dark surface need the navbar in its
-// dark variant so the bar reads as part of the page rather than floating on
-// top of it. Inverts:
+// On dark routes (see lib/routes.ts) the navbar inverts:
 //   - bg: dark surface
 //   - logo placeholder swatch: brand-dark-gray (visible on dark)
 //   - Work/About underlines: navLight (white text, underline gray→white on hover)
 //   - Contact CTA: light (white pill, dark text — the inverse of the default)
 //   - Hamburger glyph: white
 // Mobile menu overlay is already dark; it's unaffected.
-const DARK_ROUTES = ["/about"] as const;
 
 function ArrowUpRight({ className }: { className?: string }) {
   return (
@@ -87,7 +85,7 @@ export function Navbar() {
   const [hidden, setHidden] = useState(false);
   const lastScrollY = useRef(0);
   const pathname = usePathname();
-  const isDark = DARK_ROUTES.some((p) => pathname?.startsWith(p));
+  const isDark = isDarkRoute(pathname);
 
   useScrollLock(menuOpen);
 

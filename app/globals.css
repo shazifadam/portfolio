@@ -46,6 +46,15 @@
     font-family: var(--font-primary);
   }
 
+  /* Dark-surface routes (e.g. /about) — RouteBackground toggles
+     `.dark-surface` on <html> + <body> so the over-scroll bounce on iOS or
+     trackpad doesn't flash white past the page edges. The same class also
+     keeps the html background dark so the in-flow body bg matches. */
+  html.dark-surface,
+  html.dark-surface body {
+    background-color: var(--semantic-surface-bg-dark);
+  }
+
   /* Grain overlay — global, non-interactive. baseFrequency 1.2 gives a finer
      pixel-level grain (vs the broader splotches at 0.9), opacity 0.08 keeps it
      visible without dominating the page surface. The grain reads stronger

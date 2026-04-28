@@ -39,7 +39,9 @@ export default function AboutPage() {
             </BlurReveal>
 
             <BlurReveal>
-              <HorizontalRule />
+              {/* On dark surfaces the default brand-gray rule reads as near-white;
+                  drop it to brand-dark-gray so it's a subtle divider, not a band. */}
+              <HorizontalRule className="bg-brand-dark-gray" />
             </BlurReveal>
 
             {/* Bio — photo left + 4-paragraph prose right on desktop, stacked
