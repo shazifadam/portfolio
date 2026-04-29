@@ -513,9 +513,27 @@ Light bg.
 - Submit: `SEND YOUR REQUEST →` Dark button, right-aligned.
 - Validation via React Hook Form. Submit POSTs to `/api/contact` → Resend.
 
-### 5.6 Journal `/journal`
+### 5.6 Journal `/journal` + `/journal/[slug]`
 
-Built as a shell so the route exists, but the navbar link is **disabled** at launch (`pointer-events: none`, `aria-disabled`, dark-gray colour). Sanity schema is built and ready.
+Live. Listing page is a 2-column grid on desktop (1-col mobile) of card-style entries — date (text-journal-meta), title (text-h3), summary, optional cover image. Empty-state copy renders if Sanity returns no entries.
+
+Article page (`/journal/[slug]`) uses a **dedicated reader-oriented type stack** that intentionally diverges from the rest of the site (CLAUDE.md §3.2-J):
+
+- `.text-journal-meta` — Geist SemiBold 15.75 / 18.9 / +1.125, uppercase. Used for "PUBLISHED ON …" line + listing-card date.
+- `.text-journal-body` — STK Bureau Serif Light 18 / 27 / -0.28. The literary serif voice for paragraph body.
+- `.text-journal-sub` — Geist Medium 31.5 / 27 / -0.28. In-article subheadings.
+
+Header order: breadcrumb → "PUBLISHED ON {date}" → H2 title → "by Shazif Adam" (P1) → optional cover → body. Article column constrained to `max-w-[720px]` for comfortable measure.
+
+Sanity body field (`journalEntry.body`) is a single Portable Text array supporting:
+- `block.normal` → renders as `.text-journal-body` paragraph
+- `block.h2` → renders as `.text-journal-sub` subheading
+- `image` (inline, hotspot, with alt + caption) → full-width figure with optional caption
+- Marks: italic, strong, link (with URL annotation)
+
+The editor reorders blocks freely via drag-handle in Sanity Studio's array UI.
+
+Navbar link is **enabled** as a normal item on both desktop (`navDark` / `navLight`) and mobile menu. No more "Coming Soon" badge or `data-coming-soon` cursor.
 
 ### 5.7 Shop
 

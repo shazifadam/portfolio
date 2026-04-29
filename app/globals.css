@@ -258,6 +258,39 @@
     letter-spacing: 0;
   }
 
+  /* ── Journal article styles ────────────────────────────────────
+     Used only on /journal/[slug] — these are reader-oriented and
+     intentionally diverge from the rest of the site so an article
+     reads like a journal entry, not a marketing page. */
+
+  /* Date / "PUBLISHED ON …" line */
+  .text-journal-meta {
+    font-family: var(--font-primary);
+    font-weight: 600;
+    font-size: 15.75px;
+    line-height: 18.9px;
+    letter-spacing: 1.125px;
+    text-transform: uppercase;
+  }
+
+  /* Body paragraphs — STK Bureau Serif Light, the "literary" body voice */
+  .text-journal-body {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.28px;
+  }
+
+  /* In-article subheadings */
+  .text-journal-sub {
+    font-family: var(--font-primary);
+    font-weight: 500;
+    font-size: 31.5px;
+    line-height: 27px;
+    letter-spacing: -0.28px;
+  }
+
   /* ── Mobile overrides ─────────────────────────────────── */
   @media (max-width: 768px) {
     .text-h0 {

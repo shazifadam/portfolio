@@ -185,14 +185,9 @@ export function Navbar() {
             <UnderlineLink href="/about" variant={isDark ? "navLight" : "navDark"}>
               About
             </UnderlineLink>
-            <span data-coming-soon className="inline-flex">
-              <UnderlineLink
-                variant="disabled"
-                surface={isDark ? "dark" : "light"}
-              >
-                Journal
-              </UnderlineLink>
-            </span>
+            <UnderlineLink href="/journal" variant={isDark ? "navLight" : "navDark"}>
+              Journal
+            </UnderlineLink>
             <span data-coming-soon className="inline-flex">
               <UnderlineLink
                 variant="disabled"
@@ -315,15 +310,13 @@ function MobileMenuBody({ onClose }: { onClose: () => void }) {
           </Link>
         </motion.li>
         <motion.li
-          className="flex items-center gap-2"
           initial={ITEM_HIDDEN}
           animate={ITEM_VISIBLE}
           transition={{ duration: ITEM_DURATION, ease: ITEM_EASE, delay: 0.2 }}
         >
-          <span aria-disabled className="text-h3 text-brand-white opacity-90">
+          <Link href="/journal" onClick={onClose} className="text-h3 text-brand-white">
             Journal
-          </span>
-          <ComingSoonBadge tone="onDark" />
+          </Link>
         </motion.li>
         <motion.li
           className="flex items-center gap-2"

@@ -82,8 +82,15 @@ export const journalEntryBySlugQuery = groq`
     title,
     summary,
     coverImage,
-    body,
     publishedAt,
-    tags
+    tags,
+    body[]{
+      ...,
+      _type == "image" => { ..., asset-> }
+    }
   }
+`;
+
+export const allJournalSlugsQuery = groq`
+  *[_type == "journalEntry" && defined(slug.current)][].slug.current
 `;
