@@ -148,20 +148,21 @@ export function Navbar() {
 
   return (
     <>
-      {/* Permanent safe-area cap. Height is `env(safe-area-inset-top)` so
-          on iPhones with a notch this renders as a solid bar matching the
-          navbar bg, sitting under the iOS status bar. On non-notched
-          devices and on desktop the env value is 0 and the cap collapses
-          to nothing. The cap is its own sticky element with a higher
-          z-index than the navbar, so when the navbar slides up to hide,
-          the navbar passes BEHIND the cap rather than leaving the chrome
-          area transparent. Combined with the route-aware theme-color
-          export, this gives the "solid bar above the navbar" effect on
-          iOS — the chrome tint never sees through to the page section. */}
+      {/* Permanent safe-area cap. Sits in the iOS notch / status-bar
+          region so the chrome tint never sees through to the page section
+          behind it. `position: fixed` is required here (not sticky) — on
+          iOS Safari the URL-bar resize relocates sticky anchors mid-scroll,
+          which is what was leaving a visible gap between the cap and the
+          true top of the viewport. Fixed positions against the visual
+          viewport directly and stays put. Height is the safe-area inset:
+          ~44pt on a notched iPhone, 0 on every other device.
+
+          With the cap z-index above the navbar, the navbar passes behind
+          this bar when it slides up to hide. */}
       <div
         aria-hidden
         className={cn(
-          "sticky top-0 z-[51] w-full",
+          "fixed inset-x-0 top-0 z-[51]",
           isDark ? "bg-semantic-surface-dark" : "bg-semantic-surface-primary",
         )}
         style={{ height: "env(safe-area-inset-top, 0px)" }}
@@ -169,14 +170,12 @@ export function Navbar() {
 
       <header
         className={cn(
-          // Sticky bar that fully translates off-screen on scroll-down and
-          // back on scroll-up. `will-change: transform` keeps it on its
-          // own compositor layer so iOS doesn't leave sub-pixel artefacts.
-          // Hidden state overshoots to -101% so any sub-pixel rounding
-          // still clears the cap above. `top` honours the safe-area inset
-          // so the navbar sits flush below the cap rather than overlapping
-          // it on iOS notched devices.
-          "sticky z-50 w-full transition-transform duration-[600ms] ease-smooth will-change-transform",
+          // `position: fixed` for the same reason as the cap — sticky on
+          // iOS detaches from the visual viewport during URL-bar resize.
+          // Fixed pins to the viewport directly. `top: env(safe-area-inset-top)`
+          // keeps the navbar flush beneath the cap on notched iPhones; on
+          // every other device the inset is 0 and the navbar sits at top:0.
+          "fixed inset-x-0 z-50 transition-transform duration-[600ms] ease-smooth will-change-transform",
           isDark ? "bg-semantic-surface-dark" : "bg-semantic-surface-primary",
           hidden && !menuOpen && "-translate-y-[101%]",
         )}

@@ -41,16 +41,27 @@
   }
 
   /* Match html and body bg so iOS Safari's dynamic URL-bar resize, or any
-     sub-pixel gap between the sticky navbar and the page top, never flashes
-     a different colour against the surface the user is reading. */
+     sub-pixel gap between the navbar and the page top, never flashes a
+     different colour against the surface the user is reading.
+     `overflow-x: hidden` damps out the iOS rubber-band that sometimes
+     reveals the html bg horizontally during a fast scroll. */
   html {
     background-color: var(--semantic-surface-bg-primary);
+    overflow-x: hidden;
   }
 
   body {
     background-color: var(--semantic-surface-bg-primary);
     color: var(--semantic-text-primary);
     font-family: var(--font-primary);
+    overflow-x: hidden;
+    /* Reserves space for the position:fixed navbar (and the safe-area cap
+       above it on iOS notched devices) so first-section content doesn't
+       sit under the bar. 76px ≈ desktop navbar height (Container py-4 +
+       h-11 button). On mobile the actual bar is ~72px so there's a 4px
+       cushion. env(safe-area-inset-top) is 0 on non-notched devices,
+       ~44pt on notched iPhones with viewport-fit=cover. */
+    padding-top: calc(76px + env(safe-area-inset-top, 0px));
   }
 
   /* Dark-surface routes (e.g. /about) — RouteBackground toggles
