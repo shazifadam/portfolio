@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { geist, inter, stkBureauSerif } from "@/lib/fonts";
 import { Navbar } from "@/components/layout/Navbar";
@@ -6,6 +7,8 @@ import { Footer } from "@/components/layout/Footer";
 import { RouteBackground } from "@/components/layout/RouteBackground";
 import { PageTransition } from "@/components/motion/PageTransition";
 import { ComingSoonCursor } from "@/components/ui/ComingSoonCursor";
+
+const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://shazifadam.com"),
@@ -57,6 +60,18 @@ export default function RootLayout({
         </PageTransition>
         <Footer />
         <ComingSoonCursor />
+        {/* Plausible analytics — loads only when NEXT_PUBLIC_PLAUSIBLE_DOMAIN
+            is set, so dev / preview without the env var don't fire pageviews
+            into the production site. The default `script.js` auto-tracks
+            App Router push-state navigations as pageviews. */}
+        {plausibleDomain && (
+          <Script
+            defer
+            strategy="afterInteractive"
+            data-domain={plausibleDomain}
+            src="https://plausible.io/js/script.js"
+          />
+        )}
       </body>
     </html>
   );
