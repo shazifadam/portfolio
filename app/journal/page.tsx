@@ -29,7 +29,7 @@ export default async function JournalPage() {
             <div className="flex flex-col gap-8">
               <SectionLabel>Journal</SectionLabel>
               <h1 className="text-h1 max-w-4xl text-semantic-text-primary">
-                Notes from the studio.
+                The Offcut
               </h1>
               <HorizontalRule />
             </div>
