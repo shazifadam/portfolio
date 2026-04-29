@@ -148,38 +148,24 @@ export function Navbar() {
 
   return (
     <>
-      {/* Permanent safe-area cap. Sits in the iOS notch / status-bar
-          region so the chrome tint never sees through to the page section
-          behind it. `position: fixed` is required here (not sticky) — on
-          iOS Safari the URL-bar resize relocates sticky anchors mid-scroll,
-          which is what was leaving a visible gap between the cap and the
-          true top of the viewport. Fixed positions against the visual
-          viewport directly and stays put. Height is the safe-area inset:
-          ~44pt on a notched iPhone, 0 on every other device.
-
-          With the cap z-index above the navbar, the navbar passes behind
-          this bar when it slides up to hide. */}
-      <div
-        aria-hidden
-        className={cn(
-          "fixed inset-x-0 top-0 z-[51]",
-          isDark ? "bg-semantic-surface-dark" : "bg-semantic-surface-primary",
-        )}
-        style={{ height: "var(--ios-cap-height)" }}
-      />
-
       <header
         className={cn(
-          // `position: fixed` for the same reason as the cap — sticky on
-          // iOS detaches from the visual viewport during URL-bar resize.
-          // Fixed pins to the viewport directly. `top: env(safe-area-inset-top)`
-          // keeps the navbar flush beneath the cap on notched iPhones; on
-          // every other device the inset is 0 and the navbar sits at top:0.
-          "fixed inset-x-0 z-50 transition-transform duration-[600ms] ease-smooth will-change-transform",
+          // Sticky bar that translates off-screen on scroll-down and back
+          // on scroll-up. Hidden state overshoots to -101% so any sub-pixel
+          // rounding still clears the viewport top.
+          //
+          // `transform-gpu` (translate3d(0,0,0)) + `backface-visibility:
+          // hidden` + `isolation: isolate` together force iOS Safari to
+          // composite the navbar on its own GPU layer in its own stacking
+          // context. Without this, iOS Safari's `mix-blend-mode: multiply`
+          // grain overlay (body::after at z-100) was bleeding the page
+          // section through the navbar — a known iOS rendering bug where
+          // mix-blend-mode at a higher z-index breaks isolation for fixed
+          // / sticky elements beneath it.
+          "sticky top-0 z-50 w-full transform-gpu transition-transform duration-[600ms] ease-smooth [backface-visibility:hidden] [isolation:isolate] will-change-transform",
           isDark ? "bg-semantic-surface-dark" : "bg-semantic-surface-primary",
           hidden && !menuOpen && "-translate-y-[101%]",
         )}
-        style={{ top: "var(--ios-cap-height)" }}
       >
         <Container className="flex items-center justify-between !py-4">
           {/* Logo placeholder — replace with the SVG mark when ready */}
