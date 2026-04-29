@@ -54,6 +54,16 @@
     font-family: var(--font-primary);
   }
 
+  /* Safe-area cap above the navbar so iOS Safari's status-bar region
+     stays covered by the navbar's bg instead of letting the page section
+     tint through. Pairs with viewport-fit=cover in app/layout.tsx —
+     together they let the navbar extend up into the chrome area on
+     notched iPhones (env returns ~44pt) and collapse to 0 on every
+     other device. */
+  header {
+    padding-top: env(safe-area-inset-top);
+  }
+
   /* Dark-surface routes (e.g. /about) — RouteBackground toggles
      `.dark-surface` on <html> + <body> so the over-scroll bounce on iOS or
      trackpad doesn't flash white past the page edges. The same class also
