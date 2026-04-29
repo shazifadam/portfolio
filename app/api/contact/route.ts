@@ -66,7 +66,7 @@ export async function POST(req: Request) {
       from,
       to,
       replyTo: email,
-      subject: `New enquiry from ${name}`,
+      subject: `WEBSITE INQUIRY - ${name}`,
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
       // Lightweight HTML so the inbox preview reads cleanly without a heavy
       // template — the plain-text fallback above stays readable too.
