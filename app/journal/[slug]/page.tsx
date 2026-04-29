@@ -65,9 +65,12 @@ export default async function JournalEntryPage({
               </Link>
             </BlurReveal>
 
-            {/* Header: title → author block (headshot + byline + date) */}
+            {/* Header: title → author block (headshot + byline + date).
+                Both blocks centred — title text-centred, author container
+                centred via mx-auto so the headshot + byline form a tight
+                centred unit beneath the title. */}
             <BlurReveal>
-              <div className="flex flex-col gap-6">
+              <div className="flex flex-col items-center gap-6 text-center">
                 <h1 className="text-h2 text-semantic-text-primary">
                   {entry.title}
                 </h1>
@@ -81,7 +84,7 @@ export default async function JournalEntryPage({
                       className="object-cover"
                     />
                   </div>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col items-start text-left">
                     <span className="text-p1 text-semantic-text-primary">
                       by Shazif Adam
                     </span>
