@@ -154,15 +154,15 @@ export function Navbar() {
           // on scroll-up. Hidden state overshoots to -101% so any sub-pixel
           // rounding still clears the viewport top.
           //
-          // `transform-gpu` (translate3d(0,0,0)) + `backface-visibility:
-          // hidden` + `isolation: isolate` together force iOS Safari to
-          // composite the navbar on its own GPU layer in its own stacking
-          // context. Without this, iOS Safari's `mix-blend-mode: multiply`
-          // grain overlay (body::after at z-100) was bleeding the page
-          // section through the navbar — a known iOS rendering bug where
-          // mix-blend-mode at a higher z-index breaks isolation for fixed
-          // / sticky elements beneath it.
-          "sticky top-0 z-50 w-full transform-gpu transition-transform duration-[600ms] ease-smooth [backface-visibility:hidden] [isolation:isolate] will-change-transform",
+          // `backface-visibility: hidden` is kept as a render hint for the
+          // 600ms slide. Earlier rounds added `transform-gpu`,
+          // `will-change-transform`, and `[isolation:isolate]` to try to
+          // fix an iOS Safari bleed-through issue, but those three were
+          // themselves the cause — they created a stacking context that
+          // detached the navbar from the parent paint and let the page
+          // section show through during scroll. Removing them restores
+          // correct iOS rendering.
+          "sticky top-0 z-50 w-full transition-transform duration-[600ms] ease-smooth [backface-visibility:hidden]",
           isDark ? "bg-semantic-surface-dark" : "bg-semantic-surface-primary",
           hidden && !menuOpen && "-translate-y-[101%]",
         )}
