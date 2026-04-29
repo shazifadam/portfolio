@@ -148,93 +148,100 @@ export function Navbar() {
 
   return (
     <>
-      <header
+      {/* Permanent safe-area cap. Height is `env(safe-area-inset-top)` so
+          on iPhones with a notch this renders as a solid bar matching the
+          navbar bg, sitting under the iOS status bar. On non-notched
+          devices and on desktop the env value is 0 and the cap collapses
+          to nothing. The cap is its own sticky element with a higher
+          z-index than the navbar, so when the navbar slides up to hide,
+          the navbar passes BEHIND the cap rather than leaving the chrome
+          area transparent. Combined with the route-aware theme-color
+          export, this gives the "solid bar above the navbar" effect on
+          iOS — the chrome tint never sees through to the page section. */}
+      <div
+        aria-hidden
         className={cn(
-          // Sticky bar with a permanent background cap. The bg lives on the
-          // <header> so it's always pinned at the top of the viewport — only
-          // the contents inside slide on scroll. `overflow-hidden` clips the
-          // sliding inner row so when it translates -100% it disappears
-          // cleanly without bleeding above. This is what eliminates the
-          // "gap above the navbar" the previous implementation showed on iOS
-          // mid-animation: the bg covers the navbar's space at every frame,
-          // so the page section behind never peeks through.
-          "sticky top-0 z-50 w-full overflow-hidden",
+          "sticky top-0 z-[51] w-full",
           isDark ? "bg-semantic-surface-dark" : "bg-semantic-surface-primary",
         )}
+        style={{ height: "env(safe-area-inset-top, 0px)" }}
+      />
+
+      <header
+        className={cn(
+          // Sticky bar that fully translates off-screen on scroll-down and
+          // back on scroll-up. `will-change: transform` keeps it on its
+          // own compositor layer so iOS doesn't leave sub-pixel artefacts.
+          // Hidden state overshoots to -101% so any sub-pixel rounding
+          // still clears the cap above. `top` honours the safe-area inset
+          // so the navbar sits flush below the cap rather than overlapping
+          // it on iOS notched devices.
+          "sticky z-50 w-full transition-transform duration-[600ms] ease-smooth will-change-transform",
+          isDark ? "bg-semantic-surface-dark" : "bg-semantic-surface-primary",
+          hidden && !menuOpen && "-translate-y-[101%]",
+        )}
+        style={{ top: "env(safe-area-inset-top, 0px)" }}
       >
-        <div
-          className={cn(
-            // The actual navbar row — logo, links, CTA. Slides up on
-            // scroll-down and back on scroll-up. `will-change: transform`
-            // keeps it on its own compositor layer so iOS doesn't leave
-            // sub-pixel artefacts during the 600ms slide. The hidden state
-            // overshoots to -101% so any sub-pixel rounding still clears
-            // the parent's overflow-hidden edge.
-            "transition-transform duration-[600ms] ease-smooth will-change-transform",
-            hidden && !menuOpen && "-translate-y-[101%]",
-          )}
-        >
-          <Container className="flex items-center justify-between !py-4">
-            {/* Logo placeholder — replace with the SVG mark when ready */}
-            <Link
-              href="/"
-              aria-label="Shazif Adam — home"
-              className={cn(
-                "block h-8 w-32",
-                isDark ? "bg-brand-dark-gray" : "bg-brand-gray",
-              )}
-            />
+        <Container className="flex items-center justify-between !py-4">
+          {/* Logo placeholder — replace with the SVG mark when ready */}
+          <Link
+            href="/"
+            aria-label="Shazif Adam — home"
+            className={cn(
+              "block h-8 w-32",
+              isDark ? "bg-brand-dark-gray" : "bg-brand-gray",
+            )}
+          />
 
-            <nav className="hidden items-center gap-10 md:flex">
-              <UnderlineLink href="/work" variant={isDark ? "navLight" : "navDark"}>
-                Work
+          <nav className="hidden items-center gap-10 md:flex">
+            <UnderlineLink href="/work" variant={isDark ? "navLight" : "navDark"}>
+              Work
+            </UnderlineLink>
+            <UnderlineLink href="/about" variant={isDark ? "navLight" : "navDark"}>
+              About
+            </UnderlineLink>
+            <span data-coming-soon className="inline-flex">
+              <UnderlineLink
+                variant="disabled"
+                surface={isDark ? "dark" : "light"}
+              >
+                Journal
               </UnderlineLink>
-              <UnderlineLink href="/about" variant={isDark ? "navLight" : "navDark"}>
-                About
+            </span>
+            <span data-coming-soon className="inline-flex">
+              <UnderlineLink
+                variant="disabled"
+                surface={isDark ? "dark" : "light"}
+              >
+                <span className="inline-flex items-center gap-1">
+                  Shop
+                  <ArrowUpRight className="text-brand-dark-gray" />
+                </span>
               </UnderlineLink>
-              <span data-coming-soon className="inline-flex">
-                <UnderlineLink
-                  variant="disabled"
-                  surface={isDark ? "dark" : "light"}
-                >
-                  Journal
-                </UnderlineLink>
-              </span>
-              <span data-coming-soon className="inline-flex">
-                <UnderlineLink
-                  variant="disabled"
-                  surface={isDark ? "dark" : "light"}
-                >
-                  <span className="inline-flex items-center gap-1">
-                    Shop
-                    <ArrowUpRight className="text-brand-dark-gray" />
-                  </span>
-                </UnderlineLink>
-              </span>
-            </nav>
+            </span>
+          </nav>
 
-            {/* Desktop CTA — light pill on dark routes so it reads against the bar */}
-            <div className="hidden md:block">
-              <Button href="/contact" variant={isDark ? "light" : "dark"}>
-                Contact
-              </Button>
-            </div>
+          {/* Desktop CTA — light pill on dark routes so it reads against the bar */}
+          <div className="hidden md:block">
+            <Button href="/contact" variant={isDark ? "light" : "dark"}>
+              Contact
+            </Button>
+          </div>
 
-            {/* Mobile menu trigger */}
-            <button
-              type="button"
-              aria-label="Open menu"
-              aria-expanded={menuOpen}
-              onClick={() => setMenuOpen(true)}
-              className={cn(
-                "md:hidden inline-flex h-10 w-10 items-center justify-center",
-                isDark ? "text-brand-white" : "text-semantic-text-primary",
-              )}
-            >
-              <HamburgerIcon />
-            </button>
-          </Container>
-        </div>
+          {/* Mobile menu trigger */}
+          <button
+            type="button"
+            aria-label="Open menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen(true)}
+            className={cn(
+              "md:hidden inline-flex h-10 w-10 items-center justify-center",
+              isDark ? "text-brand-white" : "text-semantic-text-primary",
+            )}
+          >
+            <HamburgerIcon />
+          </button>
+        </Container>
       </header>
 
       {/* MOBILE MENU — full-viewport overlay */}

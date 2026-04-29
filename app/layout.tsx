@@ -35,8 +35,13 @@ export const metadata: Metadata = {
 // Defaults to the light surface so the chrome reads as a continuation of
 // the navbar bg on every page; the dark hero of /about overrides this in
 // app/about/page.tsx so the tint matches that surface instead.
+//
+// `viewport-fit=cover` lets the page extend edge-to-edge under iOS
+// chrome — required for `env(safe-area-inset-top)` to expose the notch
+// height to the navbar's permanent cap (see components/layout/Navbar.tsx).
 export const viewport: Viewport = {
   themeColor: "#faf9f6",
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
