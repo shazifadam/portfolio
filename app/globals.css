@@ -32,6 +32,24 @@
     --radius-pill: 999px;
     --container-max: 96rem;
     --container-px: 104px;
+
+    /* iOS chrome cap height. Default is env(), which returns the safe-area
+       inset on notched iPhones (~44pt) and 0 on every other device. The
+       @supports override below floors this to 44px on iOS Safari
+       specifically — including non-notched iPhones where env() returns 0
+       — so the cap always covers the translucent status-bar region and
+       the page section behind it can never tint through. Other browsers
+       keep the env() default and end up with a 0-height (invisible) cap. */
+    --ios-cap-height: env(safe-area-inset-top, 0px);
+  }
+
+  /* `-webkit-touch-callout` is iOS Safari only; the @supports rule scopes
+     this min height exclusively to iOS so Android Chrome / Firefox / etc.
+     don't get a redundant 44px bar at the top. */
+  @supports (-webkit-touch-callout: none) {
+    :root {
+      --ios-cap-height: max(env(safe-area-inset-top, 0px), 44px);
+    }
   }
 
   html {
@@ -55,13 +73,13 @@
     color: var(--semantic-text-primary);
     font-family: var(--font-primary);
     overflow-x: hidden;
-    /* Reserves space for the position:fixed navbar (and the safe-area cap
-       above it on iOS notched devices) so first-section content doesn't
-       sit under the bar. 76px ≈ desktop navbar height (Container py-4 +
-       h-11 button). On mobile the actual bar is ~72px so there's a 4px
-       cushion. env(safe-area-inset-top) is 0 on non-notched devices,
-       ~44pt on notched iPhones with viewport-fit=cover. */
-    padding-top: calc(76px + env(safe-area-inset-top, 0px));
+    /* Reserves space for the position:fixed navbar plus the safe-area cap
+       above it. 76px ≈ desktop navbar height (Container py-4 + h-11
+       button). --ios-cap-height resolves to env(safe-area-inset-top) on
+       most devices and gets a 44px floor on iOS Safari (see :root above)
+       so iPhones consistently get the full cap reserved regardless of
+       whether they expose a non-zero safe-area inset. */
+    padding-top: calc(76px + var(--ios-cap-height));
   }
 
   /* Dark-surface routes (e.g. /about) — RouteBackground toggles

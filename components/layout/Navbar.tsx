@@ -165,7 +165,7 @@ export function Navbar() {
           "fixed inset-x-0 top-0 z-[51]",
           isDark ? "bg-semantic-surface-dark" : "bg-semantic-surface-primary",
         )}
-        style={{ height: "env(safe-area-inset-top, 0px)" }}
+        style={{ height: "var(--ios-cap-height)" }}
       />
 
       <header
@@ -179,7 +179,7 @@ export function Navbar() {
           isDark ? "bg-semantic-surface-dark" : "bg-semantic-surface-primary",
           hidden && !menuOpen && "-translate-y-[101%]",
         )}
-        style={{ top: "env(safe-area-inset-top, 0px)" }}
+        style={{ top: "var(--ios-cap-height)" }}
       >
         <Container className="flex items-center justify-between !py-4">
           {/* Logo placeholder — replace with the SVG mark when ready */}
