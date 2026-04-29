@@ -54,7 +54,7 @@ export default async function JournalPage() {
                     className="group flex flex-col gap-6"
                   >
                     {entry.coverImageUrl && (
-                      <div className="relative aspect-[600/489] w-full overflow-hidden rounded-sm bg-semantic-border-light">
+                      <div className="relative aspect-[10/7] w-full overflow-hidden rounded-sm bg-semantic-border-light">
                         <Image
                           src={entry.coverImageUrl}
                           alt=""
