@@ -50,7 +50,7 @@ export default async function JournalEntryPage({
 
   return (
     <article>
-      <section className="bg-semantic-surface-primary py-20 md:py-36">
+      <section className="bg-brand-white py-20 md:py-36">
         <Container>
           {/* Article column — 770px on desktop, full-width on mobile. */}
           <div className="mx-auto flex max-w-[770px] flex-col gap-10">
@@ -95,14 +95,18 @@ export default async function JournalEntryPage({
         </Container>
       </section>
 
-      {/* More from Offcuts — surfaces up to two other entries on a separate
-          light-bg section. Hidden when there aren't any other entries. */}
+      {/* More from Offcuts — surfaces up to two other entries on its own
+          primary-bg section so the colour shift signals "you're done with
+          the article, here's more". Hidden when there aren't any other
+          entries. Heading and grid are left-aligned by default; the
+          wrapper drops its mobile max-width on desktop so the grid spans
+          the full container. */}
       {moreEntries.length > 0 && (
-        <section className="bg-semantic-surface-primary pb-20 md:pb-36">
+        <section className="bg-semantic-surface-primary py-20 md:py-36">
           <Container>
-            <div className="mx-auto flex max-w-[520px] flex-col gap-10 md:max-w-none md:items-center">
+            <div className="mx-auto flex max-w-[520px] flex-col gap-10 md:max-w-none">
               <BlurReveal>
-                <h2 className="text-h3 text-semantic-text-primary">
+                <h2 className="text-h2 text-semantic-text-primary">
                   More from Offcuts
                 </h2>
               </BlurReveal>
