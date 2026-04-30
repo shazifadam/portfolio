@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Container } from "./Container";
 import { Button } from "@/components/ui/Button";
 import { UnderlineLink } from "@/components/ui/UnderlineLink";
@@ -9,12 +10,21 @@ const SOCIALS: { label: string; href: string }[] = [
   { label: "X", href: "https://x.com/shazifadam" },
 ];
 
-// Two-circle ornament — placeholder until Shazif drops the real images in.
-// 76×76 each, no gap, side by side. Colours sampled from Figma node 182:3210.
+// Two-circle ornament — 76×76 each, no gap, side by side. The left
+// circle is now Shazif's portrait crop (1-1 new copy.jpg) clipped to a
+// circle; the right is the brand-lightest swatch from Figma node 182:3210.
 function CircleOrnament({ className }: { className?: string }) {
   return (
     <div aria-hidden className={`flex shrink-0 ${className ?? ""}`}>
-      <div className="h-[76px] w-[76px] rounded-full bg-brand-dark-gray" />
+      <div className="relative h-[76px] w-[76px] overflow-hidden rounded-full bg-brand-dark-gray">
+        <Image
+          src="/images/1-1%20new%20copy.jpg"
+          alt=""
+          fill
+          sizes="76px"
+          className="object-cover"
+        />
+      </div>
       <div className="h-[76px] w-[76px] rounded-full bg-brand-lightest" />
     </div>
   );
