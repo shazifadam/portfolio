@@ -273,12 +273,14 @@
     text-transform: uppercase;
   }
 
-  /* Body paragraphs — STK Bureau Serif Light, the "literary" body voice */
+  /* Body paragraphs — STK Bureau Serif Light, the "literary" body voice.
+     Desktop sits at 20.3 / 30.4 for a slightly more present read; mobile
+     drops back down (see the @media block at the bottom of this file). */
   .text-journal-body {
     font-family: var(--font-display);
     font-weight: 300;
-    font-size: 18px;
-    line-height: 27px;
+    font-size: 20.3px;
+    line-height: 30.4px;
     letter-spacing: -0.28px;
   }
 
@@ -319,6 +321,10 @@
     }
     .text-label {
       font-size: 15.75px;
+    }
+    .text-journal-body {
+      font-size: 18px;
+      line-height: 27px;
     }
   }
 }

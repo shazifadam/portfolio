@@ -52,26 +52,16 @@ export default async function JournalEntryPage({
     <article>
       <section className="bg-semantic-surface-primary py-20 md:py-36">
         <Container>
-          {/* Article column — narrow on desktop (520px) for a tight prose
-              measure, full-width on mobile. */}
-          <div className="mx-auto flex max-w-[520px] flex-col gap-10">
-            <BlurReveal>
-              <Link
-                href="/journal"
-                className="text-p3 text-semantic-text-secondary hover:text-brand-black transition-colors inline-flex items-center gap-2"
-              >
-                <BackArrowIcon />
-                Back to Journal
-              </Link>
-            </BlurReveal>
-
-            {/* Header: title → author block (headshot + byline + date).
-                Both blocks centred — title text-centred, author container
-                centred via mx-auto so the headshot + byline form a tight
-                centred unit beneath the title. */}
+          {/* Article column — 770px on desktop, full-width on mobile. */}
+          <div className="mx-auto flex max-w-[770px] flex-col gap-10">
+            {/* Header: title → author block. Title and author row are both
+                centred horizontally; byline + date stay left-aligned within
+                the row so the two text lines align flush against the
+                headshot's right edge. `text-balance` evens out the
+                multi-line title for a tighter visual block. */}
             <BlurReveal>
               <div className="flex flex-col items-center gap-6 text-center">
-                <h1 className="text-h2 text-semantic-text-primary">
+                <h1 className="text-h2 text-balance text-semantic-text-primary">
                   {entry.title}
                 </h1>
                 <div className="flex items-center gap-3">
@@ -85,12 +75,12 @@ export default async function JournalEntryPage({
                     />
                   </div>
                   <div className="flex flex-col items-start text-left">
-                    <span className="text-p1 text-semantic-text-primary">
+                    <span className="text-p2 text-semantic-text-primary">
                       by Shazif Adam
                     </span>
                     {entry.publishedAt && (
                       <span className="text-journal-meta text-semantic-text-secondary">
-                        Published on {formatJournalDate(entry.publishedAt)}
+                        On {formatJournalDate(entry.publishedAt)}
                       </span>
                     )}
                   </div>
@@ -165,25 +155,3 @@ export default async function JournalEntryPage({
   );
 }
 
-// Inline 24×24 left arrow for the breadcrumb — matches the case-study
-// detail page's icon. Inline to avoid a one-off asset.
-function BackArrowIcon() {
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M19 12H5M5 12L11 6M5 12L11 18"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
