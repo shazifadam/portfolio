@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { geist, inter, stkBureauSerif } from "@/lib/fonts";
 import { Navbar } from "@/components/layout/Navbar";
@@ -7,8 +8,6 @@ import { Footer } from "@/components/layout/Footer";
 import { RouteBackground } from "@/components/layout/RouteBackground";
 import { PageTransition } from "@/components/motion/PageTransition";
 import { ComingSoonCursor } from "@/components/ui/ComingSoonCursor";
-
-const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://shazifadam.com"),
@@ -53,25 +52,27 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable} ${inter.variable} ${stkBureauSerif.variable}`}>
       <body className="min-h-screen bg-semantic-surface-primary text-semantic-text-primary">
+        {/* Skip-to-content link — invisible until a keyboard user tabs to
+            it; lets them jump past the navbar. Standard a11y pattern. */}
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-sm focus:bg-brand-black focus:px-4 focus:py-2 focus:text-brand-white focus:text-cta"
+        >
+          Skip to content
+        </a>
         <RouteBackground />
         <Navbar />
         <PageTransition>
-          <main>{children}</main>
+          <main id="main">{children}</main>
         </PageTransition>
         <Footer />
         <ComingSoonCursor />
-        {/* Plausible analytics — loads only when NEXT_PUBLIC_PLAUSIBLE_DOMAIN
-            is set, so dev / preview without the env var don't fire pageviews
-            into the production site. The default `script.js` auto-tracks
-            App Router push-state navigations as pageviews. */}
-        {plausibleDomain && (
-          <Script
-            defer
-            strategy="afterInteractive"
-            data-domain={plausibleDomain}
-            src="https://plausible.io/js/script.js"
-          />
-        )}
+        {/* Vercel Analytics + Speed Insights — both free tier, cookieless,
+            privacy-friendly. Auto-track App Router push-state navigations.
+            No env var needed; the @vercel/analytics package ships a no-op
+            in dev so only Production deploys send beacons. */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

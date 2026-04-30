@@ -108,6 +108,17 @@
       scroll-behavior: auto !important;
     }
   }
+
+  /* Keyboard focus ring — applies to all interactive elements when
+     navigated via keyboard (focus-visible), but stays invisible on click
+     so mouse/touch users don't see persistent rings. brand-accent-orange
+     reads with strong contrast on both light and dark surfaces, so the
+     same colour works site-wide without a per-section override. */
+  *:focus-visible {
+    outline: 2px solid var(--brand-accent-orange);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
 }
 
 @layer components {

@@ -179,13 +179,25 @@ export function Navbar() {
           />
 
           <nav className="hidden items-center gap-10 md:flex">
-            <UnderlineLink href="/work" variant={isDark ? "navLight" : "navDark"}>
+            <UnderlineLink
+              href="/work"
+              variant={isDark ? "navLight" : "navDark"}
+              current={pathname?.startsWith("/work")}
+            >
               Work
             </UnderlineLink>
-            <UnderlineLink href="/about" variant={isDark ? "navLight" : "navDark"}>
+            <UnderlineLink
+              href="/about"
+              variant={isDark ? "navLight" : "navDark"}
+              current={pathname?.startsWith("/about")}
+            >
               About
             </UnderlineLink>
-            <UnderlineLink href="/journal" variant={isDark ? "navLight" : "navDark"}>
+            <UnderlineLink
+              href="/journal"
+              variant={isDark ? "navLight" : "navDark"}
+              current={pathname?.startsWith("/journal")}
+            >
               Journal
             </UnderlineLink>
             <span data-coming-soon className="inline-flex">

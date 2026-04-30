@@ -35,9 +35,9 @@ export default function PrivacyPage() {
           delivered to my inbox by email and stored only there.
         </p>
         <p>
-          <strong>Aggregate analytics.</strong> The Site uses Plausible
-          Analytics to count pageviews, referrers, country, and device type in
-          aggregate. Plausible does not use cookies, does not collect personal
+          <strong>Aggregate analytics.</strong> The Site uses Vercel Web
+          Analytics to count pageviews, referrers, country, and device type
+          in aggregate. The service is cookieless, does not collect personal
           data, and does not track you across sites.
         </p>
       </LegalSection>
@@ -69,14 +69,14 @@ export default function PrivacyPage() {
             </a>
           </li>
           <li>
-            <strong>Plausible Analytics</strong> — privacy-friendly,
+            <strong>Vercel Web Analytics</strong> — privacy-friendly,
             cookieless visitor analytics.{" "}
             <a
-              href="https://plausible.io/privacy"
+              href="https://vercel.com/legal/privacy-policy"
               target="_blank"
               rel="noreferrer noopener"
             >
-              Plausible privacy policy
+              Vercel privacy policy
             </a>
           </li>
         </ul>

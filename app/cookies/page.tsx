@@ -38,11 +38,11 @@ export default function CookiesPage() {
           you should expect <strong>no analytics, advertising, or tracking
           cookies</strong>. Analytics is handled by{" "}
           <a
-            href="https://plausible.io/data-policy"
+            href="https://vercel.com/docs/analytics/privacy-policy"
             target="_blank"
             rel="noreferrer noopener"
           >
-            Plausible
+            Vercel Web Analytics
           </a>
           , which is cookieless by design.
         </p>

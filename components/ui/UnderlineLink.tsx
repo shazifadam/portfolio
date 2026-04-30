@@ -55,6 +55,8 @@ type Props = {
   variant?: Variant;
   /** Currently only affects the `disabled` variant — see RULE_DEFAULT comment. */
   surface?: Surface;
+  /** Set when this link points at the current page; renders aria-current="page". */
+  current?: boolean;
   className?: string;
   children: ReactNode;
 };
@@ -103,6 +105,7 @@ export function UnderlineLink({
   external,
   variant = "navDark",
   surface = "light",
+  current,
   className,
   children,
 }: Props) {
@@ -138,7 +141,11 @@ export function UnderlineLink({
   }
 
   return (
-    <Link href={href} className={cn("group inline-flex", className)}>
+    <Link
+      href={href}
+      aria-current={current ? "page" : undefined}
+      className={cn("group inline-flex", className)}
+    >
       <Inner variant={variant} surface={surface}>
         {children}
       </Inner>
