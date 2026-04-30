@@ -27,10 +27,35 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const entry = await getJournalEntry(params.slug);
-  if (!entry) return { title: "Journal" };
+  if (!entry) return { title: "The Offcuts" };
+
+  // OG description = title — Shazif Adam (per spec). Cover image is the
+  // article's own coverImageUrl (already a 2400px Sanity URL from
+  // getJournalEntry); falls back to the journal listing's static
+  // /og/the-offcuts.svg when no cover is set.
+  const description = `${entry.title} — Shazif Adam`;
+  const ogImage = entry.coverImageUrl ?? "/og/the-offcuts.svg";
+
   return {
     title: entry.title,
-    description: entry.summary,
+    description,
+    openGraph: {
+      title: `${entry.title} — Shazif Adam`,
+      description,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: `${entry.title} — Shazif Adam`,
+        },
+      ],
+    },
+    twitter: {
+      title: `${entry.title} — Shazif Adam`,
+      description,
+      images: [ogImage],
+    },
   };
 }
 

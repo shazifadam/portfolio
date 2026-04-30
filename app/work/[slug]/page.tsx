@@ -71,9 +71,41 @@ export async function generateMetadata({
       slug: params.slug,
     });
     if (!doc) return { title: "Case Study" };
+
+    // OG description follows Shazif's spec — title-with-byline, identical
+    // for every shared case-study link, distinct from the body description
+    // search engines crawl. Cover image (1200×630 crop) is generated via
+    // Sanity's URL builder; if there's no cover, fall back to the default
+    // /og/case-studies.svg from the /work listing.
+    const description = `${doc.titleStart} — Shazif Adam`;
+    const ogImage = doc.coverImage
+      ? urlFor(doc.coverImage as SanityImageSource)
+          .width(1200)
+          .height(630)
+          .quality(85)
+          .url()
+      : "/og/case-studies.svg";
+
     return {
       title: doc.titleStart,
-      description: doc.titleEnd,
+      description,
+      openGraph: {
+        title: `${doc.titleStart} — Shazif Adam`,
+        description,
+        images: [
+          {
+            url: ogImage,
+            width: 1200,
+            height: 630,
+            alt: `${doc.titleStart} — Shazif Adam`,
+          },
+        ],
+      },
+      twitter: {
+        title: `${doc.titleStart} — Shazif Adam`,
+        description,
+        images: [ogImage],
+      },
     };
   } catch {
     return { title: "Case Study" };

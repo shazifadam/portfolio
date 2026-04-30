@@ -13,9 +13,24 @@ import {
 } from "@/lib/journal";
 
 export const metadata: Metadata = {
-  title: "Journal",
+  title: "The Offcuts",
   description:
     "Notes, observations, and short essays from the studio — design process, illustration, tools, and short takes.",
+  openGraph: {
+    title: "The Offcuts — Shazif Adam",
+    images: [
+      {
+        url: "/og/the-offcuts.svg",
+        width: 1200,
+        height: 630,
+        alt: "The Offcuts — Shazif Adam",
+      },
+    ],
+  },
+  twitter: {
+    title: "The Offcuts — Shazif Adam",
+    images: ["/og/the-offcuts.svg"],
+  },
 };
 
 export const revalidate = 60;

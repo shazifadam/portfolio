@@ -24,12 +24,21 @@ export const metadata: Metadata = {
     url: "https://shazifadam.com",
     siteName: "Shazif Adam",
     type: "website",
+    images: [
+      {
+        url: "/og/website.svg",
+        width: 1200,
+        height: 630,
+        alt: "Shazif Adam — Designer who builds. Illustrates the rest.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Shazif Adam",
     description:
       "Product and brand designer based in Malé, Maldives. Designing and building for international clients.",
+    images: ["/og/website.svg"],
   },
 };
 

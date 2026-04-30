@@ -7,9 +7,24 @@ import { WorkGrid } from "@/components/case-study/WorkGrid";
 import { getAllCaseStudies, getHomeFeatured } from "@/lib/case-studies";
 
 export const metadata: Metadata = {
-  title: "Work",
+  title: "Case Studies",
   description:
     "Selected case studies — product design, brand identity, and web development for international clients.",
+  openGraph: {
+    title: "Case Studies — Shazif Adam",
+    images: [
+      {
+        url: "/og/case-studies.svg",
+        width: 1200,
+        height: 630,
+        alt: "Case Studies — Shazif Adam",
+      },
+    ],
+  },
+  twitter: {
+    title: "Case Studies — Shazif Adam",
+    images: ["/og/case-studies.svg"],
+  },
 };
 
 export default async function WorkPage() {
