@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/Button";
 import { UnderlineLink } from "@/components/ui/UnderlineLink";
 
 const SOCIALS: { label: string; href: string }[] = [
-  { label: "Instagram", href: "https://instagram.com/" },
-  { label: "Threads", href: "https://www.threads.net/" },
-  { label: "LinkedIn", href: "https://linkedin.com/" },
-  { label: "X", href: "https://x.com/" },
+  { label: "Instagram", href: "https://www.instagram.com/shazifadam/" },
+  { label: "Threads", href: "https://www.threads.com/@shazifadam" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/shazifadam/" },
+  { label: "X", href: "https://x.com/shazifadam" },
 ];
 
 // Two-circle ornament — placeholder until Shazif drops the real images in.
