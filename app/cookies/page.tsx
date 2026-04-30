@@ -36,63 +36,16 @@ export default function CookiesPage() {
         <p>
           shazifadam.com is designed to be cookie-light. As a public visitor
           you should expect <strong>no analytics, advertising, or tracking
-          cookies</strong>.
-        </p>
-        <p>
-          <strong>Necessary.</strong> The embedded Sanity Studio at{" "}
-          <code>/studio</code> uses authentication cookies so I can sign in
-          and edit content. These are only relevant if you&apos;re an admin
-          (currently: just me). Public pages of the Site don&apos;t set them.
-        </p>
-        <p>
-          <strong>Analytics.</strong> None. The Site uses{" "}
+          cookies</strong>. Analytics is handled by{" "}
           <a
             href="https://plausible.io/data-policy"
             target="_blank"
             rel="noreferrer noopener"
           >
-            Plausible Analytics
+            Plausible
           </a>
-          , which is cookieless by design — it counts pageviews and aggregate
-          metrics without storing anything on your device.
+          , which is cookieless by design.
         </p>
-        <p>
-          <strong>Advertising / marketing.</strong> None. The Site doesn&apos;t
-          run ads or remarketing pixels.
-        </p>
-      </LegalSection>
-
-      <LegalSection heading="Third-party cookies">
-        <p>
-          A few third-party services may set their own cookies in narrow
-          circumstances:
-        </p>
-        <ul>
-          <li>
-            <strong>Vercel</strong> — the Site&apos;s host may set short-lived
-            cookies for security and performance routing. See the{" "}
-            <a
-              href="https://vercel.com/legal/cookie-policy"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              Vercel cookie policy
-            </a>
-            .
-          </li>
-          <li>
-            <strong>Sanity</strong> — admin authentication only, on{" "}
-            <code>/studio</code>. See the{" "}
-            <a
-              href="https://www.sanity.io/legal/privacy"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              Sanity privacy policy
-            </a>
-            .
-          </li>
-        </ul>
       </LegalSection>
 
       <LegalSection heading="How to manage cookies">
@@ -128,9 +81,7 @@ export default function CookiesPage() {
           <br />
           Malé, Maldives
           <br />
-          <a href="mailto:hussain.shaxif002@gmail.com">
-            hussain.shaxif002@gmail.com
-          </a>
+          <a href="mailto:shazifadam@gmail.com">shazifadam@gmail.com</a>
         </p>
       </LegalSection>
     </LegalPage>
