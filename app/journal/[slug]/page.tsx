@@ -6,6 +6,7 @@ import { Container } from "@/components/layout/Container";
 import { BlurReveal } from "@/components/motion/BlurReveal";
 import { CardReveal } from "@/components/motion/CardReveal";
 import { JournalBody } from "@/components/journal/JournalBody";
+import { JournalShare } from "@/components/journal/JournalShare";
 import {
   formatJournalDate,
   getAllJournalSlugs,
@@ -90,6 +91,12 @@ export default async function JournalEntryPage({
 
             <BlurReveal>
               <JournalBody value={entry.body} />
+            </BlurReveal>
+
+            {/* Share row — sits at the foot of the article column,
+                centred under the body just like the title above. */}
+            <BlurReveal>
+              <JournalShare slug={entry.slug} title={entry.title} />
             </BlurReveal>
           </div>
         </Container>
