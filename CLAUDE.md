@@ -521,7 +521,7 @@ Article page (`/journal/[slug]`) uses a **dedicated reader-oriented type stack**
 
 - `.text-journal-meta` — Geist SemiBold 15.75 / 18.9 / +1.125, uppercase. Used for "PUBLISHED ON …" line + listing-card date.
 - `.text-journal-body` — STK Bureau Serif Light 18 / 27 / -0.28. The literary serif voice for paragraph body.
-- `.text-journal-sub` — Geist Medium 31.5 / 27 / -0.28. In-article subheadings.
+- `.text-journal-sub` — Geist Medium 31.5 / 42.525 / -0.28. In-article subheadings.
 
 Header order: breadcrumb → "PUBLISHED ON {date}" → H2 title → "by Shazif Adam" (P1) → optional cover → body. Article column constrained to `max-w-[720px]` for comfortable measure.
 
