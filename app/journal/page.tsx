@@ -52,18 +52,22 @@ export default async function JournalPage() {
             </BlurReveal>
           ) : (
             <>
-              {/* Latest 2 — 2-col on desktop, 1-col on mobile. CardReveal's
-                  columnIndex applies the right-first row stagger only on
-                  desktop. */}
-              <div className="grid grid-cols-1 gap-x-10 gap-y-16 md:grid-cols-2 md:gap-y-20">
-                {featuredEntries.map((entry, i) => (
-                  <CardReveal
-                    key={entry._id}
-                    columnIndex={(i % 2) as 0 | 1}
-                  >
-                    <JournalCard entry={entry} />
+              {/* Latest 2 — asymmetric big-small row on desktop, stacked
+                  on mobile. Same 48.7% / 43% widths as the home and /work
+                  grids so the wider left card holds a visibly larger image
+                  while both share the same 10/7 aspect. CardReveal's
+                  columnIndex applies the right-first reveal on desktop. */}
+              <div className="flex flex-col gap-16 md:flex-row md:items-start md:justify-between md:gap-0">
+                {featuredEntries[0] && (
+                  <CardReveal columnIndex={0} className="w-full md:w-[48.7%]">
+                    <JournalCard entry={featuredEntries[0]} />
                   </CardReveal>
-                ))}
+                )}
+                {featuredEntries[1] && (
+                  <CardReveal columnIndex={1} className="w-full md:w-[43%]">
+                    <JournalCard entry={featuredEntries[1]} />
+                  </CardReveal>
+                )}
               </div>
 
               {/* Rest — 3-col on desktop, 1-col on mobile. Each card uses
