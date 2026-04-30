@@ -60,7 +60,7 @@ export default async function JournalEntryPage({
                 headshot's right edge. `text-balance` evens out the
                 multi-line title for a tighter visual block. */}
             <BlurReveal>
-              <div className="flex flex-col items-center gap-6 text-center">
+              <div className="flex flex-col items-center gap-10 text-center">
                 <h1 className="text-h2 text-balance text-semantic-text-primary">
                   {entry.title}
                 </h1>
