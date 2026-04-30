@@ -18,7 +18,7 @@ function CircleOrnament({ className }: { className?: string }) {
     <div aria-hidden className={`flex shrink-0 ${className ?? ""}`}>
       <div className="relative h-[76px] w-[76px] overflow-hidden rounded-full bg-brand-dark-gray">
         <Image
-          src="/images/1-1%20new%20copy.jpg"
+          src="/images/head-pp-color.jpg"
           alt=""
           fill
           sizes="76px"
