@@ -519,7 +519,7 @@ Live. Listing page is a 2-column grid on desktop (1-col mobile) of card-style en
 
 Article page (`/journal/[slug]`) uses a **dedicated reader-oriented type stack** that intentionally diverges from the rest of the site (CLAUDE.md §3.2-J):
 
-- `.text-journal-meta` — Geist SemiBold 15.75 / 18.9 / +1.125, uppercase. Used for "PUBLISHED ON …" line + listing-card date.
+- `.text-journal-meta` — Geist SemiBold 12.6 / 15.12 / +1.125, uppercase. Used for "PUBLISHED ON …" line + listing-card date.
 - `.text-journal-body` — STK Bureau Serif Light 18 / 27 / -0.28. The literary serif voice for paragraph body.
 - `.text-journal-sub` — Geist Medium 31.5 / 42.525 / -0.28. In-article subheadings.
 
