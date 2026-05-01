@@ -44,10 +44,12 @@ export default async function WorkPage() {
           <div className="flex flex-col gap-12">
             <BlurReveal>
               <div className="flex flex-col gap-8">
-                <SectionLabel>Case Studies</SectionLabel>
-                <h1 className="text-h1 max-w-4xl text-semantic-text-primary">
-                  While design is more than meets the eye, here&apos;s the visible part.
-                </h1>
+                <div className="flex flex-col gap-2">
+                  <SectionLabel>Case Studies</SectionLabel>
+                  <h1 className="text-h1 max-w-4xl text-semantic-text-primary">
+                    While design is more than meets the eye, here&apos;s the visible part.
+                  </h1>
+                </div>
                 <HorizontalRule />
               </div>
             </BlurReveal>

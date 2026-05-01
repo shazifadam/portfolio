@@ -83,6 +83,10 @@ export function Navbar() {
   // Hide the navbar when the user scrolls down; reveal it when they scroll up.
   // Always reveal at the top of the page.
   const [hidden, setHidden] = useState(false);
+  // Transparent bg only while the page is at the very top (within NEAR_TOP).
+  // Once the user scrolls past that zone the solid surface colour kicks in —
+  // including when the navbar slides back in on scroll-up.
+  const [atTop, setAtTop] = useState(true);
   const lastScrollY = useRef(0);
   const pathname = usePathname();
   const isDark = isDarkRoute(pathname);
@@ -96,10 +100,17 @@ export function Navbar() {
     // accumulator so a brief jitter doesn't trigger the wrong state.
     //   HIDE_AFTER_DOWN: scroll-down distance before the navbar hides
     //   SHOW_AFTER_UP:   scroll-up distance before the navbar reveals
-    //   NEAR_TOP:        always-visible zone at the top of the page
+    //   NEAR_TOP:        always-visible zone at the top of the page; also the
+    //                    threshold below which the navbar background is transparent
     const HIDE_AFTER_DOWN = 100;
     const SHOW_AFTER_UP = 30;
     const NEAR_TOP = 16;
+
+    // Sync with the real scroll position on mount so that browser scroll
+    // restoration (back/forward navigation) sets the correct initial state.
+    const initialY = window.scrollY;
+    lastScrollY.current = initialY;
+    setAtTop(initialY < NEAR_TOP);
 
     let downAccum = 0;
     let upAccum = 0;
@@ -112,16 +123,20 @@ export function Navbar() {
 
         if (y < NEAR_TOP) {
           setHidden(false);
+          setAtTop(true);
           downAccum = 0;
           upAccum = 0;
-        } else if (delta > 0) {
-          downAccum += delta;
-          upAccum = 0;
-          if (downAccum >= HIDE_AFTER_DOWN) setHidden(true);
-        } else if (delta < 0) {
-          upAccum += -delta;
-          downAccum = 0;
-          if (upAccum >= SHOW_AFTER_UP) setHidden(false);
+        } else {
+          setAtTop(false);
+          if (delta > 0) {
+            downAccum += delta;
+            upAccum = 0;
+            if (downAccum >= HIDE_AFTER_DOWN) setHidden(true);
+          } else if (delta < 0) {
+            upAccum += -delta;
+            downAccum = 0;
+            if (upAccum >= SHOW_AFTER_UP) setHidden(false);
+          }
         }
 
         lastScrollY.current = y;
@@ -155,15 +170,21 @@ export function Navbar() {
           // rounding still clears the viewport top.
           //
           // `backface-visibility: hidden` is kept as a render hint for the
-          // 600ms slide. Earlier rounds added `transform-gpu`,
-          // `will-change-transform`, and `[isolation:isolate]` to try to
-          // fix an iOS Safari bleed-through issue, but those three were
-          // themselves the cause — they created a stacking context that
-          // detached the navbar from the parent paint and let the page
-          // section show through during scroll. Removing them restores
-          // correct iOS rendering.
-          "sticky top-0 z-50 w-full transition-transform duration-[600ms] ease-smooth [backface-visibility:hidden]",
-          isDark ? "bg-semantic-surface-dark" : "bg-semantic-surface-primary",
+          // 600ms slide. `transform-gpu`, `will-change-transform`, and
+          // `[isolation:isolate]` must NOT be added — they caused an iOS Safari
+          // bleed-through bug by creating a detached stacking context.
+          //
+          // Two transitions run simultaneously via the arbitrary shorthand:
+          //   background-color — 300ms ease; fades in the solid surface when
+          //     the user scrolls past NEAR_TOP, and back to transparent on return.
+          //   transform — 600ms ease-smooth; the existing hide/show slide.
+          "sticky top-0 z-50 w-full [backface-visibility:hidden]",
+          "[transition:background-color_300ms_ease,transform_600ms_cubic-bezier(0.22,1,0.36,1)]",
+          atTop && !menuOpen
+            ? "bg-transparent"
+            : isDark
+              ? "bg-semantic-surface-dark"
+              : "bg-semantic-surface-primary",
           hidden && !menuOpen && "-translate-y-[101%]",
         )}
       >

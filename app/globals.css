@@ -73,6 +73,15 @@
     background-color: var(--semantic-surface-bg-dark);
   }
 
+  /* White-surface routes (e.g. /journal/[slug]) — RouteBackground toggles
+     `.white-surface` so the body bg behind the transparent navbar matches
+     the section's bg-brand-white (#ffffff). Without this the default body
+     bg (#faf9f6) shows through the transparent navbar as a faint band. */
+  html.white-surface,
+  html.white-surface body {
+    background-color: var(--brand-white);
+  }
+
   /* Grain overlay — global, non-interactive. baseFrequency 1.2 gives a finer
      pixel-level grain (vs the broader splotches at 0.9), opacity 0.08 keeps it
      visible without dominating the page surface. The grain reads stronger

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import { Container } from "@/components/layout/Container";
@@ -145,13 +144,6 @@ export default async function CaseStudyPage({
             {/* Title block */}
             <BlurReveal>
               <div className="flex flex-col gap-4">
-                <Link
-                  href="/work"
-                  className="text-p3 text-semantic-text-secondary hover:text-brand-black transition-colors inline-flex items-center gap-2"
-                >
-                  <BackArrowIcon />
-                  Back to Case Studies
-                </Link>
                 <h1 className="text-h1 text-brand-black">
                   <span
                     style={
@@ -264,28 +256,5 @@ export default async function CaseStudyPage({
         </section>
       )}
     </article>
-  );
-}
-
-// Small inline 24×24 left arrow used for the breadcrumb. Inline to avoid
-// adding a new svg asset for one icon.
-function BackArrowIcon() {
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M19 12H5M5 12L11 6M5 12L11 18"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }
