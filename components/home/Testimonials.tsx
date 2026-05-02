@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { HorizontalRule } from "@/components/ui/HorizontalRule";
 import { BlurReveal } from "@/components/motion/BlurReveal";
@@ -13,6 +14,8 @@ type Testimonial = {
   role: string;
   /** CSS colour value — token preferred, e.g. var(--brand-accent-orange). */
   avatarColor: string;
+  /** Optional photo — when set, renders instead of the colour swatch. */
+  avatarImage?: string;
 };
 
 // 3×2 grid (6 cards) per Figma 182:3133 (light) / 184:6573 (dark).
@@ -24,10 +27,12 @@ const PLACEHOLDER_QUOTE =
 
 const TESTIMONIALS: Testimonial[] = [
   {
-    quote: PLACEHOLDER_QUOTE,
-    name: "Alexander Becher",
-    role: "CEO — Unable.agency",
+    quote:
+      "He totally understood what we needed. The final result exceeded our expectations and has been received really well. Excellent support throughout the process and would definitely work with him again.",
+    name: "Aliyya",
+    role: "Co-founder of Atmos Mundi",
     avatarColor: "var(--brand-gray)",
+    avatarImage: "/images/testimonials/aliyya.jpeg",
   },
   {
     quote: PLACEHOLDER_QUOTE,
@@ -61,20 +66,22 @@ const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-function Avatar({ color }: { color: string }) {
+function Avatar({ color, image }: { color: string; image?: string }) {
   // 40px square inside a 42.769px bounding box, rotated -4.12deg per Figma
   // 182:3142. The outer flex centres it so the rotation pivots around the
   // visual centre and the row's items-center alignment doesn't shift.
   return (
     <div className="flex size-[42.769px] items-center justify-center">
       <div
-        aria-hidden
-        className="size-10 rounded-sm"
-        style={{
-          transform: "rotate(-4.12deg)",
-          backgroundColor: color,
-        }}
-      />
+        className="relative size-10 overflow-hidden rounded-sm"
+        style={{ transform: "rotate(-4.12deg)" }}
+      >
+        {image ? (
+          <Image src={image} alt="" fill sizes="40px" className="object-cover" />
+        ) : (
+          <div aria-hidden className="size-full" style={{ backgroundColor: color }} />
+        )}
+      </div>
     </div>
   );
 }
@@ -86,6 +93,7 @@ function TestimonialCard({
   name,
   role,
   avatarColor,
+  avatarImage,
   tone,
 }: Testimonial & { tone: Tone }) {
   // Quote text recolours per surface so it stays readable: dark text on the
@@ -99,7 +107,7 @@ function TestimonialCard({
     <div className="flex w-full flex-col items-start gap-[17px]">
       <p className={cn("text-body-xs", quoteColor)}>{quote}</p>
       <div className="flex items-center gap-[10px]">
-        <Avatar color={avatarColor} />
+        <Avatar color={avatarColor} image={avatarImage} />
         <div className="text-p3 text-semantic-text-secondary leading-[23.625px]">
           <p>{name}</p>
           <p>{role}</p>

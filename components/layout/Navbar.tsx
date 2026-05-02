@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import { Container } from "./Container";
 import { Button } from "@/components/ui/Button";
 import { UnderlineLink } from "@/components/ui/UnderlineLink";
-import { ComingSoonBadge } from "@/components/ui/ComingSoonBadge";
 import { cn } from "@/lib/utils";
 import { isDarkRoute } from "@/lib/routes";
 
@@ -221,17 +220,16 @@ export function Navbar() {
             >
               Journal
             </UnderlineLink>
-            <span data-coming-soon className="inline-flex">
-              <UnderlineLink
-                variant="disabled"
-                surface={isDark ? "dark" : "light"}
-              >
-                <span className="inline-flex items-center gap-1">
-                  Shop
-                  <ArrowUpRight className="text-brand-dark-gray" />
-                </span>
-              </UnderlineLink>
-            </span>
+            <UnderlineLink
+              href="https://shop.fineprintmv.com/artist/SA"
+              external
+              variant={isDark ? "navLight" : "navDark"}
+            >
+              <span className="inline-flex items-center gap-1">
+                Shop
+                <ArrowUpRight />
+              </span>
+            </UnderlineLink>
           </nav>
 
           {/* Desktop CTA — light pill on dark routes so it reads against the bar */}
@@ -352,16 +350,20 @@ function MobileMenuBody({ onClose }: { onClose: () => void }) {
           </Link>
         </motion.li>
         <motion.li
-          className="flex items-center gap-2"
           initial={ITEM_HIDDEN}
           animate={ITEM_VISIBLE}
           transition={{ duration: ITEM_DURATION, ease: ITEM_EASE, delay: 0.3 }}
         >
-          <span aria-disabled className="inline-flex items-center text-h3 text-brand-white opacity-90">
+          <a
+            href="https://shop.fineprintmv.com/artist/SA"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+            className="inline-flex items-center text-h3 text-brand-white"
+          >
             Shop
             <ArrowUpRight className="ml-1 text-brand-white" />
-          </span>
-          <ComingSoonBadge tone="onDark" />
+          </a>
         </motion.li>
       </ul>
 
