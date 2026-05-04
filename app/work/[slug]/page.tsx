@@ -148,12 +148,12 @@ export default async function CaseStudyPage({
           <div className="flex flex-col gap-10">
             {/* Title / tags / meta
                 Mobile:  stacked — title → tags → meta panel (gap-10)
-                Desktop: two columns, gap-[54px]
+                Desktop: two columns, gap-[80px]
                   Left  (flex-1 min-w-0) — title + tags; min-w-0 lets the
                          H1 wrap at the flex boundary instead of overflowing.
-                  Right (shrink-0)       — meta panel at its natural width. */}
+                  Right (shrink-0 max-w-[460px]) — meta panel capped at 460px. */}
             <BlurReveal>
-              <div className="flex flex-col gap-10 md:flex-row md:items-start md:gap-[54px]">
+              <div className="flex flex-col gap-10 md:flex-row md:items-start md:gap-[80px]">
                 {/* Left col — title + tags */}
                 <div className="flex min-w-0 flex-1 flex-col gap-4">
                   <h1 className="text-h1 text-brand-black">
@@ -185,7 +185,7 @@ export default async function CaseStudyPage({
 
                 {/* Right col — meta panel; hidden when no fields are set */}
                 {(doc.myRole || doc.team || doc.scope || doc.deliveredIn) && (
-                  <div className="shrink-0">
+                  <div className="shrink-0 md:w-[460px]">
                     <CaseStudyMeta
                       myRole={doc.myRole}
                       team={doc.team}
