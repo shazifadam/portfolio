@@ -53,6 +53,32 @@ export default defineType({
       options: { hotspot: true },
     }),
 
+    // ── PROJECT META (role, team, scope, timeline) ────────────────────
+    defineField({
+      name: "myRole",
+      title: "My Role",
+      description: 'e.g. "Lead UI/UX Designer"',
+      type: "string",
+    }),
+    defineField({
+      name: "team",
+      title: "Team",
+      description: 'e.g. "Encrea Studio"',
+      type: "string",
+    }),
+    defineField({
+      name: "scope",
+      title: "Scope",
+      description: 'e.g. "UX Research • UI Design • Prototyping • Documentation"',
+      type: "string",
+    }),
+    defineField({
+      name: "deliveredIn",
+      title: "Delivered In",
+      description: 'e.g. "8 weeks"',
+      type: "string",
+    }),
+
     // ── METADATA ─────────────────────────────────────────────────────
     defineField({
       name: "slug",
