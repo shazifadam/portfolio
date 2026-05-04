@@ -146,51 +146,48 @@ export default async function CaseStudyPage({
       <section className="bg-brand-white py-20 md:py-36">
         <Container>
           <div className="flex flex-col gap-10">
-            {/* Title + meta block
-                Desktop: title/tags left, meta panel right (side-by-side, gap-4).
-                Mobile: stacked, meta panel below title/tags (gap-10). */}
+            {/* Title + tags */}
             <BlurReveal>
-              <div className="flex flex-col gap-10 md:flex-row md:items-start md:gap-4">
-                {/* Left — title + tags */}
-                <div className="flex flex-col gap-4 md:shrink-0">
-                  <h1 className="text-h1 text-brand-black">
-                    <span
-                      style={
-                        doc.titleStartColor
-                          ? { color: doc.titleStartColor }
-                          : undefined
-                      }
-                    >
-                      {doc.titleStart}
-                    </span>
-                    {doc.titleEnd && (
-                      <>
-                        {" "}
-                        <span className="text-semantic-border-light">—</span>{" "}
-                        {doc.titleEnd}
-                      </>
-                    )}
-                  </h1>
-                  {doc.tags && doc.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
-                      {doc.tags.map((t: TagValue) => (
-                        <TagPill key={t} tag={t} />
-                      ))}
-                    </div>
+              <div className="flex flex-col gap-4">
+                <h1 className="text-h1 text-brand-black">
+                  <span
+                    style={
+                      doc.titleStartColor
+                        ? { color: doc.titleStartColor }
+                        : undefined
+                    }
+                  >
+                    {doc.titleStart}
+                  </span>
+                  {doc.titleEnd && (
+                    <>
+                      {" "}
+                      <span className="text-semantic-border-light">—</span>{" "}
+                      {doc.titleEnd}
+                    </>
                   )}
-                </div>
-
-                {/* Right — project meta panel (only renders if any field is set) */}
-                <div className="md:flex-1">
-                  <CaseStudyMeta
-                    myRole={doc.myRole}
-                    team={doc.team}
-                    scope={doc.scope}
-                    deliveredIn={doc.deliveredIn}
-                  />
-                </div>
+                </h1>
+                {doc.tags && doc.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {doc.tags.map((t: TagValue) => (
+                      <TagPill key={t} tag={t} />
+                    ))}
+                  </div>
+                )}
               </div>
             </BlurReveal>
+
+            {/* Meta panel — sits between tags and cover image */}
+            {(doc.myRole || doc.team || doc.scope || doc.deliveredIn) && (
+              <BlurReveal>
+                <CaseStudyMeta
+                  myRole={doc.myRole}
+                  team={doc.team}
+                  scope={doc.scope}
+                  deliveredIn={doc.deliveredIn}
+                />
+              </BlurReveal>
+            )}
 
             {/* Cover */}
             {coverUrl && (
