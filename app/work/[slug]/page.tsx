@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { ProtectedImage } from "@/components/ui/ProtectedImage";
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import { Container } from "@/components/layout/Container";
@@ -143,7 +143,7 @@ export default async function CaseStudyPage({
           Padding mirrors the Figma frame (pt-80 / pb-144 → py-20 / md:py-36).
           The WHOLE prose stack lives in this single section so backgrounds
           stay clean while bodies share the xl:pl-[350px] indent rhythm. */}
-      <section className="bg-brand-white py-20 md:py-36">
+      <section className="bg-brand-white pt-10 pb-20 md:pt-16 md:pb-36">
         <Container>
           <div className="flex flex-col gap-10">
             {/* Title / tags / meta
@@ -153,7 +153,7 @@ export default async function CaseStudyPage({
                          H1 wrap at the flex boundary instead of overflowing.
                   Right (shrink-0 max-w-[460px]) — meta panel capped at 460px. */}
             <BlurReveal>
-              <div className="flex flex-col gap-10 md:flex-row md:items-start md:gap-[80px]">
+              <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-[80px]">
                 {/* Left col — title + tags */}
                 <div className="flex min-w-0 flex-1 flex-col gap-4">
                   <h1 className="text-h1 text-brand-black">
@@ -185,7 +185,7 @@ export default async function CaseStudyPage({
 
                 {/* Right col — meta panel; hidden when no fields are set */}
                 {(doc.myRole || doc.team || doc.scope || doc.deliveredIn) && (
-                  <div className="shrink-0 md:w-[460px]">
+                  <div className="shrink-0 lg:w-[460px]">
                     <CaseStudyMeta
                       myRole={doc.myRole}
                       team={doc.team}
@@ -201,7 +201,7 @@ export default async function CaseStudyPage({
             {coverUrl && (
               <BlurReveal>
                 <div className="relative aspect-[1232/720] w-full overflow-hidden rounded-sm bg-semantic-border-light">
-                  <Image
+                  <ProtectedImage
                     src={coverUrl}
                     alt={doc.titleStart}
                     fill

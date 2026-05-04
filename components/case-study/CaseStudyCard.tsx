@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ProtectedImage } from "@/components/ui/ProtectedImage";
 import Link from "next/link";
 import { TagPill } from "@/components/ui/TagPill";
 import { cn } from "@/lib/utils";
@@ -64,7 +64,7 @@ export function CaseStudyCard({
           )}
         >
           {coverImage && (
-            <Image
+            <ProtectedImage
               src={coverImage}
               alt=""
               fill

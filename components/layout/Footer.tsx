@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ProtectedImage } from "@/components/ui/ProtectedImage";
 import { Container } from "./Container";
 import { Button } from "@/components/ui/Button";
 import { UnderlineLink } from "@/components/ui/UnderlineLink";
@@ -17,7 +17,7 @@ function CircleOrnament({ className }: { className?: string }) {
   return (
     <div aria-hidden className={`flex shrink-0 ${className ?? ""}`}>
       <div className="relative h-[76px] w-[76px] overflow-hidden rounded-full bg-brand-dark-gray">
-        <Image
+        <ProtectedImage
           src="/images/head-pp-color.jpg"
           alt=""
           fill

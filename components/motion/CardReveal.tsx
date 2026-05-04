@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { m, useInView } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -44,7 +44,7 @@ export function CardReveal({
   const delay = isDesktop && columnIndex === 0 ? 0.2 : 0;
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       className={cn(className)}
       initial={{ opacity: 0, filter: "blur(16px)", y: 12 }}
@@ -56,6 +56,6 @@ export function CardReveal({
       transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

@@ -50,15 +50,14 @@ const DISCIPLINES = ["UI/UX", "WEB", "BRAND IDENTITY", "ILLUSTRATION"];
 // On-load reveal cadence for the hero (seconds, absolute from t=0):
 //   0.0 — H0 line 1
 //   0.2 — H0 line 2
-//   0.3..0.6 — pill tags, +0.1s each
-//   0.7 — caption paragraph
-//   0.8 — GIF card grid
+//   0.3 — all discipline pills (one wrapper, no per-pill stagger)
+//   0.4 — caption paragraph
+//   0.55 — GIF card grid
 const REVEAL_LINE_1 = 0;
 const REVEAL_LINE_2 = 0.2;
-const REVEAL_PILLS_BASE = 0.3;
-const REVEAL_PILL_STEP = 0.1;
-const REVEAL_CAPTION = 0.7;
-const REVEAL_GRID = 0.8;
+const REVEAL_PILLS = 0.3;
+const REVEAL_CAPTION = 0.4;
+const REVEAL_GRID = 0.55;
 
 function CardGrid({
   cards,
@@ -123,18 +122,15 @@ export function Hero() {
           </HeroReveal>
         </div>
 
-        <div className="flex flex-wrap items-start justify-center gap-[17px]">
-          {DISCIPLINES.map((d, i) => (
-            <HeroReveal
-              key={d}
-              delay={REVEAL_PILLS_BASE + i * REVEAL_PILL_STEP}
-            >
-              <Pill>{d}</Pill>
-            </HeroReveal>
-          ))}
-        </div>
+        <HeroReveal delay={REVEAL_PILLS}>
+          <div className="flex flex-wrap items-start justify-center gap-[17px]">
+            {DISCIPLINES.map((d) => (
+              <Pill key={d}>{d}</Pill>
+            ))}
+          </div>
+        </HeroReveal>
 
-        <HeroReveal delay={REVEAL_CAPTION}>
+        <HeroReveal delay={REVEAL_CAPTION} fade>
           <p className="text-p1 text-semantic-text-secondary max-w-[664px]">
             Product and brand designer <br className="md:hidden" />based in Malé, Maldives.
             <br />
@@ -145,7 +141,7 @@ export function Hero() {
         {/* GIF grid — desktop has 5 cards, mobile has 3. Both use aspect-ratio
             so the cards scale proportionally with viewport width. The whole
             grid reveals as one beat after the caption. */}
-        <HeroReveal delay={REVEAL_GRID} className="w-full">
+        <HeroReveal delay={REVEAL_GRID} fade className="w-full">
           <CardGrid
             cards={DESKTOP_CARDS}
             aspectRatio={DESKTOP_ASPECT}

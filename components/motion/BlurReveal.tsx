@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { m, useInView } from "framer-motion";
 import { useRef, type ReactNode } from "react";
 
 export function BlurReveal({
@@ -16,7 +16,7 @@ export function BlurReveal({
   const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       className={className}
       initial={{ opacity: 0, filter: "blur(16px)", y: 12 }}
@@ -28,6 +28,6 @@ export function BlurReveal({
       transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

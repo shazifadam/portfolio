@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ProtectedImage } from "@/components/ui/ProtectedImage";
 import { BlurReveal } from "@/components/motion/BlurReveal";
 import { PortableBody } from "@/components/case-study/PortableBody";
 import { urlFor } from "@/sanity/lib/image";
@@ -55,7 +55,7 @@ function PhotoBlockRenderer({ block }: { block: PhotoBlock }) {
                 key={i}
                 className="relative aspect-[608/725] w-full overflow-hidden rounded-sm bg-semantic-border-light"
               >
-                <Image
+                <ProtectedImage
                   src={urlFor(img).width(1400).quality(85).url()}
                   alt={block.caption ?? ""}
                   fill
@@ -67,7 +67,7 @@ function PhotoBlockRenderer({ block }: { block: PhotoBlock }) {
           </div>
         ) : (
           <div className="relative aspect-[1232/725] w-full overflow-hidden rounded-sm bg-semantic-border-light">
-            <Image
+            <ProtectedImage
               src={urlFor(images[0]).width(2400).quality(85).url()}
               alt={block.caption ?? ""}
               fill

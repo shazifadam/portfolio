@@ -32,16 +32,16 @@ export function WorkGrid({ items }: { items: CaseStudyCardData[] }) {
         // 530/1232 ≈ 43% (small). Remaining ~8.3% becomes the gap via
         // justify-between.
         const leftWidth =
-          leftVariant === "big" ? "md:w-[48.7%]" : "md:w-[43%]";
+          leftVariant === "big" ? "sm:w-[48.7%]" : "sm:w-[43%]";
         const rightWidth =
-          rightVariant === "big" ? "md:w-[48.7%]" : "md:w-[43%]";
+          rightVariant === "big" ? "sm:w-[48.7%]" : "sm:w-[43%]";
 
         return (
           <div
             key={idx}
             // Mobile: stack with same gap as between rows. Desktop: side-by-side
             // with row-remaining width as gap via justify-between.
-            className="flex flex-col gap-16 md:flex-row md:gap-0 md:items-start md:justify-between"
+            className="flex flex-col gap-16 sm:flex-row sm:gap-0 sm:items-start sm:justify-between"
           >
             <CardReveal columnIndex={0} className={`w-full ${leftWidth}`}>
               <CaseStudyCard {...row[0]} variant={leftVariant} />

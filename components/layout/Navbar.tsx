@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Container } from "./Container";
 import { Button } from "@/components/ui/Button";
 import { UnderlineLink } from "@/components/ui/UnderlineLink";
@@ -198,7 +198,7 @@ export function Navbar() {
             )}
           />
 
-          <nav className="hidden items-center gap-10 md:flex">
+          <nav className="hidden items-center gap-10 lg:flex">
             <UnderlineLink
               href="/work"
               variant={isDark ? "navLight" : "navDark"}
@@ -233,7 +233,7 @@ export function Navbar() {
           </nav>
 
           {/* Desktop CTA — light pill on dark routes so it reads against the bar */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <Button href="/contact" variant={isDark ? "light" : "dark"}>
               Contact
             </Button>
@@ -246,7 +246,7 @@ export function Navbar() {
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen(true)}
             className={cn(
-              "md:hidden inline-flex h-10 w-10 items-center justify-center",
+              "lg:hidden inline-flex h-10 w-10 items-center justify-center",
               isDark ? "text-brand-white" : "text-semantic-text-primary",
             )}
           >
@@ -278,7 +278,7 @@ function MobileMenu({
         // Use a class-toggled `flex` / `hidden` instead of the `hidden` attr —
         // the attribute's `display: none` loses to the `flex` class on equal
         // specificity, which is what was making the menu always-visible.
-        "fixed inset-0 z-[100] flex-col bg-semantic-surface-dark text-brand-white md:hidden",
+        "fixed inset-0 z-[100] flex-col bg-semantic-surface-dark text-brand-white lg:hidden",
         open ? "flex" : "hidden",
       )}
       style={{ height: "100dvh" }}
@@ -322,7 +322,7 @@ function MobileMenuBody({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex flex-1 flex-col justify-between px-6 pt-10 pb-12">
       <ul className="flex flex-col items-start gap-4">
-        <motion.li
+        <m.li
           initial={ITEM_HIDDEN}
           animate={ITEM_VISIBLE}
           transition={{ duration: ITEM_DURATION, ease: ITEM_EASE, delay: 0 }}
@@ -330,8 +330,8 @@ function MobileMenuBody({ onClose }: { onClose: () => void }) {
           <Link href="/work" onClick={onClose} className="text-h3 text-brand-white">
             Work
           </Link>
-        </motion.li>
-        <motion.li
+        </m.li>
+        <m.li
           initial={ITEM_HIDDEN}
           animate={ITEM_VISIBLE}
           transition={{ duration: ITEM_DURATION, ease: ITEM_EASE, delay: 0.1 }}
@@ -339,8 +339,8 @@ function MobileMenuBody({ onClose }: { onClose: () => void }) {
           <Link href="/about" onClick={onClose} className="text-h3 text-brand-white">
             About
           </Link>
-        </motion.li>
-        <motion.li
+        </m.li>
+        <m.li
           initial={ITEM_HIDDEN}
           animate={ITEM_VISIBLE}
           transition={{ duration: ITEM_DURATION, ease: ITEM_EASE, delay: 0.2 }}
@@ -348,8 +348,8 @@ function MobileMenuBody({ onClose }: { onClose: () => void }) {
           <Link href="/journal" onClick={onClose} className="text-h3 text-brand-white">
             Journal
           </Link>
-        </motion.li>
-        <motion.li
+        </m.li>
+        <m.li
           initial={ITEM_HIDDEN}
           animate={ITEM_VISIBLE}
           transition={{ duration: ITEM_DURATION, ease: ITEM_EASE, delay: 0.3 }}
@@ -364,10 +364,10 @@ function MobileMenuBody({ onClose }: { onClose: () => void }) {
             Shop
             <ArrowUpRight className="ml-1 text-brand-white" />
           </a>
-        </motion.li>
+        </m.li>
       </ul>
 
-      <motion.div
+      <m.div
         onClick={onClose}
         initial={ITEM_HIDDEN}
         animate={ITEM_VISIBLE}
@@ -376,7 +376,7 @@ function MobileMenuBody({ onClose }: { onClose: () => void }) {
         <Button href="/contact" variant="light" className="w-full justify-center">
           Contact
         </Button>
-      </motion.div>
+      </m.div>
     </div>
   );
 }

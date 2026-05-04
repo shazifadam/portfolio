@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { type ReactNode } from "react";
 
 // On-load reveal for hero content (above the fold). Animates blur + slight
@@ -15,24 +15,29 @@ export function HeroReveal({
   children,
   delay = 0,
   className,
+  fade = false,
 }: {
   children: ReactNode;
   delay?: number;
   className?: string;
+  /** When true, also animates opacity 0→1 (used for caption + GIF grid). */
+  fade?: boolean;
 }) {
+  const initial = fade
+    ? { opacity: 0, filter: "blur(24px)", y: 32 }
+    : { filter: "blur(24px)", y: 32 };
+  const animate = fade
+    ? { opacity: 1, filter: "blur(0px)", y: 0 }
+    : { filter: "blur(0px)", y: 0 };
+
   return (
-    <motion.div
+    <m.div
       className={className}
-      // Items reveal from opacity 0 + blur + offset, so each piece "appears"
-      // instead of crisping up from already-visible. The hero section itself
-      // (bg, container, layout) is rendered by SSR with no motion wrapper, so
-      // there's no full-page flash — only the individual hero pieces are
-      // briefly invisible until their respective `delay` fires.
-      initial={{ opacity: 0, filter: "blur(24px)", y: 32 }}
-      animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+      initial={initial}
+      animate={animate}
       transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

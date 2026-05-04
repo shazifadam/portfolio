@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ProtectedImage } from "@/components/ui/ProtectedImage";
 import { Container } from "@/components/layout/Container";
 import { HorizontalRule } from "@/components/ui/HorizontalRule";
 import { BlurReveal } from "@/components/motion/BlurReveal";
@@ -35,16 +35,20 @@ const TESTIMONIALS: Testimonial[] = [
     avatarImage: "/images/testimonials/aliyya.jpeg",
   },
   {
-    quote: PLACEHOLDER_QUOTE,
-    name: "Alexander Becher",
-    role: "CEO — Unable.agency",
+    quote:
+      "Great experience working together on the Celestial Pool & Spa website. He understood our vision clearly, delivered beyond expectations, and made the whole process smooth and professional.",
+    name: "Sofwan",
+    role: "CEO — Celestial Pool & Spa",
     avatarColor: "var(--brand-accent-orange)",
+    avatarImage: "/images/testimonials/sofwan.jpg",
   },
   {
-    quote: PLACEHOLDER_QUOTE,
-    name: "Alexander Becher",
-    role: "CEO — Unable.agency",
+    quote:
+      "Shazif took care in understanding the fundamentals of the brand identity before crafting the design. We're impressed with his work and would work with him again.",
+    name: "Musannif",
+    role: "Co-Founder — Tell & Go",
     avatarColor: "var(--brand-dark-gray)",
+    avatarImage: "/images/testimonials/muchi.jpg",
   },
   {
     quote: PLACEHOLDER_QUOTE,
@@ -77,7 +81,7 @@ function Avatar({ color, image }: { color: string; image?: string }) {
         style={{ transform: "rotate(-4.12deg)" }}
       >
         {image ? (
-          <Image src={image} alt="" fill sizes="40px" className="object-cover" />
+          <ProtectedImage src={image} alt="" fill sizes="40px" className="object-cover" />
         ) : (
           <div aria-hidden className="size-full" style={{ backgroundColor: color }} />
         )}
@@ -139,7 +143,7 @@ export function Testimonials({ tone = "light" }: { tone?: Tone } = {}) {
             </div>
           </BlurReveal>
 
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {TESTIMONIALS.map((t, i) => (
               <BlurReveal key={`${t.name}-${i}`}>
                 <TestimonialCard {...t} tone={tone} />

@@ -3,11 +3,11 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { geist, inter, stkBureauSerif } from "@/lib/fonts";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { SiteShell } from "@/components/layout/SiteShell";
 import { RouteBackground } from "@/components/layout/RouteBackground";
 import { PageTransition } from "@/components/motion/PageTransition";
 import { ComingSoonCursor } from "@/components/ui/ComingSoonCursor";
+import { MotionProvider } from "@/components/motion/MotionProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://shazifadam.com"),
@@ -61,6 +61,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable} ${inter.variable} ${stkBureauSerif.variable}`}>
       <body className="min-h-screen bg-semantic-surface-primary text-semantic-text-primary">
+        <MotionProvider>
         {/* Skip-to-content link — invisible until a keyboard user tabs to
             it; lets them jump past the navbar. Standard a11y pattern. */}
         <a
@@ -70,11 +71,11 @@ export default function RootLayout({
           Skip to content
         </a>
         <RouteBackground />
-        <Navbar />
-        <PageTransition>
-          <main id="main">{children}</main>
-        </PageTransition>
-        <Footer />
+        <SiteShell>
+          <PageTransition>
+            <main id="main">{children}</main>
+          </PageTransition>
+        </SiteShell>
         <ComingSoonCursor />
         {/* Vercel Analytics + Speed Insights — both free tier, cookieless,
             privacy-friendly. Auto-track App Router push-state navigations.
@@ -82,6 +83,7 @@ export default function RootLayout({
             in dev so only Production deploys send beacons. */}
         <Analytics />
         <SpeedInsights />
+        </MotionProvider>
       </body>
     </html>
   );
