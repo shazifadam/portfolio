@@ -37,10 +37,10 @@ export default function ContactPage() {
               -2.11deg tilt as the About bio so the visual handwriting stays
               consistent — replace the bg with a real image when ready. */}
           <BlurReveal>
-            <div className="flex flex-col gap-10 pt-12 md:pt-16 md:flex-row md:items-start md:gap-10">
-              <div className="flex w-full shrink-0 items-center justify-center md:w-[508px]">
+            <div className="flex flex-col gap-10 pt-12 md:pt-16 lg:flex-row lg:items-start lg:gap-10">
+              <div className="flex w-full shrink-0 items-center justify-center overflow-hidden lg:w-[320px] xl:w-[508px]">
                 <div
-                  className="aspect-[508/414] w-full rounded-sm bg-semantic-text-secondary"
+                  className="aspect-[508/414] w-full max-h-[280px] lg:max-h-none rounded-sm bg-semantic-text-secondary"
                   style={{ transform: "rotate(-2.11deg)" }}
                   aria-hidden
                 />

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -188,15 +189,16 @@ export function Navbar() {
         )}
       >
         <Container className="flex items-center justify-between !py-4">
-          {/* Logo placeholder — replace with the SVG mark when ready */}
-          <Link
-            href="/"
-            aria-label="Shazif Adam — home"
-            className={cn(
-              "block h-8 w-32",
-              isDark ? "bg-brand-dark-gray" : "bg-brand-gray",
-            )}
-          />
+          <Link href="/" aria-label="Shazif Adam — home" className="flex items-center">
+            <Image
+              src="/logo/shazifadamlogo.svg"
+              alt="Shazif Adam"
+              width={193}
+              height={40}
+              priority
+              unoptimized
+            />
+          </Link>
 
           <nav className="hidden items-center gap-10 lg:flex">
             <UnderlineLink
@@ -285,12 +287,15 @@ function MobileMenu({
     >
       {/* Top bar — mirrors the dark navbar in Figma 184:7271 */}
       <div className="flex items-center justify-between px-6 py-4">
-        <Link
-          href="/"
-          aria-label="Shazif Adam — home"
-          onClick={onClose}
-          className="block h-8 w-32 bg-brand-dark-gray"
-        />
+        <Link href="/" aria-label="Shazif Adam — home" onClick={onClose} className="flex items-center">
+          <Image
+            src="/logo/shazifadamlogo-dgbg.svg"
+            alt="Shazif Adam"
+            width={183}
+            height={40}
+            unoptimized
+          />
+        </Link>
         <button
           type="button"
           aria-label="Close menu"
@@ -321,13 +326,13 @@ const ITEM_DURATION = 0.6;
 function MobileMenuBody({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex flex-1 flex-col justify-between px-6 pt-10 pb-12">
-      <ul className="flex flex-col items-start gap-4">
+      <ul className="flex flex-col items-start gap-4 pl-1">
         <m.li
           initial={ITEM_HIDDEN}
           animate={ITEM_VISIBLE}
           transition={{ duration: ITEM_DURATION, ease: ITEM_EASE, delay: 0 }}
         >
-          <Link href="/work" onClick={onClose} className="text-h3 text-brand-white">
+          <Link href="/work" onClick={onClose} className="text-h2 text-brand-white">
             Work
           </Link>
         </m.li>
@@ -336,7 +341,7 @@ function MobileMenuBody({ onClose }: { onClose: () => void }) {
           animate={ITEM_VISIBLE}
           transition={{ duration: ITEM_DURATION, ease: ITEM_EASE, delay: 0.1 }}
         >
-          <Link href="/about" onClick={onClose} className="text-h3 text-brand-white">
+          <Link href="/about" onClick={onClose} className="text-h2 text-brand-white">
             About
           </Link>
         </m.li>
@@ -345,7 +350,7 @@ function MobileMenuBody({ onClose }: { onClose: () => void }) {
           animate={ITEM_VISIBLE}
           transition={{ duration: ITEM_DURATION, ease: ITEM_EASE, delay: 0.2 }}
         >
-          <Link href="/journal" onClick={onClose} className="text-h3 text-brand-white">
+          <Link href="/journal" onClick={onClose} className="text-h2 text-brand-white">
             Journal
           </Link>
         </m.li>
@@ -359,7 +364,7 @@ function MobileMenuBody({ onClose }: { onClose: () => void }) {
             target="_blank"
             rel="noopener noreferrer"
             onClick={onClose}
-            className="inline-flex items-center text-h3 text-brand-white"
+            className="inline-flex items-center text-h2 text-brand-white"
           >
             Shop
             <ArrowUpRight className="ml-1 text-brand-white" />

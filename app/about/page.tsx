@@ -54,8 +54,8 @@ export default function AboutPage() {
                 Figma; outer wrapper preserves the original bounding box so the
                 rotation doesn't push the prose column. */}
             <BlurReveal>
-              <div className="flex flex-col gap-10 md:flex-row md:items-start md:gap-10">
-                <div className="flex w-full shrink-0 items-center justify-center md:w-[508px]">
+              <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-10">
+                <div className="flex w-full shrink-0 items-center justify-center overflow-hidden lg:w-[508px]">
                   <div
                     className="aspect-[508/414] w-full rounded-sm bg-semantic-text-secondary"
                     style={{ transform: "rotate(-2.11deg)" }}

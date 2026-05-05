@@ -25,7 +25,15 @@ function CircleOrnament({ className }: { className?: string }) {
           className="object-cover"
         />
       </div>
-      <div className="h-[76px] w-[76px] rounded-full bg-brand-lightest" />
+      <div className="relative h-[76px] w-[76px] overflow-hidden rounded-full bg-brand-lightest">
+        <ProtectedImage
+          src="/images/brand-LOGOO.png"
+          alt=""
+          fill
+          sizes="76px"
+          className="object-cover"
+        />
+      </div>
     </div>
   );
 }

@@ -74,7 +74,7 @@ export function Expertise() {
             {rows.map((row, rowIdx) => (
               <div
                 key={rowIdx}
-                className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-x-14"
+                className="grid grid-cols-1 gap-12 sm:grid-cols-2 sm:gap-x-14"
               >
                 {row.map((item, colIdx) => (
                   <CardReveal

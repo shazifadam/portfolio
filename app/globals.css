@@ -166,6 +166,20 @@
     }
   }
 
+  @media (min-width: 769px) and (max-width: 1023px) {
+    .container-shell {
+      padding-left: 52px;
+      padding-right: 52px;
+    }
+  }
+
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .container-shell {
+      padding-left: 64px;
+      padding-right: 64px;
+    }
+  }
+
   /* ── Typography (desktop values from PRD §3.2) ─────────── */
   .text-h0 {
     font-family: var(--font-display);
@@ -313,8 +327,8 @@
     letter-spacing: -0.28px;
   }
 
-  /* ── Mobile overrides ─────────────────────────────────── */
-  @media (max-width: 768px) {
+  /* ── Mobile + tablet overrides (≤1023px) ──────────────── */
+  @media (max-width: 1023px) {
     .text-h0 {
       font-size: 45px;
       line-height: 45px;
@@ -345,6 +359,18 @@
     .text-journal-body {
       font-size: 18px;
       line-height: 27px;
+    }
+  }
+
+  /* ── Large-tablet overrides (1024px–1279px) ────────────── */
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .text-h1 {
+      font-size: 45px;
+      line-height: 54px;
+    }
+    .text-h2 {
+      font-size: 36px;
+      line-height: 48.6px;
     }
   }
 }

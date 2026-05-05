@@ -79,7 +79,7 @@ export default async function JournalEntryPage({
       <section className="bg-brand-white py-20 md:py-36">
         <Container>
           {/* Article column — 770px on desktop, full-width on mobile. */}
-          <div className="mx-auto flex max-w-[770px] flex-col gap-10">
+          <div className="mx-auto flex max-w-[500px] flex-col gap-10 lg:max-w-[770px]">
             {/* Header: title → author block. Title and author row are both
                 centred horizontally; byline + date stay left-aligned within
                 the row so the two text lines align flush against the

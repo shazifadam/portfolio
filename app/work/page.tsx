@@ -4,7 +4,7 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { HorizontalRule } from "@/components/ui/HorizontalRule";
 import { BlurReveal } from "@/components/motion/BlurReveal";
 import { WorkGrid } from "@/components/case-study/WorkGrid";
-import { getAllCaseStudies, getHomeFeatured } from "@/lib/case-studies";
+import { getAllCaseStudies } from "@/lib/case-studies";
 
 export const metadata: Metadata = {
   title: "Case Studies",
@@ -28,10 +28,9 @@ export const metadata: Metadata = {
 };
 
 export default async function WorkPage() {
-  const [featured, all] = await Promise.all([
-    getHomeFeatured(),
-    getAllCaseStudies(),
-  ]);
+  const all = await getAllCaseStudies();
+  const above = all.slice(0, 4);
+  const below = all.slice(4);
 
   return (
     <>
@@ -53,7 +52,7 @@ export default async function WorkPage() {
                 <HorizontalRule />
               </div>
             </BlurReveal>
-            <WorkGrid items={featured} />
+            <WorkGrid items={above} />
           </div>
         </Container>
       </section>
@@ -80,16 +79,17 @@ export default async function WorkPage() {
         </Container>
       </section>
 
-      {/* ── All work ──────────────────────────────────────────────────────
-          Full case-study list, ordered by `order` field once Sanity is live.
-          Same WorkGrid pattern (alternating big-small per row); no heading per
-          PRD §5.2 — the dark→light bg shift from Honest Account is the
-          divider. */}
-      <section className="bg-semantic-surface-primary py-20 md:py-36">
-        <Container>
-          <WorkGrid items={all} />
-        </Container>
-      </section>
+      {/* ── Remaining work ────────────────────────────────────────────────
+          Case studies from position 5 onwards — only rendered when the
+          dataset has more than 4 entries. The dark→light bg shift from
+          Honest Account acts as the visual divider; no extra heading needed. */}
+      {below.length > 0 && (
+        <section className="bg-semantic-surface-primary py-20 md:py-36">
+          <Container>
+            <WorkGrid items={below} />
+          </Container>
+        </section>
+      )}
     </>
   );
 }
