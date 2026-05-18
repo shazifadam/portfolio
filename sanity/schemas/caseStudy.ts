@@ -67,6 +67,20 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: "showTeamLink",
+      title: "Make team name a link",
+      description: "When enabled, the team name becomes a clickable link",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
+      name: "teamUrl",
+      title: "Team URL",
+      description: 'e.g. "https://encrea.studio"',
+      type: "url",
+      hidden: ({ document }) => !document?.showTeamLink,
+    }),
+    defineField({
       name: "scope",
       title: "Scope",
       description: 'e.g. "UX Research • UI Design • Prototyping • Documentation"',

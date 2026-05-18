@@ -32,7 +32,7 @@ export const caseStudyBySlugQuery = groq`
   *[_type == "caseStudy" && slug.current == $slug][0] {
     ${cardFields},
     publishedAt,
-    myRole, team, scope, deliveredIn,
+    myRole, team, showTeamLink, teamUrl, scope, deliveredIn,
     showOverview, overviewBody,
     showChallenges, challengesBody,
     showObjectives, objectivesBody,

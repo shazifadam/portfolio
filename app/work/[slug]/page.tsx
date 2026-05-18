@@ -45,6 +45,8 @@ type CaseStudyDoc = SanityCaseStudyCard & {
   publishedAt?: string;
   myRole?: string;
   team?: string;
+  showTeamLink?: boolean;
+  teamUrl?: string;
   scope?: string;
   deliveredIn?: string;
   showOverview?: boolean;
@@ -189,6 +191,8 @@ export default async function CaseStudyPage({
                     <CaseStudyMeta
                       myRole={doc.myRole}
                       team={doc.team}
+                      showTeamLink={doc.showTeamLink}
+                      teamUrl={doc.teamUrl}
                       scope={doc.scope}
                       deliveredIn={doc.deliveredIn}
                     />
