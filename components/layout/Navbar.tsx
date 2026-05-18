@@ -191,7 +191,7 @@ export function Navbar() {
         <Container className="flex items-center justify-between !py-4">
           <Link href="/" aria-label="Shazif Adam — home" className="flex items-center">
             <Image
-              src="/logo/shazifadamlogo.svg"
+              src={isDark ? "/logo/shazifadamlogo-dgbg.svg" : "/logo/shazifadamlogo.svg"}
               alt="Shazif Adam"
               width={193}
               height={40}
