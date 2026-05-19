@@ -43,6 +43,7 @@ type PostLaunchBlock = {
 
 type CaseStudyDoc = SanityCaseStudyCard & {
   publishedAt?: string;
+  coverVideo?: { asset?: { url?: string } };
   myRole?: string;
   team?: string;
   showTeamLink?: boolean;
@@ -201,18 +202,29 @@ export default async function CaseStudyPage({
               </div>
             </BlurReveal>
 
-            {/* Cover */}
-            {coverUrl && (
+            {/* Cover — video takes precedence over image when both are set */}
+            {(doc.coverVideo?.asset?.url || coverUrl) && (
               <BlurReveal>
                 <div className="relative aspect-[1232/720] w-full overflow-hidden rounded-sm bg-semantic-border-light">
-                  <ProtectedImage
-                    src={coverUrl}
-                    alt={doc.titleStart}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 1232px"
-                    className="object-cover"
-                    priority
-                  />
+                  {doc.coverVideo?.asset?.url ? (
+                    <video
+                      src={doc.coverVideo.asset.url}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  ) : (
+                    <ProtectedImage
+                      src={coverUrl!}
+                      alt={doc.titleStart}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 1232px"
+                      className="object-cover"
+                      priority
+                    />
+                  )}
                 </div>
               </BlurReveal>
             )}

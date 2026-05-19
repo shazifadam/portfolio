@@ -16,6 +16,13 @@ export type PhotoBlock = {
   caption?: string;
 };
 
+export type VideoBlock = {
+  _type: "videoBlock";
+  _key: string;
+  video?: { asset?: { url?: string } };
+  caption?: string;
+};
+
 export type TextBlock = {
   _type: "textBlock";
   _key: string;
@@ -24,11 +31,14 @@ export type TextBlock = {
   body?: any[];
 };
 
-export type ContentBlockData = PhotoBlock | TextBlock;
+export type ContentBlockData = PhotoBlock | VideoBlock | TextBlock;
 
 export function ContentBlock({ block }: { block: ContentBlockData }) {
   if (block._type === "photoBlock") {
     return <PhotoBlockRenderer block={block} />;
+  }
+  if (block._type === "videoBlock") {
+    return <VideoBlockRenderer block={block} />;
   }
   if (block._type === "textBlock") {
     return <TextBlockRenderer block={block} />;
@@ -76,6 +86,33 @@ function PhotoBlockRenderer({ block }: { block: PhotoBlock }) {
             />
           </div>
         )}
+        {block.caption && (
+          <figcaption className="text-p3 text-semantic-text-secondary">
+            {block.caption}
+          </figcaption>
+        )}
+      </figure>
+    </BlurReveal>
+  );
+}
+
+function VideoBlockRenderer({ block }: { block: VideoBlock }) {
+  const url = block.video?.asset?.url;
+  if (!url) return null;
+
+  return (
+    <BlurReveal>
+      <figure className="flex flex-col gap-3">
+        <div className="relative aspect-[1232/725] w-full overflow-hidden rounded-sm bg-semantic-border-light">
+          <video
+            src={url}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        </div>
         {block.caption && (
           <figcaption className="text-p3 text-semantic-text-secondary">
             {block.caption}

@@ -48,9 +48,16 @@ export default defineType({
     }),
     defineField({
       name: "coverImage",
-      title: "Cover Image / GIF / Video",
+      title: "Cover Image / GIF",
       type: "image",
       options: { hotspot: true },
+    }),
+    defineField({
+      name: "coverVideo",
+      title: "Cover Video (MP4)",
+      description: "Optional — takes precedence over the cover image. Use a short looping clip.",
+      type: "file",
+      options: { accept: "video/*" },
     }),
 
     // ── PROJECT META (role, team, scope, timeline) ────────────────────
@@ -220,6 +227,28 @@ export default defineType({
           },
         },
         {
+          name: "videoBlock",
+          title: "Video Block",
+          type: "object",
+          fields: [
+            {
+              name: "video",
+              title: "Video (MP4)",
+              type: "file",
+              options: { accept: "video/*" },
+              validation: (Rule: { required: () => unknown }) => Rule.required(),
+            },
+            {
+              name: "caption",
+              title: "Caption (optional)",
+              type: "string",
+            },
+          ],
+          preview: {
+            prepare: () => ({ title: "Video Block" }),
+          },
+        },
+        {
           name: "textBlock",
           title: "Text Block",
           type: "object",
@@ -238,7 +267,7 @@ export default defineType({
           ],
           preview: {
             select: { heading: "heading" },
-            prepare: ({ heading }) => ({
+            prepare: ({ heading }: { heading?: string }) => ({
               title: `Text Block — ${heading || "No heading"}`,
             }),
           },

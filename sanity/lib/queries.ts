@@ -32,6 +32,7 @@ export const caseStudyBySlugQuery = groq`
   *[_type == "caseStudy" && slug.current == $slug][0] {
     ${cardFields},
     publishedAt,
+    coverVideo { asset->{ url } },
     myRole, team, showTeamLink, teamUrl, scope, deliveredIn,
     showOverview, overviewBody,
     showChallenges, challengesBody,
@@ -43,6 +44,10 @@ export const caseStudyBySlugQuery = groq`
       _type == "photoBlock" => {
         layout,
         images[]{ ..., asset-> },
+        caption
+      },
+      _type == "videoBlock" => {
+        video { asset->{ url } },
         caption
       },
       _type == "textBlock" => {
