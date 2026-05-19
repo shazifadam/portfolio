@@ -236,7 +236,6 @@ export default defineType({
               title: "Video (MP4)",
               type: "file",
               options: { accept: "video/*" },
-              validation: (Rule: { required: () => unknown }) => Rule.required(),
             },
             {
               name: "caption",
