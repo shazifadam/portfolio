@@ -9,6 +9,7 @@ const cardFields = `
   titleEnd,
   tags,
   coverImage,
+  coverVideo { asset->{ url } },
   order
 `;
 

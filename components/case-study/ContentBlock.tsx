@@ -103,16 +103,14 @@ function VideoBlockRenderer({ block }: { block: VideoBlock }) {
   return (
     <BlurReveal>
       <figure className="flex flex-col gap-3">
-        <div className="relative aspect-[1232/725] w-full overflow-hidden rounded-sm bg-semantic-border-light">
-          <video
-            src={url}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        </div>
+        <video
+          src={url}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-auto rounded-sm"
+        />
         {block.caption && (
           <figcaption className="text-p3 text-semantic-text-secondary">
             {block.caption}

@@ -202,20 +202,22 @@ export default async function CaseStudyPage({
               </div>
             </BlurReveal>
 
-            {/* Cover — video takes precedence over image when both are set */}
+            {/* Cover — video takes precedence over image when both are set.
+                Video renders at its natural proportions; image uses the fixed
+                1232/720 aspect so the placeholder bg doesn't collapse. */}
             {(doc.coverVideo?.asset?.url || coverUrl) && (
               <BlurReveal>
-                <div className="relative aspect-[1232/720] w-full overflow-hidden rounded-sm bg-semantic-border-light">
-                  {doc.coverVideo?.asset?.url ? (
-                    <video
-                      src={doc.coverVideo.asset.url}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                  ) : (
+                {doc.coverVideo?.asset?.url ? (
+                  <video
+                    src={doc.coverVideo.asset.url}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="w-full h-auto rounded-sm"
+                  />
+                ) : (
+                  <div className="relative aspect-[1232/720] w-full overflow-hidden rounded-sm bg-semantic-border-light">
                     <ProtectedImage
                       src={coverUrl!}
                       alt={doc.titleStart}
@@ -224,8 +226,8 @@ export default async function CaseStudyPage({
                       className="object-cover"
                       priority
                     />
-                  )}
-                </div>
+                  </div>
+                )}
               </BlurReveal>
             )}
 

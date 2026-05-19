@@ -23,8 +23,10 @@ export type CaseStudyCardData = {
   titleEnd?: string;
   tags?: TagValue[];
   href: string;
-  /** Cover image URL (Sanity later). Falls back to a tinted placeholder. */
+  /** Cover image URL. Falls back to a tinted placeholder. */
   coverImage?: string;
+  /** Cover video URL — takes precedence over coverImage when set. */
+  coverVideo?: string;
 };
 
 type Props = CaseStudyCardData & {
@@ -39,6 +41,7 @@ export function CaseStudyCard({
   tags,
   href,
   coverImage,
+  coverVideo,
   variant,
   className,
 }: Props) {
@@ -63,7 +66,16 @@ export function CaseStudyCard({
             aspectClass,
           )}
         >
-          {coverImage && (
+          {coverVideo ? (
+            <video
+              src={coverVideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          ) : coverImage ? (
             <ProtectedImage
               src={coverImage}
               alt=""
@@ -71,7 +83,7 @@ export function CaseStudyCard({
               sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover"
             />
-          )}
+          ) : null}
         </div>
 
         {/* Title: [titleStart in brand colour] [—] [titleEnd]. The em-dash sits

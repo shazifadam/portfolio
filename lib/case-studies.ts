@@ -90,6 +90,7 @@ export type SanityCaseStudyCard = {
   titleEnd?: string;
   tags?: TagValue[];
   coverImage?: SanityImageSource;
+  coverVideo?: { asset?: { url?: string } };
   order?: number;
 };
 
@@ -103,6 +104,7 @@ export function mapSanityCard(doc: SanityCaseStudyCard): CaseStudyCardData {
     coverImage: doc.coverImage
       ? urlFor(doc.coverImage).width(1200).quality(85).url()
       : undefined,
+    coverVideo: doc.coverVideo?.asset?.url,
   };
 }
 
