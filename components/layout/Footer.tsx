@@ -70,7 +70,7 @@ export function Footer() {
           {/* BOTTOM BLOCK */}
           <div className="flex flex-col gap-[30px] md:flex-row md:items-end md:justify-between">
             <div className="flex flex-col gap-[30px]">
-              <div className="flex flex-col items-start gap-2">
+              <div className="flex flex-col items-start gap-2 text-[14px] md:text-base">
                 <UnderlineLink href="/privacy" variant="footerMuted">
                   Privacy Policy
                 </UnderlineLink>
