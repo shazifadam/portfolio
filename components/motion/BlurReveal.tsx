@@ -26,6 +26,9 @@ export function BlurReveal({
           : { opacity: 0, filter: "blur(16px)", y: 12 }
       }
       transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay }}
+      onAnimationComplete={() => {
+        if (inView && ref.current) ref.current.style.filter = "";
+      }}
     >
       {children}
     </m.div>
