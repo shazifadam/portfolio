@@ -31,6 +31,18 @@ export async function POST(req: Request) {
       { status: 400 },
     );
   }
+  if (name.length > 200) {
+    return NextResponse.json(
+      { error: "Name is too long (200 chars max)." },
+      { status: 400 },
+    );
+  }
+  if (email.length > 320) {
+    return NextResponse.json(
+      { error: "Email address is too long." },
+      { status: 400 },
+    );
+  }
   if (!EMAIL_PATTERN.test(email)) {
     return NextResponse.json(
       { error: "Enter a valid email address." },
@@ -66,7 +78,7 @@ export async function POST(req: Request) {
       from,
       to,
       replyTo: email,
-      subject: `WEBSITE INQUIRY - ${name}`,
+      subject: `WEBSITE INQUIRY - ${name.replace(/[\r\n\t]/g, " ")}`,
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
       // Lightweight HTML so the inbox preview reads cleanly without a heavy
       // template — the plain-text fallback above stays readable too.

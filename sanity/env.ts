@@ -31,10 +31,10 @@ export const dataset = readEnv("NEXT_PUBLIC_SANITY_DATASET", "production");
 
 // Placeholder project ID lets the build complete; @sanity/client tolerates an
 // invalid ID at construction — actual API calls fail at runtime, where they're
-// caught by try/catch.
+// caught by try/catch. Set NEXT_PUBLIC_SANITY_PROJECT_ID in .env.local / Vercel.
 export const projectId = readEnv(
   "NEXT_PUBLIC_SANITY_PROJECT_ID",
-  "l8rn7xb3",
+  "__missing_project_id__",
 );
 
 export const useCdn = false;
