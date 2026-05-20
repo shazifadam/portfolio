@@ -50,24 +50,24 @@ const TESTIMONIALS: Testimonial[] = [
     avatarColor: "var(--brand-dark-gray)",
     avatarImage: "/images/testimonials/muchi.jpg",
   },
-  {
-    quote: PLACEHOLDER_QUOTE,
-    name: "Alexander Becher",
-    role: "CEO — Unable.agency",
-    avatarColor: "var(--brand-dark-gray)",
-  },
-  {
-    quote: PLACEHOLDER_QUOTE,
-    name: "Alexander Becher",
-    role: "CEO — Unable.agency",
-    avatarColor: "var(--brand-gray)",
-  },
-  {
-    quote: PLACEHOLDER_QUOTE,
-    name: "Alexander Becher",
-    role: "CEO — Unable.agency",
-    avatarColor: "var(--brand-black)",
-  },
+  // {
+  //   quote: PLACEHOLDER_QUOTE,
+  //   name: "Alexander Becher",
+  //   role: "CEO — Unable.agency",
+  //   avatarColor: "var(--brand-dark-gray)",
+  // },
+  // {
+  //   quote: PLACEHOLDER_QUOTE,
+  //   name: "Alexander Becher",
+  //   role: "CEO — Unable.agency",
+  //   avatarColor: "var(--brand-gray)",
+  // },
+  // {
+  //   quote: PLACEHOLDER_QUOTE,
+  //   name: "Alexander Becher",
+  //   role: "CEO — Unable.agency",
+  //   avatarColor: "var(--brand-black)",
+  // },
 ];
 
 function Avatar({ color, image }: { color: string; image?: string }) {
