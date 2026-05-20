@@ -42,13 +42,9 @@ export function ArtworkStrip() {
           </div>
         </Container>
 
-        {/* Strip — full-bleed, fixed aspect ratio (1484/483 ≈ 3.07:1).
-            `overflow-hidden` clips the ticker; edge gradients mask tiles
-            entering/leaving the viewport edges. */}
-        <div
-          className="relative w-full overflow-hidden"
-          style={{ aspectRatio: "1484 / 483" }}
-        >
+        {/* Strip — full-bleed. Mobile uses a 3:2 ratio (~250px on 375px screens);
+            desktop switches to the panoramic 1484:483 (≈3:1) from Figma. */}
+        <div className="relative w-full overflow-hidden aspect-[3/2] md:aspect-[1484/483]">
           <div className="absolute inset-y-0 left-0 flex h-full w-fit animate-artwork-ticker">
             {[...TILES, ...TILES].map((tile, i) => (
               <div
