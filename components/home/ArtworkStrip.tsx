@@ -17,12 +17,14 @@ type Tile = {
 };
 
 const TILES: Tile[] = [
-  { bg: "var(--brand-black)" },
-  { bg: "var(--brand-accent-orange)" },
-  { bg: "var(--brand-dark-gray)" },
-  { bg: "var(--brand-coal)" },
-  { bg: "var(--brand-mist)" },
-  { bg: "var(--brand-gray)" },
+  { bg: "var(--brand-gray)", src: "/crafts/0-salmanmosque.jpg", ratio: 1 },
+  { bg: "var(--brand-gray)", src: "/crafts/1-libaas.jpg",       ratio: 0.8072 },
+  { bg: "var(--brand-gray)", src: "/crafts/2-saildhoani.jpg",   ratio: 0.8 },
+  { bg: "var(--brand-gray)", src: "/crafts/3-nostalgia.jpg",    ratio: 1 },
+  { bg: "var(--brand-gray)", src: "/crafts/4-manta.jpg",        ratio: 1 },
+  { bg: "var(--brand-gray)", src: "/crafts/5-islamiccentre.jpg",ratio: 1 },
+  { bg: "var(--brand-gray)", src: "/crafts/6-clownfish.jpg",    ratio: 1 },
+  { bg: "var(--brand-gray)", src: "/crafts/7-redsqurelfish.jpg",ratio: 0.8 },
 ];
 
 export function ArtworkStrip() {
