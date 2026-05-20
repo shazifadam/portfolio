@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { HorizontalRule } from "@/components/ui/HorizontalRule";
@@ -55,12 +56,20 @@ export default function AboutPage() {
                 rotation doesn't push the prose column. */}
             <BlurReveal>
               <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-10">
-                <div className="flex w-full shrink-0 items-center justify-center overflow-hidden lg:w-[508px]">
+                <div className="flex w-full shrink-0 items-center justify-center overflow-visible lg:w-[508px]">
                   <div
-                    className="aspect-[508/414] w-full rounded-sm bg-semantic-text-secondary"
+                    className="relative aspect-[508/414] w-full overflow-hidden rounded-sm"
                     style={{ transform: "rotate(-2.11deg)" }}
-                    aria-hidden
-                  />
+                  >
+                    <Image
+                      src="/images/head-pp-color.jpg"
+                      alt="Shazif Adam"
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 508px"
+                      className="object-cover object-top"
+                      priority
+                    />
+                  </div>
                 </div>
                 <div className="text-p1 text-brand-light-gray flex flex-1 flex-col gap-[1lh]">
                   <p>
