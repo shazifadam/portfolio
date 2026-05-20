@@ -12,7 +12,11 @@ export function Pill({
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-pill border border-semantic-border-light px-6 py-2 text-headliner text-semantic-text-secondary",
+        "inline-flex items-center rounded-pill border border-semantic-border-light text-semantic-text-secondary",
+        // Mobile: compact size
+        "px-3 py-1 text-[12px] leading-5 tracking-[1.5px]",
+        // Desktop: full headliner token
+        "md:px-6 md:py-2 md:text-[18px] md:leading-[27px] md:tracking-[4.5px]",
         className,
       )}
     >

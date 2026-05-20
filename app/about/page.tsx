@@ -4,6 +4,7 @@ import { Container } from "@/components/layout/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { HorizontalRule } from "@/components/ui/HorizontalRule";
 import { BlurReveal } from "@/components/motion/BlurReveal";
+import { Expertise } from "@/components/home/Expertise";
 import { Testimonials } from "@/components/home/Testimonials";
 
 export const metadata: Metadata = {
@@ -126,9 +127,11 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* Testimonials — same 6-card grid as home, dark surface variant.
-          Two adjacent dark sections share the same bg, so the boundary
-          reads as breathing room rather than a colour shift. */}
+      {/* Expertise — same dark bg as the section above; adjacent sections
+          merge visually so the boundary reads as breathing room. */}
+      <Expertise />
+
+      {/* Testimonials — same 6-card grid as home, dark surface variant. */}
       <Testimonials tone="dark" />
     </>
   );

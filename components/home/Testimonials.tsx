@@ -22,9 +22,6 @@ type Testimonial = {
 // Avatar colours cycle through tokens to match the Figma sequence:
 //   row 1 → gray, accent-orange, dark-gray
 //   row 2 → dark-gray, gray, black
-const PLACEHOLDER_QUOTE =
-  "He totally got what I was going for with my brand. The logo is straight-up fire and has received so many compliments already. I'm stoked to put it on all of my branding materials and show it off to the world.";
-
 const TESTIMONIALS: Testimonial[] = [
   {
     quote:
