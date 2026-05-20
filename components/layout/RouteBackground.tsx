@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { isDarkRoute, isWhiteBgRoute } from "@/lib/routes";
+import { isDarkRoute, isWhiteBgRoute, isBorderLightRoute } from "@/lib/routes";
 
 // Toggles surface classes on <html> + <body> to match the first-section bg
 // of the current route. This ensures the body bg behind the transparent
@@ -16,10 +16,13 @@ export function RouteBackground() {
   useEffect(() => {
     const dark = isDarkRoute(pathname);
     const white = isWhiteBgRoute(pathname);
+    const borderLight = isBorderLightRoute(pathname);
     document.documentElement.classList.toggle("dark-surface", dark);
     document.body.classList.toggle("dark-surface", dark);
     document.documentElement.classList.toggle("white-surface", white);
     document.body.classList.toggle("white-surface", white);
+    document.documentElement.classList.toggle("border-light-surface", borderLight);
+    document.body.classList.toggle("border-light-surface", borderLight);
   }, [pathname]);
   return null;
 }

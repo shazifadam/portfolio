@@ -57,7 +57,7 @@ export function CaseStudyCard({
   return (
     <Link
       href={href}
-      className={cn("group flex w-full flex-col gap-6", className)}
+      className={cn("group flex w-full flex-col gap-3", className)}
     >
       <div className="flex flex-col gap-4">
         <div

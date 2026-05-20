@@ -8,7 +8,7 @@ const REVEAL_PILLS = 0.2;
 
 export function Hero() {
   return (
-    <section className="bg-brand-lightest pt-28 pb-10 md:pb-14">
+    <section className="bg-semantic-border-light pt-28 pb-24 md:pb-32">
       <Container className="flex flex-col items-center">
         <div className="flex w-full max-w-[834px] flex-col gap-4">
           <HeroReveal delay={REVEAL_INTRO}>
@@ -27,7 +27,7 @@ export function Hero() {
           </HeroReveal>
 
           <HeroReveal delay={REVEAL_PILLS}>
-            <div className="flex flex-wrap items-start gap-[17px]">
+            <div className="flex flex-wrap items-start gap-x-[10px] gap-y-[8px]">
               <Pill>BRAND IDENTITY</Pill>
               <Pill>UI/UX</Pill>
               <Pill>WEB</Pill>

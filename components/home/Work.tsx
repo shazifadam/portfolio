@@ -8,7 +8,7 @@ export async function Work() {
   const items = await getHomeFeatured();
 
   return (
-    <section className="bg-semantic-surface-primary py-20 md:py-36">
+    <section className="relative -mt-6 overflow-hidden rounded-t-[24px] bg-semantic-surface-primary py-16 md:py-36">
       <Container>
         <div className="flex flex-col gap-10">
           {/* Heading + rule reveal as a unit. The grid below handles its own

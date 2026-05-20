@@ -16,7 +16,10 @@ export function TagPill({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 pl-1 pr-2 py-0.5 text-tag text-brand-dark-gray",
+        "inline-flex items-center py-0.5",
+        "gap-1 pr-1.5 text-[15.5px] leading-[22px]",
+        "md:pr-2 md:text-tag",
+        "text-brand-dark-gray",
         className,
       )}
     >
@@ -26,7 +29,7 @@ export function TagPill({
         width={24}
         height={24}
         aria-hidden
-        className="shrink-0"
+        className="shrink-0 size-6"
       />
       <span>{def.label}</span>
     </span>

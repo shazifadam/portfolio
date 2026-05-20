@@ -82,6 +82,14 @@
     background-color: var(--brand-white);
   }
 
+  /* Border-light-surface routes (home /) — hero uses --semantic-border-light
+     (#e8e6e1). Without this the body bg (#faf9f6) shows as a lighter band
+     through the transparent navbar sitting above the hero section. */
+  html.border-light-surface,
+  html.border-light-surface body {
+    background-color: var(--semantic-border-light);
+  }
+
   /* Grain overlay — global, non-interactive. baseFrequency 1.2 gives a finer
      pixel-level grain (vs the broader splotches at 0.9), opacity 0.08 keeps it
      visible without dominating the page surface. The grain reads stronger

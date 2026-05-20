@@ -22,3 +22,10 @@ export function isWhiteBgRoute(pathname: string | null | undefined): boolean {
   if (!pathname) return false;
   return WHITE_BG_ROUTES.some((p) => pathname.startsWith(p));
 }
+
+// Routes whose hero uses --semantic-border-light (#e8e6e1). The body bg is
+// overridden to match so the transparent navbar zone shows the same gray
+// instead of the default body bg (#faf9f6).
+export function isBorderLightRoute(pathname: string | null | undefined): boolean {
+  return pathname === "/";
+}
