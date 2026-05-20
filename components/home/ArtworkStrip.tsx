@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ProtectedImage } from "@/components/ui/ProtectedImage";
 import { Container } from "@/components/layout/Container";
 import { HorizontalRule } from "@/components/ui/HorizontalRule";
 import { BlurReveal } from "@/components/motion/BlurReveal";
@@ -61,7 +61,7 @@ export function ArtworkStrip() {
                 }}
               >
                 {tile.src && (
-                  <Image
+                  <ProtectedImage
                     src={tile.src}
                     alt=""
                     fill
