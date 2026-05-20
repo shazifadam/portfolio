@@ -98,15 +98,8 @@ export default function AboutPage() {
               </div>
             </BlurReveal>
 
-            {/* Illustration strip — four placeholder tiles. Desktop renders
-                them as four flex-1 cells that share the container width.
-                Mobile turns into an infinite ticker carousel: tiles double
-                ([...TILES, ...TILES]) and the track translates from 0 to
-                -50% over the loop — same technique as the home ArtworkStrip
-                so when the first set scrolls past, the second is already in
-                position and the loop reads as continuous. */}
+            {/* Illustration strip — hidden until artwork is ready
             <BlurReveal>
-              {/* Desktop: static 4-cell row */}
               <div className="hidden gap-[30px] md:flex">
                 {Array.from({ length: 4 }).map((_, i) => (
                   <div
@@ -116,10 +109,6 @@ export default function AboutPage() {
                   />
                 ))}
               </div>
-
-              {/* Mobile: full-bleed ticker. Negative margin breaks out of
-                  Container's px-6 so the strip touches the screen edges, and
-                  overflow-hidden clips the off-screen tail of the doubled set. */}
               <div className="-mx-6 overflow-hidden md:hidden">
                 <div className="flex w-fit animate-artwork-ticker">
                   {[...Array(8)].map((_, i) => (
@@ -132,6 +121,7 @@ export default function AboutPage() {
                 </div>
               </div>
             </BlurReveal>
+            */}
           </div>
         </Container>
       </section>
