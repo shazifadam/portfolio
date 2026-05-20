@@ -69,6 +69,7 @@ export function CaseStudyCard({
           {coverVideo ? (
             <video
               src={coverVideo}
+              poster={coverImage}
               autoPlay
               muted
               loop
