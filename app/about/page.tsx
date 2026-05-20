@@ -62,7 +62,7 @@ export default function AboutPage() {
                     style={{ transform: "rotate(-2.11deg)" }}
                   >
                     <Image
-                      src="/images/1-1 new.jpg"
+                      src="/images/1-1-new.jpg"
                       alt="Shazif Adam"
                       fill
                       sizes="(max-width: 1024px) 100vw, 508px"
