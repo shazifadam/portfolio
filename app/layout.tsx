@@ -12,13 +12,13 @@ import { MotionProvider } from "@/components/motion/MotionProvider";
 export const metadata: Metadata = {
   metadataBase: new URL("https://shazifadam.com"),
   title: {
-    default: "Shazif Adam — Designer who builds. Illustrates the rest.",
+    default: "Shazif Adam — Multidisciplinary Designer specialized in crafting Brand Identities, Interface Designs & Illustrations",
     template: "%s — Shazif Adam",
   },
   description:
     "Product and brand designer based in Malé, Maldives. Designing and building for international clients.",
   openGraph: {
-    title: "Shazif Adam — Designer who builds. Illustrates the rest.",
+    title: "Shazif Adam — Multidisciplinary Designer specialized in crafting Brand Identities, Interface Designs & Illustrations",
     description:
       "Product and brand designer based in Malé, Maldives. Designing and building for international clients.",
     url: "https://shazifadam.com",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
         url: "/og/website.png",
         width: 1200,
         height: 630,
-        alt: "Shazif Adam — Designer who builds. Illustrates the rest.",
+        alt: "Shazif Adam — Multidisciplinary Designer specialized in crafting Brand Identities, Interface Designs & Illustrations",
       },
     ],
   },

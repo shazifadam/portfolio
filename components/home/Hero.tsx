@@ -13,16 +13,16 @@ export function Hero() {
         <div className="flex w-full max-w-[834px] flex-col gap-4">
           <HeroReveal delay={REVEAL_INTRO}>
             <p className="text-h3 text-brand-black">
-              Hi, I&apos;m{" "}
+              I&apos;m{" "}
               <Link
                 href="/about"
                 className="text-brand-accent-orange underline decoration-brand-accent-orange underline-offset-4"
               >
                 Shazif
               </Link>
-              {", "}a designer with over 10 years of experience in brand, web,
-              and product design. I&apos;ve worked across healthcare,
-              international development, education, and tech industries.
+              {", "}a multidisciplinary designer with over ten years of
+              experience. Specialized in crafting Brand Identities, Interface &
+              Experience Designs and Illustrations
             </p>
           </HeroReveal>
 
