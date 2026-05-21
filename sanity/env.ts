@@ -29,12 +29,16 @@ export const apiVersion = readEnv(
 
 export const dataset = readEnv("NEXT_PUBLIC_SANITY_DATASET", "production");
 
-// Placeholder project ID lets the build complete; @sanity/client tolerates an
-// invalid ID at construction — actual API calls fail at runtime, where they're
-// caught by try/catch. Set NEXT_PUBLIC_SANITY_PROJECT_ID in .env.local / Vercel.
+// Placeholder project ID lets the build complete. It MUST contain only the
+// characters @sanity/client permits in a projectId (a-z, 0-9, dashes) — an
+// underscore makes createClient() throw synchronously at construction, which
+// crashes the client-side Studio bundle. With a syntactically valid fake ID,
+// construction succeeds and only the actual API calls fail at runtime, where
+// they're caught by try/catch. Set NEXT_PUBLIC_SANITY_PROJECT_ID in
+// .env.local / Vercel for real reads.
 export const projectId = readEnv(
   "NEXT_PUBLIC_SANITY_PROJECT_ID",
-  "__missing_project_id__",
+  "missing-project-id",
 );
 
 export const useCdn = false;
