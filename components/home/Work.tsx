@@ -2,6 +2,7 @@ import { Container } from "@/components/layout/Container";
 import { HorizontalRule } from "@/components/ui/HorizontalRule";
 import { WorkGrid } from "@/components/case-study/WorkGrid";
 import { BlurReveal } from "@/components/motion/BlurReveal";
+import { OutlineButton } from "@/components/ui/OutlineButton";
 import { getHomeFeatured } from "@/lib/case-studies";
 
 export async function Work() {
@@ -22,6 +23,11 @@ export async function Work() {
             </div>
           </BlurReveal>
           <WorkGrid items={items} />
+          <BlurReveal>
+            <div className="flex justify-center">
+              <OutlineButton href="/work">View More Work</OutlineButton>
+            </div>
+          </BlurReveal>
         </div>
       </Container>
     </section>
