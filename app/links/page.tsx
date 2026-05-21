@@ -15,10 +15,6 @@ type LinkItem = {
   subtitle: string;
   href: string;
   external?: boolean;
-  /** Placeholder bg shown until a real cover image is provided */
-  bg: string;
-  /** Optional cover image — drop into public/images/links/ and set the path */
-  src?: string;
 };
 
 const LINKS: LinkItem[] = [
@@ -26,20 +22,17 @@ const LINKS: LinkItem[] = [
     title: "Case Studies",
     subtitle: "Selected work",
     href: "/work",
-    bg: "var(--brand-black)",
   },
   {
     title: "About Me",
     subtitle: "Who I am & what I do",
     href: "/about",
-    bg: "var(--brand-accent-orange)",
   },
   {
     title: "Shop",
     subtitle: "Buy My Artworks",
     href: "https://shop.fineprintmv.com/artist/SA",
     external: true,
-    bg: "var(--brand-dark-gray)",
   },
 ];
 
@@ -63,23 +56,9 @@ function ChevronRight() {
   );
 }
 
-function LinkCard({ title, subtitle, bg, src }: Omit<LinkItem, "href" | "external">) {
+function LinkCard({ title, subtitle }: Omit<LinkItem, "href" | "external">) {
   return (
     <div className="flex items-center gap-4 rounded-sm border border-brand-light-gray bg-brand-white p-4 transition-colors duration-200 hover:bg-brand-light-gray">
-      <div
-        className="relative h-14 w-14 shrink-0 overflow-hidden rounded-sm"
-        style={{ backgroundColor: bg }}
-      >
-        {src && (
-          <Image
-            src={src}
-            alt=""
-            fill
-            sizes="56px"
-            className="object-cover"
-          />
-        )}
-      </div>
       <div className="flex flex-1 flex-col gap-0.5">
         <p className="text-navbarlabel text-brand-black">{title}</p>
         <p className="text-p3 text-semantic-text-secondary">{subtitle}</p>
@@ -134,21 +113,11 @@ export default function LinksPage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <LinkCard
-                  title={link.title}
-                  subtitle={link.subtitle}
-                  bg={link.bg}
-                  src={link.src}
-                />
+                <LinkCard title={link.title} subtitle={link.subtitle} />
               </a>
             ) : (
               <Link key={link.href} href={link.href}>
-                <LinkCard
-                  title={link.title}
-                  subtitle={link.subtitle}
-                  bg={link.bg}
-                  src={link.src}
-                />
+                <LinkCard title={link.title} subtitle={link.subtitle} />
               </Link>
             )
           )}
