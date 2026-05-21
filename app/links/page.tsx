@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "Shazif Adam — Designer who builds. Case studies, about, and shop.",
 };
 
-const DISCIPLINES = ["UI/UX", "WEB", "BRAND IDENTITY", "ILLUSTRATION"];
+const DISCIPLINES = ["BRAND DESIGN", "UI/UX", "ILLUSTRATION"];
 
 type LinkItem = {
   title: string;
