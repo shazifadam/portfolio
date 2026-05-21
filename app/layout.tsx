@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og/website.svg",
+        url: "/og/website.png",
         width: 1200,
         height: 630,
         alt: "Shazif Adam — Designer who builds. Illustrates the rest.",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "Shazif Adam",
     description:
       "Product and brand designer based in Malé, Maldives. Designing and building for international clients.",
-    images: ["/og/website.svg"],
+    images: ["/og/website.png"],
   },
 };
 

@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     title: "Case Studies — Shazif Adam",
     images: [
       {
-        url: "/og/case-studies.svg",
+        url: "/og/case-studies.png",
         width: 1200,
         height: 630,
         alt: "Case Studies — Shazif Adam",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     title: "Case Studies — Shazif Adam",
-    images: ["/og/case-studies.svg"],
+    images: ["/og/case-studies.png"],
   },
 };
 

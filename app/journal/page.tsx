@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     title: "The Offcuts — Shazif Adam",
     images: [
       {
-        url: "/og/the-offcuts.svg",
+        url: "/og/the-offcuts.png",
         width: 1200,
         height: 630,
         alt: "The Offcuts — Shazif Adam",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     title: "The Offcuts — Shazif Adam",
-    images: ["/og/the-offcuts.svg"],
+    images: ["/og/the-offcuts.png"],
   },
 };
 

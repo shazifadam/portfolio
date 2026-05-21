@@ -83,7 +83,7 @@ export async function generateMetadata({
     // for every shared case-study link, distinct from the body description
     // search engines crawl. Cover image (1200×630 crop) is generated via
     // Sanity's URL builder; if there's no cover, fall back to the default
-    // /og/case-studies.svg from the /work listing.
+    // /og/case-studies.png from the /work listing.
     const description = `${doc.titleStart} — Shazif Adam`;
     const ogImage = doc.coverImage
       ? urlFor(doc.coverImage as SanityImageSource)
@@ -91,7 +91,7 @@ export async function generateMetadata({
           .height(630)
           .quality(85)
           .url()
-      : "/og/case-studies.svg";
+      : "/og/case-studies.png";
 
     return {
       title: doc.titleStart,

@@ -32,9 +32,9 @@ export async function generateMetadata({
   // OG description = title — Shazif Adam (per spec). Cover image is the
   // article's own coverImageUrl (already a 2400px Sanity URL from
   // getJournalEntry); falls back to the journal listing's static
-  // /og/the-offcuts.svg when no cover is set.
+  // /og/the-offcuts.png when no cover is set.
   const description = `${entry.title} — Shazif Adam`;
-  const ogImage = entry.coverImageUrl ?? "/og/the-offcuts.svg";
+  const ogImage = entry.coverImageUrl ?? "/og/the-offcuts.png";
 
   return {
     title: entry.title,
