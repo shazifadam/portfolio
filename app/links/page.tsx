@@ -28,9 +28,10 @@ type LinkItem = {
 
 const LINKS: LinkItem[] = [
   {
-    title: "Case Studies",
-    subtitle: "Selected work",
-    href: "/work",
+    title: "Shop",
+    subtitle: "Buy My Artworks",
+    href: "https://shop.fineprintmv.com/artist/SA",
+    external: true,
   },
   {
     title: "About Me",
@@ -38,10 +39,9 @@ const LINKS: LinkItem[] = [
     href: "/about",
   },
   {
-    title: "Shop",
-    subtitle: "Buy My Artworks",
-    href: "https://shop.fineprintmv.com/artist/SA",
-    external: true,
+    title: "Case Studies",
+    subtitle: "Selected work",
+    href: "/work",
   },
 ];
 
