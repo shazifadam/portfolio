@@ -15,7 +15,7 @@ const FEATURE = {
   subtitle: "A4 • A3 SIZE POSTER PRINT",
   image: "/images/featurelink/dhirunba-feature.jpg",
   cta: "BUY PRINT",
-  href: "https://shop.fineprintmv.com/artist/SA",
+  href: "https://shop.fineprintmv.com/artwork/6",
 };
 
 type LinkItem = {
