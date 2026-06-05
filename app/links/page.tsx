@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { Pill } from "@/components/ui/Pill";
 
 export const metadata: Metadata = {
   title: "Links",
@@ -149,12 +150,7 @@ export default function LinksPage() {
           </div>
           <div className="flex flex-wrap justify-center gap-2">
             {DISCIPLINES.map((d) => (
-              <span
-                key={d}
-                className="rounded-pill border border-semantic-border-light px-3 py-1 text-cta text-semantic-text-secondary"
-              >
-                {d}
-              </span>
+              <Pill key={d}>{d}</Pill>
             ))}
           </div>
         </div>
