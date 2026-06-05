@@ -10,6 +10,14 @@ export const metadata: Metadata = {
 
 const DISCIPLINES = ["BRAND DESIGN", "UI/UX", "ILLUSTRATION"];
 
+const FEATURE = {
+  title: "Dhirunba",
+  subtitle: "A4 • A3 SIZE POSTER PRINT",
+  image: "/images/featurelink/dhirunba-feature.jpg",
+  cta: "BUY PRINT",
+  href: "https://shop.fineprintmv.com/artist/SA",
+};
+
 type LinkItem = {
   title: string;
   subtitle: string;
@@ -53,6 +61,54 @@ function ChevronRight() {
         strokeLinejoin="round"
       />
     </svg>
+  );
+}
+
+function FeatureCard() {
+  return (
+    <a
+      href={FEATURE.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group block w-full"
+    >
+      <div className="flex items-center gap-3 rounded-sm border border-brand-black py-2 pl-2 pr-3 transition-colors duration-200 group-hover:bg-brand-light-gray">
+        <div className="relative aspect-[102.281/117.001] w-[102px] shrink-0 overflow-hidden">
+          <Image
+            src={FEATURE.image}
+            alt={FEATURE.title}
+            fill
+            sizes="120px"
+            className="object-cover"
+          />
+        </div>
+        <div className="flex flex-1 flex-col items-stretch justify-between self-stretch pb-3 pt-2">
+          <div className="flex flex-col items-start pl-2">
+            <p className="text-p2 text-brand-black">{FEATURE.title}</p>
+            {/* Figma-pinned one-off label (400:2257): Inter 12/14.4/+1 caps.
+                No matching token in the type scale, so size/leading/tracking
+                are inline; font family routes through --font-tag. */}
+            <p
+              className="text-[12px] uppercase leading-[14.4px] tracking-[1px] text-semantic-text-secondary"
+              style={{ fontFamily: "var(--font-tag)" }}
+            >
+              {FEATURE.subtitle}
+            </p>
+          </div>
+          <div className="flex w-full items-center justify-center gap-2 rounded-pill bg-brand-black px-4 py-2">
+            <Image
+              src="/icons/linkspage/shopping-cart-02.svg"
+              alt=""
+              width={18}
+              height={18}
+              aria-hidden
+              className="h-[18px] w-[18px] shrink-0"
+            />
+            <span className="text-cta text-brand-lightest">{FEATURE.cta}</span>
+          </div>
+        </div>
+      </div>
+    </a>
   );
 }
 
@@ -105,6 +161,7 @@ export default function LinksPage() {
 
         {/* Link cards */}
         <div className="flex w-full flex-col gap-3">
+          <FeatureCard />
           {LINKS.map((link) =>
             link.external ? (
               <a
