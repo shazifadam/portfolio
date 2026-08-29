@@ -9,6 +9,29 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Tell me about your project or collaboration idea. Brand, product, web — designed and built end-to-end.",
+  alternates: {
+    canonical: "/contact",
+  },
+  openGraph: {
+    title: "Contact — Shazif Adam",
+    description:
+      "Tell me about your project or collaboration idea. Brand, product, web — designed and built end-to-end.",
+    url: "/contact",
+    images: [
+      {
+        url: "/og/website.png",
+        width: 1200,
+        height: 630,
+        alt: "Contact — Shazif Adam",
+      },
+    ],
+  },
+  twitter: {
+    title: "Contact — Shazif Adam",
+    description:
+      "Tell me about your project or collaboration idea. Brand, product, web — designed and built end-to-end.",
+    images: ["/og/website.png"],
+  },
 };
 
 export default function ContactPage() {

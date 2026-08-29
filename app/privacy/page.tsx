@@ -6,6 +6,29 @@ export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
     "How shazifadam.com collects, uses, and protects information from visitors and contact-form submissions.",
+  alternates: {
+    canonical: "/privacy",
+  },
+  openGraph: {
+    title: "Privacy Policy — Shazif Adam",
+    description:
+      "How shazifadam.com collects, uses, and protects information from visitors and contact-form submissions.",
+    url: "/privacy",
+    images: [
+      {
+        url: "/og/website.png",
+        width: 1200,
+        height: 630,
+        alt: "Privacy Policy — Shazif Adam",
+      },
+    ],
+  },
+  twitter: {
+    title: "Privacy Policy — Shazif Adam",
+    description:
+      "How shazifadam.com collects, uses, and protects information from visitors and contact-form submissions.",
+    images: ["/og/website.png"],
+  },
 };
 
 export default function PrivacyPage() {

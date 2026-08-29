@@ -15,6 +15,8 @@ export const inter = Inter({
   weight: ["400"],
   variable: "--font-inter",
   display: "swap",
+  // Tag pills sit below the fold — preloading Inter only competes with the LCP.
+  preload: false,
 });
 
 // STK Bureau Serif — display face for all headings.

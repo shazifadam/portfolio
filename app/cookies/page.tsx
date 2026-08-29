@@ -6,6 +6,29 @@ export const metadata: Metadata = {
   title: "Cookie Policy",
   description:
     "How shazifadam.com uses cookies — short answer: barely at all. Here's the full breakdown.",
+  alternates: {
+    canonical: "/cookies",
+  },
+  openGraph: {
+    title: "Cookie Policy — Shazif Adam",
+    description:
+      "How shazifadam.com uses cookies — short answer: barely at all. Here's the full breakdown.",
+    url: "/cookies",
+    images: [
+      {
+        url: "/og/website.png",
+        width: 1200,
+        height: 630,
+        alt: "Cookie Policy — Shazif Adam",
+      },
+    ],
+  },
+  twitter: {
+    title: "Cookie Policy — Shazif Adam",
+    description:
+      "How shazifadam.com uses cookies — short answer: barely at all. Here's the full breakdown.",
+    images: ["/og/website.png"],
+  },
 };
 
 export default function CookiesPage() {

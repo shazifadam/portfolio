@@ -16,8 +16,12 @@ export const metadata: Metadata = {
   title: "The Offcuts",
   description:
     "Notes, observations, and short essays from the studio — design process, illustration, tools, and short takes.",
+  alternates: {
+    canonical: "/journal",
+  },
   openGraph: {
     title: "The Offcuts — Shazif Adam",
+    url: "/journal",
     images: [
       {
         url: "/og/the-offcuts.png",

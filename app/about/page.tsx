@@ -11,6 +11,29 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Designer who builds — a brand and product designer based in Malé, Maldives, designing and building for international clients.",
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About — Shazif Adam",
+    description:
+      "Designer who builds — a brand and product designer based in Malé, Maldives, designing and building for international clients.",
+    url: "/about",
+    images: [
+      {
+        url: "/og/website.png",
+        width: 1200,
+        height: 630,
+        alt: "About — Shazif Adam",
+      },
+    ],
+  },
+  twitter: {
+    title: "About — Shazif Adam",
+    description:
+      "Designer who builds — a brand and product designer based in Malé, Maldives, designing and building for international clients.",
+    images: ["/og/website.png"],
+  },
 };
 
 // /about renders on the dark surface; iOS Safari's status bar tint

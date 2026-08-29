@@ -24,9 +24,9 @@ This file is the operational map for Claude sessions working on this project. It
 | Framework | Next.js 14 (App Router) | TypeScript, RSC by default |
 | Styling | Tailwind CSS + CSS custom properties | Tokens in `globals.css`, type utilities in Tailwind layer |
 | CMS | Sanity.io Studio v3 | Embedded studio at `/studio` |
-| Animation | Framer Motion | Page transitions + blur/grain reveal |
+| Animation | Framer Motion (`LazyMotion` + `MotionConfig reducedMotion="user"`) | Blur/grain reveals only — no route transitions |
 | Email | Resend + React Hook Form | `/api/contact` route |
-| Analytics | Plausible | Script in root layout |
+| Analytics | Vercel Analytics + Speed Insights | `<Analytics />` + `<SpeedInsights />` in root layout, cookieless |
 | Hosting | Vercel | Domain: shazifadam.com |
 
 ### Dependencies to install
@@ -92,9 +92,13 @@ clsx
 │   │   └── IllustrationStrip.tsx
 │   ├── contact/
 │   │   └── ContactForm.tsx
+│   ├── ui/
+│   │   └── LazyVideo.tsx              # preload="none" + play-on-intersection — use for EVERY <video>
 │   └── motion/
-│       ├── PageTransition.tsx
-│       └── BlurReveal.tsx
+│       ├── MotionProvider.tsx         # LazyMotion + MotionConfig reducedMotion="user"
+│       ├── BlurReveal.tsx
+│       ├── CardReveal.tsx
+│       └── HeroReveal.tsx
 ├── sanity/
 │   ├── schemas/
 │   │   ├── index.ts
@@ -109,6 +113,7 @@ clsx
 │   ├── env.ts
 │   └── sanity.config.ts
 ├── lib/
+│   ├── site.ts                        # SITE_URL (www canonical host)
 │   ├── fonts.ts                       # next/font/local + next/font/google
 │   ├── links.ts                       # /links data: Sanity fetch + static fallback
 │   ├── tags.ts                        # tag → icon map
@@ -228,12 +233,12 @@ These are the established interaction and animation patterns. **Any new page (Wo
 | **Section reveal — text/heading blocks** | `<BlurReveal>` ([components/motion/BlurReveal.tsx](components/motion/BlurReveal.tsx)) | Wraps heading/text blocks below the hero. Viewport-triggered (`useInView`, fires once at `-10%` margin). `opacity 0→1` + `blur 16px→0` + `y 12px→0`, **1.5s** `cubic-bezier(0.22, 1, 0.36, 1)`. |
 | **Section reveal — grid/card sections** | `<CardReveal>` ([components/motion/CardReveal.tsx](components/motion/CardReveal.tsx)) | Per-card viewport-triggered reveal. Same blur+y+opacity values as BlurReveal (1.5s, ease-smooth). On desktop applies a **0.2s delay to left-column cards** (`columnIndex === 0`) so the right card reveals first per row. Mobile (single column) suppresses the per-position delay — every card animates as it scrolls in. |
 | **Hero on-load reveal** | `<HeroReveal>` ([components/motion/HeroReveal.tsx](components/motion/HeroReveal.tsx)) | Mount-triggered (no IntersectionObserver — hero is in view by definition). `opacity 0→1` + `blur 24px→0` + `y 32px→0`, 1.5s. Used for staggered hero-element reveals with explicit `delay` per child. |
-| **Page transitions** | `<PageTransition>` ([components/motion/PageTransition.tsx](components/motion/PageTransition.tsx)) | Currently a pass-through. The previous motion-wrapper version interfered with hero animations during hydration. Keep pass-through until route transitions are re-introduced via a different mechanism. |
+| **Page transitions** | none | `PageTransition.tsx` (a pass-through) was deleted 2026-08-29. Route transitions, if ever re-added, must not wrap the hero in opacity (View Transitions API is the candidate — see Tasks.md). |
 | **Underline links** | `<UnderlineLink>` ([components/ui/UnderlineLink.tsx](components/ui/UnderlineLink.tsx)) | Used by every nav link AND every footer text link. Absolute 2px underline that slides 4px down + colour-shifts on hover; **text never moves**. Variants: `navDark`, `navLight`, `footerMuted`, `disabled`. |
 | **CTA button** | `<Button>` ([components/ui/Button.tsx](components/ui/Button.tsx)) | Pill + separate circle. Default touching, hover translates the circle right `+4px` (no layout shift). Sizes: `md` (44px) default, `sm` (36px) for secondary CTAs like "Know More". |
 | **Coming-soon hover cursor** | `<ComingSoonCursor>` mounted in [app/layout.tsx](app/layout.tsx) | Triggered by `data-coming-soon` attribute on any element. Desktop hover only (`(hover: hover) and (pointer: fine)`). Native cursor hidden via global rule in `globals.css`. Used for Journal + Shop in the navbar; reuse for any "not yet shipped" element. |
 | **Grain texture** | Global `body::after` ([app/globals.css](app/globals.css)) | `feTurbulence baseFrequency=1.2`, `opacity 0.08`, `mix-blend-mode: multiply`. Always present — reveals scatter through it during BlurReveal/CardReveal which is what gives the "grain emerges" feel. Don't disable per-section. |
-| **Reduced-motion** | Global `@media (prefers-reduced-motion: reduce)` in [app/globals.css](app/globals.css) | Clamps all CSS animation/transition durations to 0.01ms. Honours user preference automatically — no per-component handling needed. |
+| **Reduced-motion** | `@media (prefers-reduced-motion: reduce)` in [app/globals.css](app/globals.css) **+** `<MotionConfig reducedMotion="user">` in [components/motion/MotionProvider.tsx](components/motion/MotionProvider.tsx) | The CSS rule clamps CSS animations; MotionConfig makes Framer honour the OS setting (it ignored it before 2026-08-29). No per-component handling needed. |
 | **Token discipline** | All colour / font / radius / spacing | Through CSS variables and the named type classes (§3.2 table). Never inline `#hex`, never use raw `font-family`, never bypass `--container-max` / `--container-px`. Add a token before bypassing one. |
 
 ### 4.1 Component inventory
@@ -600,11 +605,12 @@ Mount Sanity Studio at `/studio` via `app/studio/[[...tool]]/page.tsx`. Config i
 | Effect | Where | Detail |
 |---|---|---|
 | Blur/grain reveal | All sections below hero | IntersectionObserver, 1200ms, `cubic-bezier(0.22,1,0.36,1)` |
-| Page transition | All routes | Framer Motion `AnimatePresence`, 400ms fade |
-| Grain texture | Global | `body::after` SVG `feTurbulence`, opacity 0.035 |
-| Nav backdrop blur | On scroll | `backdrop-filter: blur(12px)` |
+| Page transition | — | none (removed 2026-08-29) |
+| Grain texture | Global | `body::after` SVG `feTurbulence`, opacity 0.08, multiply — measured free, keep |
+| Navbar | On scroll | hide/show accumulator, no backdrop blur |
+| Video | Every `<video>` | `components/ui/LazyVideo.tsx` — `preload="none"`, IntersectionObserver play/pause, never the `autoPlay` attribute |
 
-Reduce-motion: respect `prefers-reduced-motion: reduce` and disable transforms/transitions.
+Reduce-motion: CSS clamp in globals.css + `MotionConfig reducedMotion="user"` — both already global, nothing per-component.
 
 ---
 
@@ -656,6 +662,12 @@ Reduce-motion: respect `prefers-reduced-motion: reduce` and disable transforms/t
 - **Schemas are contracts.** When adding fields, update both `sanity/schemas/*.ts` and the GROQ projection in `lib/queries.ts`.
 - **Do not enable the Journal nav link at launch.** It stays `disabled` until post-launch sign-off.
 - **Tag icons are already supplied** in `public/icons/tags/`. Don't regenerate them.
+- **Canonical host is `https://www.shazifadam.com`** (apex 307s to www). Import `SITE_URL` from `lib/site.ts`; never hard-code the domain. `metadataBase` lives in `app/layout.tsx`.
+- **Every route declares its own `alternates.canonical` + `openGraph` + `twitter`** in its `metadata`/`generateMetadata` — Next 14 does not inherit `alternates` from the layout. Slug pages: top-level `description` is real copy (`portableTextToPlain` in `lib/utils.ts`), OG description stays `"<title> — Shazif Adam"`.
+- **Videos go through `<LazyVideo>`** (`components/ui/LazyVideo.tsx`). Raw `<video autoPlay>` eager-downloads the whole MP4 — /work was pulling 57–74 MB before this.
+- **Sanity images**: `urlFor()` already appends `.auto("format")`; don't add `.format()` at call sites. Sanity client is `@sanity/client` — import `createClient` from there, not `next-sanity` (bundle bloat). `groq` is a local identity tag in `sanity/lib/queries.ts`.
+- **Security headers live in `next.config.mjs`** — CSP is `Content-Security-Policy-Report-Only` on purpose (observe in DevTools for a release cycle, then enforce). Site policy excludes `/studio`, which has its own looser policy. Adding a third-party origin = add it to the CSP.
+- **Repo is public.** No personal emails/keys in CLAUDE.md, comments, or fixtures.
 
 ---
 
@@ -670,7 +682,7 @@ NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
 SANITY_API_READ_TOKEN=
 
 RESEND_API_KEY=
-CONTACT_TO_EMAIL=hussain.shaxif002@gmail.com
+CONTACT_TO_EMAIL=            # inbox that receives contact-form submissions (set in .env.local / Vercel)
 
 NEXT_PUBLIC_PLAUSIBLE_DOMAIN=shazifadam.com
 ```
@@ -687,6 +699,6 @@ NEXT_PUBLIC_PLAUSIBLE_DOMAIN=shazifadam.com
 6. **Contact left column image**.
 7. **Resend domain verification** — required before contact form goes live.
 8. **Sanity project + dataset** — create project, populate IDs in `.env.local`.
-9. **Plausible site** — provision domain in Plausible dashboard.
+9. ~~Plausible site~~ — superseded: Vercel Analytics + Speed Insights are live (no setup).
 10. **Shop external URL** — confirm destination.
 11. **`contentBlocks` placement** — confirm whether one ordered array (current plan) or split top/bottom around Challenges/Objectives/Approach is preferred.

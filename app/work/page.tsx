@@ -12,8 +12,12 @@ export const metadata: Metadata = {
   title: "Case Studies",
   description:
     "Selected case studies — product design, brand identity, and web development for international clients.",
+  alternates: {
+    canonical: "/work",
+  },
   openGraph: {
     title: "Case Studies — Shazif Adam",
+    url: "/work",
     images: [
       {
         url: "/og/case-studies.png",

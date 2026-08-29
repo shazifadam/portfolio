@@ -13,6 +13,7 @@ import {
   getJournalEntries,
   getJournalEntry,
 } from "@/lib/journal";
+import { portableTextToPlain } from "@/lib/utils";
 
 export const revalidate = 60;
 
@@ -27,21 +28,37 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const entry = await getJournalEntry(params.slug);
-  if (!entry) return { title: "The Offcuts" };
+  if (!entry) {
+    return {
+      title: "The Offcuts",
+      alternates: { canonical: `/journal/${params.slug}` },
+    };
+  }
 
   // OG description = title — Shazif Adam (per spec). Cover image is the
   // article's own coverImageUrl (already a 2400px Sanity URL from
   // getJournalEntry); falls back to the journal listing's static
   // /og/the-offcuts.png when no cover is set.
-  const description = `${entry.title} — Shazif Adam`;
+  const ogDescription = `${entry.title} — Shazif Adam`;
   const ogImage = entry.coverImageUrl ?? "/og/the-offcuts.png";
+
+  // Search engines get real prose: the editor's summary if there is one,
+  // otherwise the opening of the article body.
+  const description =
+    entry.summary?.trim() ||
+    portableTextToPlain(entry.body) ||
+    ogDescription;
 
   return {
     title: entry.title,
     description,
+    alternates: {
+      canonical: `/journal/${params.slug}`,
+    },
     openGraph: {
       title: `${entry.title} — Shazif Adam`,
-      description,
+      description: ogDescription,
+      url: `/journal/${params.slug}`,
       images: [
         {
           url: ogImage,
@@ -53,7 +70,7 @@ export async function generateMetadata({
     },
     twitter: {
       title: `${entry.title} — Shazif Adam`,
-      description,
+      description: ogDescription,
       images: [ogImage],
     },
   };

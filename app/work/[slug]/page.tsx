@@ -13,7 +13,9 @@ import {
 } from "@/components/case-study/ContentBlock";
 import { WorkGrid } from "@/components/case-study/WorkGrid";
 import { CaseStudyMeta } from "@/components/case-study/CaseStudyMeta";
+import { LazyVideo } from "@/components/ui/LazyVideo";
 import { mapSanityCard, type SanityCaseStudyCard } from "@/lib/case-studies";
+import { portableTextToPlain } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import {
@@ -77,14 +79,27 @@ export async function generateMetadata({
     const doc = await client.fetch<CaseStudyDoc | null>(caseStudyBySlugQuery, {
       slug: params.slug,
     });
-    if (!doc) return { title: "Case Study" };
+    if (!doc) {
+      return {
+        title: "Case Study",
+        alternates: { canonical: `/work/${params.slug}` },
+      };
+    }
 
     // OG description follows Shazif's spec — title-with-byline, identical
     // for every shared case-study link, distinct from the body description
     // search engines crawl. Cover image (1200×630 crop) is generated via
     // Sanity's URL builder; if there's no cover, fall back to the default
     // /og/case-studies.png from the /work listing.
-    const description = `${doc.titleStart} — Shazif Adam`;
+    const ogDescription = `${doc.titleStart} — Shazif Adam`;
+
+    // The crawler-facing description is real prose instead — the opening of
+    // the overview body, falling back to the title pair when the case study
+    // has no overview.
+    const overviewExcerpt = portableTextToPlain(doc.overviewBody);
+    const description =
+      overviewExcerpt ||
+      `${doc.titleStart}${doc.titleEnd ? ` — ${doc.titleEnd}` : ""}. Case study by Shazif Adam.`;
     const ogImage = doc.coverImage
       ? urlFor(doc.coverImage as SanityImageSource)
           .width(1200)
@@ -96,9 +111,13 @@ export async function generateMetadata({
     return {
       title: doc.titleStart,
       description,
+      alternates: {
+        canonical: `/work/${params.slug}`,
+      },
       openGraph: {
         title: `${doc.titleStart} — Shazif Adam`,
-        description,
+        description: ogDescription,
+        url: `/work/${params.slug}`,
         images: [
           {
             url: ogImage,
@@ -110,12 +129,15 @@ export async function generateMetadata({
       },
       twitter: {
         title: `${doc.titleStart} — Shazif Adam`,
-        description,
+        description: ogDescription,
         images: [ogImage],
       },
     };
   } catch {
-    return { title: "Case Study" };
+    return {
+      title: "Case Study",
+      alternates: { canonical: `/work/${params.slug}` },
+    };
   }
 }
 
@@ -208,12 +230,9 @@ export default async function CaseStudyPage({
             {(doc.coverVideo?.asset?.url || coverUrl) && (
               <BlurReveal>
                 {doc.coverVideo?.asset?.url ? (
-                  <video
+                  <LazyVideo
                     src={doc.coverVideo.asset.url}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
+                    poster={coverUrl ?? undefined}
                     className="w-full h-auto rounded-sm"
                   />
                 ) : (

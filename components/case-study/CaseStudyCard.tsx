@@ -1,4 +1,5 @@
 import { ProtectedImage } from "@/components/ui/ProtectedImage";
+import { LazyVideo } from "@/components/ui/LazyVideo";
 import Link from "next/link";
 import { TagPill } from "@/components/ui/TagPill";
 import { cn } from "@/lib/utils";
@@ -67,13 +68,9 @@ export function CaseStudyCard({
           )}
         >
           {coverVideo ? (
-            <video
+            <LazyVideo
               src={coverVideo}
               poster={coverImage}
-              autoPlay
-              muted
-              loop
-              playsInline
               className="absolute inset-0 h-full w-full object-cover"
             />
           ) : coverImage ? (

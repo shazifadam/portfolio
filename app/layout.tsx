@@ -5,23 +5,29 @@ import "./globals.css";
 import { geist, inter, stkBureauSerif } from "@/lib/fonts";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { RouteBackground } from "@/components/layout/RouteBackground";
-import { PageTransition } from "@/components/motion/PageTransition";
 import { ComingSoonCursor } from "@/components/ui/ComingSoonCursor";
 import { MotionProvider } from "@/components/motion/MotionProvider";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://shazifadam.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Shazif Adam — Multidisciplinary Designer specialized in crafting Brand Identities, Interface Designs & Illustrations",
     template: "%s — Shazif Adam",
   },
   description:
     "Product and brand designer based in Malé, Maldives. Designing and building for international clients.",
+  // Home's canonical. Metadata is shallow-merged down the tree, so every
+  // other route declares its own `alternates` block — otherwise it would
+  // inherit this one and self-canonicalise to the homepage.
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Shazif Adam — Multidisciplinary Designer specialized in crafting Brand Identities, Interface Designs & Illustrations",
     description:
       "Product and brand designer based in Malé, Maldives. Designing and building for international clients.",
-    url: "https://shazifadam.com",
+    url: SITE_URL,
     siteName: "Shazif Adam",
     type: "website",
     images: [
@@ -72,9 +78,12 @@ export default function RootLayout({
         </a>
         <RouteBackground />
         <SiteShell>
-          <PageTransition>
-            <main id="main">{children}</main>
-          </PageTransition>
+          {/* tabIndex={-1} makes the skip-link target programmatically
+              focusable; outline-none keeps the focus ring from drawing a
+              box around the whole page when the link is used. */}
+          <main id="main" tabIndex={-1} className="outline-none focus:outline-none">
+            {children}
+          </main>
         </SiteShell>
         <ComingSoonCursor />
         {/* Vercel Analytics + Speed Insights — both free tier, cookieless,

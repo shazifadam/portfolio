@@ -12,7 +12,10 @@ export function Hero() {
       <Container className="flex flex-col items-center">
         <div className="flex w-full max-w-[834px] flex-col gap-4">
           <HeroReveal delay={REVEAL_INTRO}>
-            <p className="text-h3 text-brand-black">
+            {/* The page's only <h1>. Tailwind preflight resets h1 size,
+                weight and margin to inherit/0, so .text-h3 alone decides
+                the rendering — visually identical to the <p> it replaced. */}
+            <h1 className="text-h3 text-brand-black">
               I&apos;m{" "}
               <Link
                 href="/about"
@@ -23,7 +26,7 @@ export function Hero() {
               {", "}a multidisciplinary designer with over ten years of
               experience. Specialized in crafting Brand Identities, Interface &
               Experience Designs and Illustrations
-            </p>
+            </h1>
           </HeroReveal>
 
           <HeroReveal delay={REVEAL_PILLS}>

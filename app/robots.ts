@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -9,7 +10,7 @@ export default function robots(): MetadataRoute.Robots {
       // and shouldn't be indexed. /api routes are handlers, not pages.
       disallow: ["/studio", "/api"],
     },
-    sitemap: "https://shazifadam.com/sitemap.xml",
-    host: "https://shazifadam.com",
+    sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }

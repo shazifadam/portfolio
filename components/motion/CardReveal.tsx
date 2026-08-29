@@ -54,6 +54,12 @@ export function CardReveal({
           : { opacity: 0, filter: "blur(16px)", y: 12 }
       }
       transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay }}
+      onAnimationComplete={() => {
+        // Remove the filter property entirely once settled — leaving
+        // filter: blur(0px) active creates a stacking-context boundary
+        // that iOS Safari renders as a visible ring around the element.
+        if (inView && ref.current) ref.current.style.filter = "";
+      }}
     >
       {children}
     </m.div>

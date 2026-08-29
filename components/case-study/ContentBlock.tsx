@@ -1,4 +1,5 @@
 import { ProtectedImage } from "@/components/ui/ProtectedImage";
+import { LazyVideo } from "@/components/ui/LazyVideo";
 import { BlurReveal } from "@/components/motion/BlurReveal";
 import { PortableBody } from "@/components/case-study/PortableBody";
 import { urlFor } from "@/sanity/lib/image";
@@ -103,14 +104,7 @@ function VideoBlockRenderer({ block }: { block: VideoBlock }) {
   return (
     <BlurReveal>
       <figure className="flex flex-col gap-3">
-        <video
-          src={url}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-auto rounded-sm"
-        />
+        <LazyVideo src={url} className="w-full h-auto rounded-sm" />
         {block.caption && (
           <figcaption className="text-p3 text-semantic-text-secondary">
             {block.caption}

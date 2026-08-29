@@ -1,4 +1,10 @@
-import { groq } from "next-sanity";
+// Local pass-through template tag. `groq` from next-sanity is a no-op at
+// runtime (it exists purely so editors syntax-highlight the query), but
+// importing it drags next-sanity into every route bundle that imports a
+// query, app/sitemap.ts included. Re-implementing the tag here keeps the
+// highlighting and drops the dependency.
+const groq = (strings: TemplateStringsArray, ...values: unknown[]): string =>
+  String.raw({ raw: strings }, ...values);
 
 // Card-visible projection used everywhere a case study appears as a card
 const cardFields = `
@@ -70,6 +76,15 @@ export const allCaseStudySlugsQuery = groq`
   *[_type == "caseStudy" && defined(slug.current)][].slug.current
 `;
 
+// Same set, but carrying `_updatedAt` so app/sitemap.ts can emit a real
+// <lastmod> per URL instead of "now" on every request.
+export const allCaseStudySlugsWithDatesQuery = groq`
+  *[_type == "caseStudy" && defined(slug.current)] {
+    "slug": slug.current,
+    _updatedAt
+  }
+`;
+
 export const journalEntriesQuery = groq`
   *[_type == "journalEntry"] | order(publishedAt desc) {
     _id,
@@ -100,6 +115,14 @@ export const journalEntryBySlugQuery = groq`
 
 export const allJournalSlugsQuery = groq`
   *[_type == "journalEntry" && defined(slug.current)][].slug.current
+`;
+
+// Dated counterpart — see allCaseStudySlugsWithDatesQuery.
+export const allJournalSlugsWithDatesQuery = groq`
+  *[_type == "journalEntry" && defined(slug.current)] {
+    "slug": slug.current,
+    _updatedAt
+  }
 `;
 
 // /links — singleton document (fixed _id, see sanity/schemas/linksPage.ts).

@@ -14,6 +14,29 @@ export const metadata: Metadata = {
   title: "Links",
   description:
     "Shazif Adam — Designer who builds. Case studies, about, and shop.",
+  alternates: {
+    canonical: "/links",
+  },
+  openGraph: {
+    title: "Links — Shazif Adam",
+    description:
+      "Shazif Adam — Designer who builds. Case studies, about, and shop.",
+    url: "/links",
+    images: [
+      {
+        url: "/og/website.png",
+        width: 1200,
+        height: 630,
+        alt: "Links — Shazif Adam",
+      },
+    ],
+  },
+  twitter: {
+    title: "Links — Shazif Adam",
+    description:
+      "Shazif Adam — Designer who builds. Case studies, about, and shop.",
+    images: ["/og/website.png"],
+  },
 };
 
 // Content is edited in Sanity Studio → "Links Page" (singleton). The static
