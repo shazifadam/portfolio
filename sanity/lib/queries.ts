@@ -101,3 +101,15 @@ export const journalEntryBySlugQuery = groq`
 export const allJournalSlugsQuery = groq`
   *[_type == "journalEntry" && defined(slug.current)][].slug.current
 `;
+
+// /links — singleton document (fixed _id, see sanity/schemas/linksPage.ts).
+export const linksPageQuery = groq`
+  *[_type == "linksPage" && _id == $id][0] {
+    name,
+    role,
+    photo,
+    disciplines,
+    featureCard { enabled, title, subtitle, image, ctaLabel, href },
+    links[] { _key, title, subtitle, href, newTab }
+  }
+`;

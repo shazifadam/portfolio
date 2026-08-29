@@ -99,7 +99,9 @@ clsx
 │   ├── schemas/
 │   │   ├── index.ts
 │   │   ├── caseStudy.ts
-│   │   └── journalEntry.ts
+│   │   ├── journalEntry.ts
+│   │   └── linksPage.ts               # singleton behind /links
+│   ├── constants.ts                   # singleton _ids (dependency-free)
 │   ├── lib/
 │   │   ├── client.ts                  # createClient
 │   │   ├── image.ts                   # urlFor builder
@@ -108,6 +110,7 @@ clsx
 │   └── sanity.config.ts
 ├── lib/
 │   ├── fonts.ts                       # next/font/local + next/font/google
+│   ├── links.ts                       # /links data: Sanity fetch + static fallback
 │   ├── tags.ts                        # tag → icon map
 │   └── utils.ts                       # cn(), etc.
 ├── public/
@@ -543,7 +546,7 @@ Nav item linking out (external arrow). No internal route.
 
 ## 6. Sanity schemas
 
-Both schemas live in `sanity/schemas/`. Use them **verbatim** from PRD §8 — they are the contract. Highlights:
+All schemas live in `sanity/schemas/`. `caseStudy` and `journalEntry` come **verbatim** from PRD §8 — they are the contract. `linksPage` was added 2026-08-29 (post-PRD). Highlights:
 
 ### `caseStudy`
 - Card-visible: `titleStart`, `titleStartColor` (hex string), `titleEnd`, `tags` (array w/ enum list), `coverImage` (with hotspot).
@@ -556,6 +559,13 @@ Both schemas live in `sanity/schemas/`. Use them **verbatim** from PRD §8 — t
 
 ### `journalEntry`
 - Fields: `title`, `slug` (sourced from `title`), `summary`, optional `coverImage`, `body` (Portable Text), `publishedAt`, `tags` (enum: `designProcess | uiux | illustration | tools | shortTake`).
+
+### `linksPage` (singleton — added 2026-08-29)
+- One document, fixed `_id = "linksPage"` (`sanity/constants.ts`). Pinned at the top of the desk via a custom `structure` in `sanity.config.ts`; hidden from the "+ Create" menu (`schema.templates` filter) and stripped of delete/duplicate/unpublish (`document.actions` filter). **Import `LINKS_PAGE_ID` from `sanity/constants.ts`, never from the schema file** — importing the schema into app code drags the whole `sanity` package into the client bundle (/links went 219 B → 305 kB when it did).
+- Groups: **Profile** (`name`, `role`, optional `photo`, `disciplines[]` string pills), **Feature card** (`featureCard{enabled, title, subtitle, image, ctaLabel, href}`), **Links** (`links[]` of `linkItem{title, subtitle, href, newTab?}`; drag to reorder).
+- `href` fields are `string` (not `url`) so site paths like `/about` validate — custom rule accepts `/…`, `http(s)://…`, `mailto:`. `newTab` is an optional override; when unset, absolute http(s) URLs open in a new tab and site paths use `<Link>`.
+- `initialValue` mirrors the pre-CMS hard-coded content (Dhirunba feature + Shop / About Me / Case Studies) so the first Studio open starts populated. Images can't be seeded — `photo` and `featureCard.image` fall back to `/images/head-pp-color.jpg` and `/images/featurelink/dhirunba-feature.jpg` when empty.
+- `lib/links.ts` → `getLinksPage()` maps the doc to page shape and returns `LINKS_PAGE_FALLBACK` (same content) if the doc is unpublished or the fetch fails. `/links` is `revalidate = 60` like the other Sanity routes.
 
 ### Tag enum reference (single source of truth)
 
@@ -581,6 +591,7 @@ Mount Sanity Studio at `/studio` via `app/studio/[[...tool]]/page.tsx`. Config i
 - `allCaseStudiesQuery`: `*[_type=="caseStudy"] | order(order asc)` — used by `/work` for the full list.
 - `caseStudyBySlugQuery(slug)`: full doc with derefs for `similarStudies` (project the card-visible fields).
 - `journalEntriesQuery`: `*[_type=="journalEntry"] | order(publishedAt desc)`
+- `linksPageQuery(id)`: `*[_type=="linksPage" && _id==$id][0]` — singleton behind `/links`; `$id` = `LINKS_PAGE_ID`.
 
 ---
 
